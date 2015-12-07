@@ -7,8 +7,76 @@
 </head>
 <body>
 
-Hello World
-<h1>hi</h1>
+<head>
+	<meta char-set="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE-edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Home</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/home-styles.css">
+</head>
+
+<body>
+	<div class="container">
+		<header>
+			<div class="row" style="margin-top: 10px;">
+				<div class="col-md-6">
+					<!--<img class="logo-img img-responsive" src="2.png" alt="LOGO">-->
+					<h1 id="logo-header">CoodSnippet</h1>
+				</div>
+				<div class="col-md-2" style="padding:0; width:auto;">
+					<h5>Username</h5>
+					<form action="#" method="POST" name="log-in" id="log-in-form">
+						<input type="text" name="username" required>
+					</form>
+				</div>
+				<div class="col-md-2">
+					<h5>Password</h5>
+					<input type="password" name="password" form="log-in-form" required>
+				</div>
+				<div class="col-md-1" style="width:auto;">
+					<input type="submit" value="Login" id="login-button" form="log-in-form">
+				</div>
+				<div class="col-md-1">
+					<form action="#" method="POST" name="sign-up" style="margin-top:35px;">
+						<input type="submit" value="Sign Up">
+					</form>
+				</div>
+			</div>
+
+			<div class="row" id="nav-bar-id">
+				<div class="col-md-12 text-center">
+					<ul>
+				 		<li><a href="#home">Explore</a></li>
+					 	<li><a href="#news">Add</a></li>
+					 	<li><a href="#contact">Request</a></li>
+					</ul>
+				</div>
+			</div>
+		</header>
+		<div class="row">
+			<div class="col-md-8 input-group" style="margin:auto">
+				<input type="text" class="form-control" placeholder="Search for snippet" name="searchTerm" required>
+          			<span class="input-group-btn">
+            			<button class="btn btn-default" type="submit" style="background-color:#0288D1">
+            				<span class="glyphicon glyphicon-search"></span> Search
+            			</button>
+          			</span>
+			</div>
+		</div>
+		<div class="row" style="margin-top:30px">
+			<div class="col-md-12 text-center">
+				<video width="480" height="360" controls>
+ 			 		<source src="movie.mp4" type="video/mp4">
+  				Your browser does not support the video tag.
+				</video>
+			</div>
+		</div>
+		<footer>
+		</footer>
+
+	</div>
+
 	<!-- bower:js -->
 	<script src="../../bower_components/jquery/dist/jquery.js"></script>
 	<script src="../../bower_components/bootstrap/dist/js/bootstrap.js"></script>
