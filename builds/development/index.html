@@ -20,14 +20,15 @@
 	
 	<div class="container">
 		<header>
-			<div class="row" style="margin-top: 10px;">
+			<div class="row" style="margin-top: 10px;"  >
+				<div ng-controller="LogController">
 				<div class="col-md-6">
 					<!--<img class="logo-img img-responsive" src="2.png" alt="LOGO">-->
 					<h1 id="logo-header">CoodSnippet</h1>
 				</div>
 				<div class="col-md-2" style="padding:0; width:auto;">
 					<h5>Username</h5>
-					<form action="#" method="POST" name="log-in" id="log-in-form">
+					<form action="/login" method="POST" name="log-in" id="log-in-form">
 						<input type="text" name="username" required>
 					</form>
 				</div>
@@ -38,7 +39,8 @@
 				<div class="col-md-1" style="width:auto;">
 					<input type="submit" value="Login" id="login-button" form="log-in-form">
 				</div>
-				<div class="col-md-1">
+				</div>
+				<div class="col-md-1" ng-controller="SignController">
 					<form action="#" method="POST" name="sign-up" style="margin-top:35px;">
 						<input type="submit" value="Sign Up">
 					</form>
@@ -48,15 +50,15 @@
 			<div class="row" id="nav-bar-id">
 				<div class="col-md-12 text-center">
 					<ul>
-				 		<li><a href="#home">Explore</a></li>
-					 	<li><a href="#news">Add</a></li>
-					 	<li><a href="#contact">Request</a></li>
+				 		<li><a href="#/explore">Explore</a></li>
+					 	<li><a href="#/add">Add</a></li>
+					 	<li><a href="#/ask">ask</a></li>
 					</ul>
 				</div>
 			</div>
 		</header>
 		<div class="row">
-			<div class="col-md-8 input-group" style="margin:auto">
+			<div class="col-md-8 input-group" style="margin:auto" ng-controller="SearchController">
 				<input type="text" class="form-control" placeholder="Search for snippet" name="searchTerm" required>
           			<span class="input-group-btn">
             			<button class="btn btn-default" type="submit" style="background-color:#0288D1">
@@ -73,7 +75,10 @@
 				</video>
 			</div>
 		</div>
+		<div ng-view></div>
+
 		<footer>
+			<p>Copyright © codesnippets. All Rights Reserved.</p>
 		</footer>
 
 	</div>
