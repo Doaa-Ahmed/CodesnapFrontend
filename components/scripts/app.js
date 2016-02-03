@@ -31,7 +31,7 @@ myApp.config(['$routeProvider','$locationProvider', function($routeProvider,$loc
   otherwise({
     redirectTo: '/login'
   });
-}
+}]);
 run.$inject = ['$rootScope', '$location', '$cookieStore', '$http'];
     function run($rootScope, $location, $cookieStore, $http) {
         // keep user logged in after page refresh
@@ -48,4 +48,3 @@ run.$inject = ['$rootScope', '$location', '$cookieStore', '$http'];
                 $location.path('/login');
             }
         });
-]);
