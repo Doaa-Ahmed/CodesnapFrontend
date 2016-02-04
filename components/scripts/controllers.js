@@ -20,7 +20,7 @@ angular.module('myApp')
         };
     }]);
     
-    .controller('signController',  ['UserService', '$location', '$rootScope', 'FlashService',
+    .controller('SignController',  ['UserService', '$location', '$rootScope', 'FlashService',
     function(UserService, $location, $rootScope, FlashService) {
 
        $scope.signup=function() {
