@@ -19,3 +19,24 @@ angular.module('myApp')
             });
         };
     }]);
+    
+    .controller('signController',  ['UserService', '$location', '$rootScope', 'FlashService',
+    function(UserService, $location, $rootScope, FlashService) {
+
+       $scope.signup=function() {
+            $scope.dataLoading = true;
+            UserService.Create($scope.user)
+                .then(function (response) {
+                    if (response.success) {
+                        FlashService.Success('Registration successful', true);
+                        $location.path('/login');
+                    } else {
+                        FlashService.Error(response.message);
+                        $scope.dataLoading = false;
+                    
+                }
+        }
+    }
+}
+
+]);
