@@ -21,12 +21,12 @@ myApp.config(['$routeProvider','$locationProvider', function($routeProvider,$loc
   when('/add', {
     templateUrl: 'partials/add.html',
     controller: 'AddController',
-    resolve: { loggedin: checkLoggedin }
+    data: { requireLogin: true }
   }).
   when('/explore', {
     templateUrl: 'partials/explore.html',
     controller: 'ExploreController' ,
-    resolve: { loggedin: checkLoggedin }
+    data: { requireLogin: true }
   }).
   otherwise({
     redirectTo: '/login'
