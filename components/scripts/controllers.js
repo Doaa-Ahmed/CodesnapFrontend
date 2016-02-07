@@ -1,24 +1,17 @@
 angular.module('myApp')
 
-.controller('LogController',
-    ['$scope', '$rootScope', '$location', 'AuthenticationService',
-    function ($scope, $rootScope, $location, AuthenticationService) {
-        // reset login status
-        AuthenticationService.ClearCredentials();
+.controller('LogController',function ($scope, $http, $location) {
+    $http({
+  method: 'GET',
+  url: '/someUrl'
+}).then(function successCallback(response) {
+     $location.path('/login');
+  }, function errorCallback(response) {
+     $location.path('/index');
 
-        $scope.login = function () {
-            $scope.dataLoading = true;
-            AuthenticationService.Login($scope.username, $scope.password, function (response) {
-                if (response.success) {
-                    AuthenticationService.SetCredentials($scope.username, $scope.password);
-                    $location.path('/index');
-                } else {
-                    $scope.error = response.message;
-                    $scope.dataLoading = false;
-                }
-            });
-        };
-    }]);
+  });
+
+    });
     
     .controller('SignController',  ['UserService', '$location', '$rootScope', 'FlashService',
     function(UserService, $location, $rootScope, FlashService) {
