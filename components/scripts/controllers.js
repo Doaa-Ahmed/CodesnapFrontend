@@ -1,6 +1,7 @@
 angular.module('myApp')
 
 .controller('LogController',function ($scope, $http, $location) {
+    $scope.submit = function () {
     $http({
   method: 'GET',
   url: '/someUrl'
@@ -10,7 +11,7 @@ angular.module('myApp')
      $location.path('/index');
 
   });
-
+}
     });
     
     .controller('SignController',  ['UserService', '$location', '$rootScope', 'FlashService',
