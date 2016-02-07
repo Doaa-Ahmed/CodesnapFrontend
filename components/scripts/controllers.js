@@ -1,7 +1,7 @@
 angular.module('myApp',[])
 .controller('LogController',['$http','$scope','$location',function ($scope, $http, $location) {
     $scope.submit = function () {
-        var encodedString = 'username='+ encodeURIComponent($scope.username) + '&password='+encodeURIComponent($scope.password);
+        var encodedString = 'username='+ encodeURIComponent($scope.user.username) + '&password='+encodeURIComponent($scope.user.password);
     $http({
              method: 'POST',
              url: '/someUrl',
