@@ -18,19 +18,26 @@
 					<!--<img class="logo-img img-responsive" src="2.png" alt="LOGO">-->
 					<h1 id="logo-header">CoodSnippet</h1>
 				</div>
-				<div class="col-md-2" style="padding:0; width:auto;">
-					<h5>Username</h5>
-					<form action="#" method="POST" name="log-in" id="log-in-form">
-						<input type="text" name="username" required>
-					</form>
-				</div>
-				<div class="col-md-2">
+				
+				<div ng-controller="LogController">
+					<div class="col-md-2" style="padding:0; width:auto;">
+					   <h5>Username</h5>
+					      <form action="#" method="POST" name="log-in" id="log-in-form">
+						<input type="text" name="username" ng-model="user.username" required>
+					      </form>
+				       </div>
+				      <div class="col-md-2">
 					<h5>Password</h5>
-					<input type="password" name="password" form="log-in-form" required>
+					<input type="password" name="password" ng-model="user.password" required>
+				      </div>
+				      <div class="col-md-1" style="width:auto;">
+				      	<form ng-submit="submit()">
+					  <input type="submit" value="Login" id="login-button" form="log-in-form"  >
+	                                </form>
+				      </div>
 				</div>
-				<div class="col-md-1" style="width:auto;">
-					<input type="submit" value="Login" id="login-button" form="log-in-form">
-				</div>
+				
+				
 				<div class="col-md-1">
 					<form action="signup.html" method="POST" name="sign-up" style="margin-top:35px;">
 						<input type="submit" value="Sign Up">
