@@ -1,10 +1,10 @@
 angular.module('myApp')
 
-.controller('LogController',function ($scope, $http, $location) {
+.controller('LogController',['$http','$scope','$location',function ($scope, $http, $location) {
     $scope.submit = function () {
     $http({
-  method: 'GET',
-  url: '/someUrl'
+             method: 'POST',
+             url: '/someUrl'
 }).then(function successCallback(response) {
      $location.path('/login');
   }, function errorCallback(response) {
@@ -12,7 +12,7 @@ angular.module('myApp')
 
   });
 }
-    });
+    }]);
     
     .controller('SignController',  ['UserService', '$location', '$rootScope', 'FlashService',
     function(UserService, $location, $rootScope, FlashService) {
