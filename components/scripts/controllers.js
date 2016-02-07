@@ -1,16 +1,18 @@
-angular.module('myApp')
-
+angular.module('myApp',[])
 .controller('LogController',['$http','$scope','$location',function ($scope, $http, $location) {
     $scope.submit = function () {
+        var encodedString = 'username='+ encodeURIComponent($scope.username) + '&password='+encodeURIComponent($scope.password);
     $http({
              method: 'POST',
-             url: '/someUrl'
+             url: '/someUrl',
+             data:encodedString
 }).then(function successCallback(response) {
+     console.log(data);
      $location.path('/login');
   }, function errorCallback(response) {
-     $location.path('/index');
-
-  });
+            console.log("unable to submit data");
+        $scope.errorMsg ="login not correct";
+  })
 }
     }]);
     
