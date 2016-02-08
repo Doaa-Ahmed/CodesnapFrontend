@@ -1,5 +1,4 @@
-angular.module('myApp',[])
-.controller('LogController',['$http','$scope','$location',function ($scope, $http, $location) {
+myApp.controller('LogController',['$http','$scope','$location',function ($scope, $http, $location) {
     $scope.submit = function () {
         var encodedString = 'username='+ encodeURIComponent($scope.user.username) + '&password='+encodeURIComponent($scope.user.password);
     $http({
@@ -16,7 +15,7 @@ angular.module('myApp',[])
 }
     }]);
     
-    .controller('SignController',  ['UserService', '$location', '$rootScope', 'FlashService',
+    myApp.controller('SignController',  ['UserService', '$location', '$rootScope', 'FlashService',
     function(UserService, $location, $rootScope, FlashService) {
 
        $scope.signup=function() {
@@ -31,7 +30,7 @@ angular.module('myApp',[])
                         $scope.dataLoading = false;
                     
                 }
-        }
+        })
     }
 }
 
