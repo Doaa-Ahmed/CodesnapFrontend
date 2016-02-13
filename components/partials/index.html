@@ -1,21 +1,20 @@
 <!DOCTYPE html>
-<html lan="en">
+<html ng-app="myApp">
 
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE-edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Home</title>
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="css/home-styles.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
-      <script src="app.js"></script>
-      <script src="user_service.js"></script>  
-      <script src="controllers.js"></script>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/styles/index.css">
+	<link rel="stylesheet" type="text/css" href="/styles/signup.css">
+
+    
 </head>
 
-<body ng-app="myApp">
-	<div class="container" ng-view >
+<body>
+	<div class="container" >
 		<header>
 			<div class="row" style="margin-top: 10px;">
 				<div class="col-md-6">
@@ -35,14 +34,12 @@
 				      </div>
 		                        <button type="submit">Log in</button>
                                      </form>
-
 				</div>
 				
 				
 				<div class="col-md-1">
-					<form action="signup.html" method="POST" name="sign-up" style="margin-top:35px;">
-						<input type="submit" value="SignUp">
-					</form>
+					<a href="/#/signup">Sign up</a>
+					
 				</div>
 			</div>
 
@@ -106,8 +103,16 @@
 		</footer>
 
 	</div>
-	
+    
+    <div ng-view></div>
+	<script src="angular/angular.min.js"></script>
+    <script src="angular/angular-route.min.js"></script>
 
+    <script src="/scripts/app.js"></script>
+    <script src="/scripts/controllers.js"></script>
+    <script src="/scripts/user_service.js"></script>
+
+    
 
 </body>
 
