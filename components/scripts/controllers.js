@@ -1,9 +1,10 @@
-myApp.controller('LogController',['$http','$scope','$location',function ($scope, $http, $location) {
+angular.module('myApp')
+.controller('LogController',['$http','$scope','$location',function ($scope, $http, $location) {
     $scope.submit = function () {
         var encodedString = 'username='+ encodeURIComponent($scope.user.username) + '&password='+encodeURIComponent($scope.user.password);
     $http({
              method: 'POST',
-             url: '/someUrl',
+             url: 'http://41.47.13.147:6543/login',
              data:encodedString
 }).then(function successCallback(response) {
      console.log(data);
@@ -15,7 +16,8 @@ myApp.controller('LogController',['$http','$scope','$location',function ($scope,
 }
     }]);
     
-    myApp.controller('SignController',  ['UserService', '$location', '$rootScope', 'FlashService',
+    angular.module('myApp')
+      .controller('SignController',  ['UserService', '$location', '$rootScope', 'FlashService',
     function(UserService, $location, $rootScope, FlashService) {
 
        $scope.signup=function() {
@@ -35,3 +37,4 @@ myApp.controller('LogController',['$http','$scope','$location',function ($scope,
 }
 
 ]);
+
