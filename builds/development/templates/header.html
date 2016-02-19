@@ -1,0 +1,24 @@
+<div class="row" id="nav-bar-id">
+        <div class="col-md-12 text-center">
+          <ul>
+            <li><a href="#/search">search</a></li>
+            <li><a href="#/explore">explore</a></li>
+            <li><a href="#/add">add</a></li>
+            <li><a href="#/request">request</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="container" ng-controller="PostController as postCtrl">
+      <form class="login-form" ng-submit="postCtrl.postForm()">
+        <label for="inputUsername" class="sr-only">Username</label>
+        <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus ng-model="inputData.username">
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required ng-model="inputData.password">
+    <br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Signin</button>
+      </form>
+
+      <a href="#/register">register</a>
+    </div>
+
+      

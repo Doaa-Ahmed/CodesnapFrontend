@@ -7,7 +7,7 @@ module.exports = function(grunt) {
 				banner: '\n\n //-------------------------------\n'
 			},
 			dist : {
-				src: ['components/scripts/*.js'],
+				src: ['components/scripts/**/*.js'],
 				dest: 'builds/development/js/script.js'
 		  }
 		}, //concat
@@ -35,12 +35,6 @@ module.exports = function(grunt) {
 			}
 		}, //connect
 
-		wiredep : {
-			task : {
-				src : 'builds/development/**/*.html'
-			}
-		},
-
 		watch : {
 			scripts: {
 		    files: ['components/scripts/**/*.js', 
@@ -61,6 +55,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-sass');
 	grunt.loadNpmTasks('grunt-wiredep');
-	grunt.registerTask('default', ['wiredep', 'concat', 'sass', 'connect', 'watch']); //define tasks with order they run in array, also define if to run specific task concat:dist or concat:prod
+	grunt.registerTask('default', ['connect', 'concat', 'sass', 'watch']); //define tasks with order they run in array, also define if to run specific task concat:dist or concat:prod
 
 }; //wrapper function

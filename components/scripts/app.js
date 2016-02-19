@@ -1,37 +1,43 @@
-angular.module('myApp' ,['ngRoute' , 'ngCookies', 'ngResource'])
-   
-   .config(function($stateProvider,$routeProvider,$locationProvider) {
-  
-    $routeProvider
-  .when('/index', {
-    templateUrl: 'index.html',
-  }).
-  when('/login', {
-    templateUrl: 'partials/login.html',
-    controller: 'LogController',
-}).
-  when('/signup', {
-    templateUrl: 'partials/signup.html',
-    controller: 'SignController'
-  }).
-  
-  when('/search', {
-    templateUrl: 'partials/search.html',
-    controller: 'SearchController'
-  }).
-  when('/add', {
-    templateUrl: 'partials/add.html',
-    controller: 'AddController',
-    data: { requireLogin: true }
-  }).
-  when('/explore', {
-    templateUrl: 'partials/explore.html',
-    controller: 'ExploreController' ,
-    data: { requireLogin: true }
-  }).
-  otherwise({
-    redirectTo: '/login'
-  })
-});
+  var app = angular.module('myApp', ['ngRoute']);
 
+    // configure our routes
+    app.config(function($routeProvider) {
+        $routeProvider
+
+            // route for the home page
+            .when('/', {
+                templateUrl : 'pages/home.html',
+                controller  : 'PostController'
+            })
+            .when('/register', {
+                templateUrl : 'pages/Signup.html',
+                controller  : 'signupController'
+            })
+            
+            
+            // route for the about page
+            .when('/search', {
+                templateUrl : 'pages/search.html',
+                controller  : 'searchController'
+            })
+
+            // route for the about page
+            .when('/explore', {
+                templateUrl : 'pages/explore.html',
+                controller  : 'exploreController'
+            })
+            // route for the about page
+            .when('/add', {
+                templateUrl : 'pages/add.html',
+                controller  : 'addController'
+            })
+
+            // route for the contact page
+            .when('/request', {
+                templateUrl : 'pages/request.html',
+                controller  : 'requestController'
+            })
+
+             .otherwise({redirectTo: 'pages/Signin.html'});
+    });
 

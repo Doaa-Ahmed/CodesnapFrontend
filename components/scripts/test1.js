@@ -1,1 +1,1 @@
-test1.j
+//test1.js

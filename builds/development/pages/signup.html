@@ -1,0 +1,27 @@
+<div class="container" ng-controller="signupController as signupCtrl">
+      <form class="signup-form" ng-submit="signupCtrl.signupForm()">
+        <h2>Please sign up</h2>
+        <label for="first_name" class="sr-only">first name</label>
+        <input type="text" class="form-control" placeholder="fristname" required ng-model="signupData.firstname">
+         <br>
+        <label for="inputlastname" class="sr-only">last name</label>
+        <input type="text" class="form-control" placeholder="lastname" required ng-model="signupData.lastname">
+        <br>
+        <label for="username" class="sr-only">user name</label>
+            <input type="text" id="inputPassword" class="form-control" placeholder="username" required ng-model="signupData.username">
+        <br>
+        <label for="email" class="sr-only">Email</label>
+            <input type="text" id="inputPassword" class="form-control" placeholder="email" required ng-model="signupData.email">
+        <br>
+        <label for="password" class="sr-only">Password</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required ng-model="signupData.password">
+        <br>
+        <label for="avatar" class="sr-only">Avatar</label>
+            <input type="text" id="inputPassword" class="form-control" placeholder="avatar" required ng-model="signupData.avatar">
+        <br>
+        <label for="country" class="sr-only">Country </label>
+            <input type="text" id="inputPassword" class="form-control" placeholder="country" required ng-model="signupData.country">
+        <br>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Signup</button>
+          </form>
+</div>
