@@ -9,12 +9,13 @@
                 templateUrl : 'pages/home.html',
                 controller  : 'PostController'
             })
-            .when('/register', {
-                templateUrl : 'pages/Signup.html',
-                controller  : 'signupController'
-            })
             
-            
+//            .when('/register', {
+//              templateUrl : 'pages/Signup.html',
+//              controller  : 'signupController'
+//          })
+
+
             // route for the about page
             .when('/search', {
                 templateUrl : 'pages/search.html',
@@ -40,4 +41,3 @@
 
              .otherwise({redirectTo: 'pages/Signin.html'});
     });
-

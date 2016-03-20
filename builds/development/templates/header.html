@@ -1,40 +1,146 @@
-<nav class="navbar navbar-default">
+<nav id="mainNavbar" class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">CodeSnap</a>
+    <div class="row">
+      <div class="navbar-header col-md-1">
+        <img class="img-responsive logoImg" src="images/logo.jpg" alt="logo" />
+      </div>
+      <div class="col-md-3">
+        <ul class="nav navbar-nav">
+          <li><a class="navAnchor" href="#/">Home</a></li>
+          <li><a class="navAnchor" href="#/explore">explore</a></li>
+          <li><a class="navAnchor" href="#/add">add</a></li>
+          <li><a class="navAnchor" href="#/request">request</a></li>
+        </ul>
+      </div>
+      <div class="col-md-5 headSearchCol">
+        <input type="search" class="form-control headSearchInput" placeholder="Search For Snippet!">
+        <span class="headSearchSpan">
+          <button class="btn btn-primary headSearchSpanBtn" type="button">
+            <span class="glyphicon glyphicon-search"></span>
+          </button>
+        </span>
+      </div>
+
+      <!-- Register and Login
+
+      <div class="col-md-3">
+        <ul class="nav navbar-nav" style="float:right;">
+          <li>
+            <a class="navAnchor" data-toggle="modal" data-target="#signUpModal"  style="cursor:pointer;">
+              <span class="glyphicon glyphicon-user"></span> register
+            </a>
+          </li>
+          <li>
+            <a class="navAnchor" data-toggle="modal" data-target="#loginModal" style="cursor:pointer;">
+              <span class="glyphicon glyphicon-log-in"></span> Signin
+            </a>
+          </li>
+        </ul>
     </div>
-    <ul class="nav navbar-nav pull-right">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Contact</a></li>
-    </ul>
+
+    -->
+    <div class="col-md-3">
+      <div class="dropdown" style="background-color:orange;">
+        <a style="color:orange;"class="dropdown-toggle caretSpan" data-toggle="dropdown">
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li><a href="#">SETTING</a></li>
+          <li><a href="#">LOGOUT</a></li>
+        </ul>
+      </div>
+      <span class="loggedinUser">MFAIbrahem</span>
+    </div>
   </div>
 </nav>
 
 
+<div id="loginModal" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width:100%;">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-md-offset-4">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Login</h4>
+              </div>
+            <div class="modal-body" ng-controller="PostController as postCtrl">
+              <form ng-submit="postCtrl.postForm()">
+                <div class="form-group">
+                  <label for="inputUsername">Username</label>
+                  <input type="text" class="form-control" id="inputUsername" placeholder="Username" required ng-model="inputData.username">
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword">Password</label>
+                  <input type="password" class="form-control" id="inputPassword" placeholder="Password" required ng-model="inputData.password">
+                </div>
+                <button class="btn btn-primary" type="submit">Signin</button>
+              </form>
+            </div>
 
-
-<div class="row" id="nav-bar-id">
-        <div class="col-md-12 text-center">
-          <ul>
-            <li><a href="#/search">search</a></li>
-            <li><a href="#/explore">explore</a></li>
-            <li><a href="#/add">add</a></li>
-            <li><a href="#/request">request</a></li>
-          </ul>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="container" ng-controller="PostController as postCtrl">
-      <form class="login-form" ng-submit="postCtrl.postForm()">
-        <label for="inputUsername" class="sr-only">Username</label>
-        <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus ng-model="inputData.username">
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required ng-model="inputData.password">
-    <br>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Signin</button>
-      </form>
-
-      <a href="#/register">register</a>
     </div>
+  </div>
+</div>
 
-      
+<div id="signUpModal" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width:100%;">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-md-offset-4">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Sign Up</h4>
+              </div>
+              <div class="modal-body" ng-controller="signupController as signupCtrl">
+                <form ng-submit="signupCtrl.signupForm()">
+                  <div class="form-group">
+                    <label for="first_name">first name</label>
+                    <input type="text" class="form-control" id ="first-name" placeholder="firstname" required ng-model="signupData.firstname">
+                  </div>
+                  <div class="form-group">
+                    <label for="inputlastname">last name</label>
+                    <input type="text" class="form-control" id ="inputlastname" placeholder="lastname" required ng-model="signupData.lastname">
+                  </div>
+                  <div class="form-group">
+                    <label for="username">user name</label>
+                    <input type="text" class="form-control" id ="username" placeholder="username" required ng-model="signupData.username">
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail">Email</label>
+                    <input type="email" class="form-control" id="inputEmail" placeholder="Email" required ng-model="signupData.email">
+                  </div>
+                  <div class="form-group">
+                    <label for="inputPassword">Password</label>
+                    <input type="password" class="form-control" id="Password" placeholder="Password" required ng-model="signupData.password">
+                  </div>
+                  <div class="form-group">
+                    <label for="avatar">Avatar</label>
+                    <input type="text" class="form-control" id="avatar" placeholder="Avatar" required ng-model="signupData.avatar">
+                  </div>
+                  <div class="form-group">
+                    <label for="country">Country </label>
+                    <input type="text" class="form-control" id="avatar" placeholder="Country" required ng-model="signupData.country">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Signup</button>
+                </form>
+              </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
