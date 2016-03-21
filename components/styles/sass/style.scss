@@ -111,7 +111,7 @@ body, html {
 .loggedinUser {
   float: right;
   padding: 11px 0px 11px 4px;
-  color: orange;
+  color: #6599FF;
   background-color: #333;
 }
 
@@ -372,6 +372,133 @@ textarea.reqTextarea {
 
 /* end request style */
 
+/* Explore style */
+.langContainer {
+  padding-top: 50px;
+  padding-bottom: 20px;
+  background-color: #EEE;
+}
+
+.EXPMainH {
+  color: #000000;
+  font-family: cursive;
+  font-weight: bolder;
+  font-style: italic;
+}
+
+.EXPSubH {
+  color: gray;
+  font-family: sans-serif;
+  font-style: italic;
+  margin-bottom: 0;
+}
+
+.langMainCol {
+  text-align: center;
+}
+
+#langUL {
+  display: inline-block;
+  margin-bottom: 0;
+}
+
+.listClass1 {
+  float: left;
+  margin-right: 25px;
+  margin-bottom: 0;
+  padding-top: 40px;
+}
+
+.listClass1:first-child {
+  padding-top: 80px;
+  margin-left: 0;
+  margin-bottom: 0;
+}
+
+.listClass1:last-child {
+  padding-top: 80px;
+  margin-right: 0;
+  margin-bottom: 0;
+}
+
+.listClass2 {
+  float: left;
+  margin-right: 25px;
+  margin-bottom: 5px;
+  padding-top: 0;
+}
+
+.listClass2:first-child, .listClass3:first-child {
+  padding-top: 40px;
+  margin-left: 0;
+  margin-bottom: 0;
+}
+
+.listClass2:last-child, .listClass3:last-child {
+  padding-top: 40px;
+  margin-right: 0;
+  margin-bottom: 0;
+}
+
+
+.langImg {
+  width: 70px;
+  height: 70px;
+  padding: 10px;
+  background-color: #6599FF;
+  border: 4px solid #ffffff;
+  border-radius: 50%;
+}
+
+.listClass3 {
+  float: left;
+  margin-right: 25px;
+  margin-bottom: 5px;
+  padding-top: 0;
+}
+
+.anchorList, .anchorListFirst, .anchorListLast {
+  display: block;
+}
+
+a.anchorList:hover {
+  padding-top: 6px;
+  border: 3px solid #6599FF;
+  border-radius: 50%;
+  background: #6599FF;
+}
+
+a.anchorListFirst:hover {
+  padding-right: 6px;
+  border-radius: 50%;
+  background: #6599FF;
+}
+
+a.anchorListLast:hover {
+  padding-left: 6px;
+  border-radius: 50%;
+  background: #6599FF;
+}
+
+h3.EXPImgsHeader {
+  font-family: monospace;
+  font-weight: bolder;
+  color: gray;
+}
+
+h4.EXPMiniH {
+  color: gray;
+  font-family: cursive;
+  font-weight: bolder;
+}
+
+img.EXPImgs {
+  width: 60%;
+  border-radius: 50%;
+}
+/* end of expolore style */
+
+/* mahmoud rating */
 
 .rating{
   color: #a9a9a9;
@@ -395,3 +522,4 @@ ul.rating {
 .rating .filled {
   color: #21568b;
 }
+/*end of mahmoud rating */
