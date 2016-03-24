@@ -6,7 +6,7 @@ body, html {
 }
 
 .mainRow {
-  height:100%;
+  height: 100%;
 }
 
 .carousel,
@@ -43,6 +43,7 @@ body, html {
   text-transform: uppercase;
   font-family: monospace;
   font-size: 14px;
+  color: #ffffff;
 }
 
 #mainNavbar a.navAnchor:hover {
@@ -316,7 +317,7 @@ body, html {
 
 .addSnippetContainer {
   background-color: #EEE;
-	height: 250%;
+  padding-bottom: 40px;
 }
 
 .addSnippet1stRow {
@@ -332,7 +333,6 @@ body, html {
 }
 
 .addSnippet2ndRow {
-	height: 60%;
 	padding-top: 80px;
 }
 
@@ -366,7 +366,7 @@ textarea.addTextarea {
 
 .reqSnipContainer {
   background-color: #EEE;
-	height: 125%;
+  padding-bottom: 40px;
 }
 
 #reqMainHeader {
@@ -377,7 +377,6 @@ textarea.addTextarea {
 }
 
 .reqSnippetRow {
-	height: 100%;
   padding-top: 40px;
 }
 
