@@ -1,4 +1,4 @@
-  var app = angular.module('myApp', ['ngRoute']);
+var app = angular.module('myApp', ['ngRoute']);
 
     // configure our routes
     app.config(function($routeProvider) {
@@ -9,13 +9,12 @@
                 templateUrl : 'pages/home.html',
                 controller  : 'PostController'
             })
+            .when('/register', {
+                templateUrl : 'pages/Signup.html',
+                controller  : 'signupController'
+            })
             
-//            .when('/register', {
-//              templateUrl : 'pages/Signup.html',
-//              controller  : 'signupController'
-//          })
-
-
+            
             // route for the about page
             .when('/search', {
                 templateUrl : 'pages/search.html',
@@ -25,8 +24,12 @@
             // route for the about page
             .when('/explore', {
                 templateUrl : 'pages/explore.html',
-                controller  : 'exploreController'
             })
+            .when('/explore/language/:LangId', {
+                templateUrl: 'pages/langsnippets.html',
+                controller: 'expController'
+      }).
+        
             // route for the about page
             .when('/add', {
                 templateUrl : 'pages/add.html',
@@ -41,3 +44,4 @@
 
              .otherwise({redirectTo: 'pages/Signin.html'});
     });
+
