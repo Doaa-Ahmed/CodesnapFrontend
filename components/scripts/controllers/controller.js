@@ -1,23 +1,25 @@
-app.controller('PostController', ['$scope', '$http', function($scope, $http) {
+app.controller('PostController', ['$scope', '$http','$rootScope', function($scope, $http,$rootScope) {
 		
 		this.postForm = function() {
+      
 		var obj = {'username': $scope.inputData.username,'password': $scope.inputData.password};
 			console.log(JSON.stringify(obj));
 
 			$http({
 
 				method: 'POST',
-				url: 'http://41.35.100.129:6543',
+				url: 'http://159.203.162.208:6543/api/login',
 				data:JSON.stringify(obj),
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 			})
 			.success(function(data, status, headers, config) {
-				//	window.location.href = 'pages/home.html';
 					console.log(data);
 					console.log(status);
+          $rootScope.currentUserSignedIn = true;
+      //  $rootScope.currentUser.username = data.username;
             })
 			.error(function(data, status, headers, config) {
-			//	$scope.errorMsg = 'Unable to submit form';
+				//$scope.errorMsg = 'Unable to submit form';
 				console.log(data);
 				console.log(status);
 
@@ -43,7 +45,7 @@ app.controller('PostController', ['$scope', '$http', function($scope, $http) {
 
 			$http({
 				method: 'POST',
-				url: 'http://41.35.100.129:6543',
+				url: 'http://159.203.162.208:6543/api/users',
 				data:JSON.stringify(upobject),
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 			})
@@ -56,15 +58,13 @@ app.controller('PostController', ['$scope', '$http', function($scope, $http) {
 				//$scope.errorMsg = 'Unable to signup the form';
 				console.log(data);
 				console.log(status);
-
-
 			})
 		}
 		
 	}]);	
 
 	app.controller('addController', ['$scope', '$http', function($scope, $http) {
-    	$http.get("http://41.35.100.129:6543")
+    	$http.get("http://159.203.162.208:6543/api/elements")
          .success(function(data) {
          	$scope.result=data;
          	console.log(data);
@@ -99,13 +99,14 @@ app.controller('PostController', ['$scope', '$http', function($scope, $http) {
     		        };
     	    $http({
 				method: 'POST',
-				url: 'http://41.35.100.129:6543',
+				url: 'http://159.203.162.208:6543/api/snippets',
 				data:JSON.stringify(snap),
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 			     })
 			      .success(function(data, status, headers, config) {
 					console.log(data);
 					console.log(status);
+
                     })
 			  }
         }]);
@@ -120,7 +121,7 @@ app.controller('starCtrl', function($scope,$http) {
          $http({
 
         method: 'POST',
-        url: 'http://41.35.100.129:6543',
+        url: 'http://159.203.162.208:6543/api',
         data:JSON.stringify(obj),
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       })
@@ -180,13 +181,13 @@ app.directive('starRating', function () {
   });
 
 
-app.controller('expController', ['$scope', '$http','$routeParams', function($scope, $http,$routeParams) {
-      var parameters = {$routeParams.orderId};
+/*app.controller('expController', ['$scope', '$http','$routeParams', function($scope, $http,$routeParams) {
+      var parameters = $routeParams.langId;
       var config = {
         params: parameters
       };
 
-        $http.get("http://41.35.100.129:6543",config)
+        $http.get("http://41.35.100.129:6543/api/explore/snippets/langId")
          .success(function(data) {
           $scope.result=data;
           console.log(data);
@@ -195,5 +196,34 @@ app.controller('expController', ['$scope', '$http','$routeParams', function($sco
       angular.forEach($scope.result.title, function(item) {
              $scope.tit.push(item);
             })
-        }]);
+        })
+      }]);
+*/
 
+app.controller('expController', ['$scope', '$http','$routeParams', function($scope, $http,$routeParams) {
+  var snap = {
+                    'language':$routeParams.lanid
+            };
+
+        $http({
+        method: 'POST',
+
+        url: 'http://41.35.118.106:6543/api/explore/snippets',
+        data:JSON.stringify(snap),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+           })
+            .success(function(data, status, headers, config) {
+          console.log(data);
+          console.log(status);
+          $scope.result=data;
+
+          $scope.tit = [];
+          angular.forEach($scope.result, function(item) {
+             $scope.tit.push(item);
+             console.log(item.title);
+            }
+            )
+          
+
+                    })
+                }]);
