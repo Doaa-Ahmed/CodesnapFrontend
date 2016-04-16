@@ -1,8 +1,43 @@
-<div ng-controller="expController">
-		 <ul>
-		        <li ng-repeat="item in result">
-		          <a href="#/">{{item.title}}</a>
-		        </li>
-		 </ul>
-
-</div> 
+<div class="container-fluid" style="margin-top:100px; padding-bottom150px;">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4>Context</h4></div>
+        <div class="panel-body">
+          <ul class="list-unstyled">
+            <li><label><input type="checkbox"> Web</label></li>
+            <li><label><input type="checkbox"> Desktop</label></li>
+            <li><label><input type="checkbox"> IOS</label></li>
+            <li><label><input type="checkbox"> Android</label></li>
+            <li><label><input type="checkbox"> ...</label></li>
+          </ul>
+        </div>
+        <div class="panel-footer text-center">
+          <button class="btn btn-primary btn-block">Filter</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab1primary" data-toggle="tab">Snippets</a></li>
+            <li><a href="#tab2primary" data-toggle="tab">Requests</a></li>
+          </ul>
+        </div>
+        <div class="panel-body">
+          <div class="tab-content">
+            <div class="tab-pane fade in active" id="tab1primary">
+              <textarea class="form-control" rows="10" style="resize:none;"></textarea>
+              <button class="btn btn-primary previewBtn">Preview</button>
+            </div>
+            <div class="tab-pane fade" id="tab2primary">
+              <textarea class="form-control" rows="10" style="resize:none;"></textarea>
+              <button class="btn btn-primary previewBtn">Preview</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

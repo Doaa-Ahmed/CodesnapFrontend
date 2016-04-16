@@ -20,6 +20,8 @@
           </button>
         </span>
       </div>
+
+
      <div class="col-md-3" ng-hide="currentUserSignedIn">
         <ul class="nav navbar-nav" style="float:right;">
           <li>
@@ -33,25 +35,22 @@
             </a>
           </li>
         </ul>
-    </div>                        
+    </div>
     <!--<span ng-show="currentUserSignedIn">{{welcome}}</span>-->
 
 
-<!--    <div class="col-md-3">
-      <div class="dropdown">
-        <a style="color:#6599FF;"class="dropdown-toggle caretSpan" data-toggle="dropdown">
-          <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-right">
-          <li><a href="#">SETTING</a></li>
-          <li><a href="#">LOGOUT</a></li>
-        </ul>
+<!-- start of dropdown setting and logout menue
+      <div class="css-dropdown col-md-2 col-md-offset-1">
+        <button class="dropbtn"><span class="user-name">mostafa <span class="caret"></span></span></button>
+        <div class="dropdown-content">
+          <a href="#"><span class="dropdown-options">Setting</span></a>
+          <a href="#"><span class="dropdown-options">Logout</span></a>
+        </div>
       </div>
-      <span class="loggedinUser">MFAIbrahem</span>
-    </div>
--->
+end of the dropdown -->
 
   </div> <!-- end of row -->
+</div>
 </nav>
 
 
@@ -123,14 +122,6 @@
                   <div class="form-group">
                     <label for="inputPassword">Password</label>
                     <input type="password" class="form-control" id="Password" placeholder="Password" required ng-model="signupData.password">
-                  </div>
-                  <div class="form-group">
-                    <label for="avatar">Avatar</label>
-                    <input type="text" class="form-control" id="avatar" placeholder="Avatar" required ng-model="signupData.avatar">
-                  </div>
-                  <div class="form-group">
-                    <label for="country">Country </label>
-                    <input type="text" class="form-control" id="avatar" placeholder="Country" required ng-model="signupData.country">
                   </div>
                   <button type="submit" class="btn btn-primary">Signup</button>
                 </form>
