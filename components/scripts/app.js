@@ -40,7 +40,7 @@ var app = angular.module('myApp', ['ngRoute']);
                 templateUrl : 'pages/add.html',
                 controller  : 'addController'
             })
-
+            
             // route for the contact page
             .when('/request', {
                 templateUrl : 'pages/request.html',
