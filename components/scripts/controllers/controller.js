@@ -8,7 +8,7 @@ app.controller('PostController', ['$scope', '$http','$rootScope', function($scop
 			$http({
 
 				method: 'POST',
-				url: 'http://159.203.162.208:6543/api/login',
+				url: 'http://www.koodet.com:6543/api/login',
 				data:JSON.stringify(obj),
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 			})
@@ -45,7 +45,7 @@ app.controller('PostController', ['$scope', '$http','$rootScope', function($scop
 
 			$http({
 				method: 'POST',
-				url: 'http://159.203.162.208:6543/api/users',
+				url: 'http://www.koodet.com:6543/api/users',
 				data:JSON.stringify(upobject),
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 			})
@@ -64,7 +64,7 @@ app.controller('PostController', ['$scope', '$http','$rootScope', function($scop
 	}]);	
 
 	app.controller('addController', ['$scope', '$http', function($scope, $http) {
-    	$http.get("http://159.203.162.208:6543/api/elements")
+    	$http.get("http://www.koodet.com:6543/api/elements")
          .success(function(data) {
          	$scope.result=data;
          	console.log(data);
@@ -83,35 +83,35 @@ app.controller('PostController', ['$scope', '$http','$rootScope', function($scop
             })
          
            })
-        }]);
 
-
-	app.controller('snippetController', ['$scope', '$http', function($scope, $http) {
-
-    		$scope.Postsnippet=function(){
-    		var snap = {'title': $scope.inputData.Title,
-    		            'description': $scope.inputData.Description,
-    		            'code': $scope.inputData.Code,
-    		            'context': $scope.inputData.Context.id,
-    		            'tags': $scope.inputData.Tags,
-    		            'language': $scope.inputData.Language.id,
-    		            'code_type': $scope.inputData.Codetype.id,
-    		        };
-    	    $http({
-				method: 'POST',
-				url: 'http://159.203.162.208:6543/api/snippets',
-				data:JSON.stringify(snap),
-				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-			     })
-			      .success(function(data, status, headers, config) {
-					console.log(data);
-					console.log(status);
+         $scope.Postsnippet=function(){
+        var snap = {'title': $scope.inputData.Title,
+                    'description': $scope.inputData.Description,
+                    'code': $scope.inputData.Code,
+                    'context': $scope.inputData.Context.id,
+                    'tags': $scope.inputData.Tags,
+                    'language': $scope.inputData.Language.id,
+                    'code_type': $scope.inputData.Codetype.id,
+                };
+          $http({
+        method: 'POST',
+        url: 'http://www.koodet.com:6543/api/snippets',
+        data:JSON.stringify(snap),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+           })
+            .success(function(data, status, headers, config) {
+          console.log(data);
+          console.log(status);
 
                     })
-			  }
+        }
+        
+
+
         }]);
 
-	
+
+
 
 app.controller('starCtrl', function($scope,$http) {
     $scope.rating = 0;
@@ -121,7 +121,7 @@ app.controller('starCtrl', function($scope,$http) {
          $http({
 
         method: 'POST',
-        url: 'http://159.203.162.208:6543/api',
+        url: 'http://www.koodet.com:6543/api',
         data:JSON.stringify(obj),
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       })
