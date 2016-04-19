@@ -4,7 +4,7 @@
       <div class="navbar-header col-md-1">
         <img class="img-responsive logoImg" src="images/logo.jpg" alt="logo" />
       </div>
-      <div class="col-md-3" style="padding:0;">
+      <div class="col-md-4">
         <ul class="nav navbar-nav">
           <li><a class="navAnchor" href="#/">Home</a></li>
           <li><a class="navAnchor" href="#/explore">explore</a></li>
@@ -12,7 +12,7 @@
           <li><a class="navAnchor" href="#/request">request</a></li>
         </ul>
       </div>
-      <div class="col-md-5 headSearchCol">
+      <div class="col-md-4 headSearchCol">
         <input type="search" class="form-control headSearchInput" placeholder="Search For Snippet!">
         <span class="headSearchSpan">
           <button class="btn btn-primary headSearchSpanBtn" type="button">
@@ -20,9 +20,7 @@
           </button>
         </span>
       </div>
-
-
-     <div class="col-md-3" ng-hide="currentUserSignedIn">
+      <div class="col-md-3" ng-hide="currentUserSignedIn">
         <ul class="nav navbar-nav" style="float:right;">
           <li>
             <a class="navAnchor" data-toggle="modal" data-target="#signUpModal"  style="cursor:pointer;">
@@ -35,7 +33,7 @@
             </a>
           </li>
         </ul>
-    </div>
+      </div>
     <!--<span ng-show="currentUserSignedIn">{{welcome}}</span>-->
 
 
@@ -49,10 +47,9 @@
       </div>
 end of the dropdown -->
 
-  </div> <!-- end of row -->
-</div>
+    </div> <!-- end of row -->
+  </div>
 </nav>
-
 
 <div id="loginModal" class="modal fade" role="dialog" ng-controller="PostController as postCtrl" >
   <div class="modal-dialog" style="width:100%;">

@@ -1,17 +1,12 @@
 @import "variables";
 @import "mixins";
 
-body, html, .mainRow {
-  height: 100%;
-}
+
 
 .fill2 {
+  position: absoulute;
+  height: 100%;
   background-image: url("../images/2.jpg");
-}
-
-.fill2 {
-  height: 100%;
-  width: 100%;
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -186,10 +181,10 @@ end of dropdown and setting menue style */
 
 /* footer style */
 #footer {
-  position: fixed;
-  width: 100%;
+  position: relative;
   bottom: 0;
   left: 0;
+  right: 0;
   padding: 20px 0 10px 0;
   background-color: #333;
   border-top: solid 2px #000;
@@ -297,7 +292,6 @@ end of dropdown and setting menue style */
 
 .addSnippet1stRow {
   padding-top: 40px;
-	height: 40%;
 }
 
 #addMainHeader {
@@ -307,9 +301,6 @@ end of dropdown and setting menue style */
   margin-bottom: 25px;
 }
 
-.addSnippet2ndRow {
-	padding-top: 80px;
-}
 
 label h5 {
 	font-family: cursive;
@@ -341,7 +332,7 @@ textarea.addTextarea {
 
 .reqSnipContainer {
   background-color: #EEE;
-  padding-bottom: 150px;
+  padding-bottom: 100px;
 }
 
 #reqMainHeader {
@@ -508,6 +499,15 @@ p.multiParagraph {
 	margin-bottom: -1px;
 }
 
+.panel-primary {
+  border-color: #9b59b6;
+}
+
+.panel-primary>.panel-heading {
+  background-color: #9b59b6;
+  border-color: #9b59b6;
+}
+
 /********************************************************************/
 /*** PANEL PRIMARY ***/
 .with-nav-tabs.panel-primary .nav-tabs > li > a,
@@ -521,15 +521,15 @@ p.multiParagraph {
 .with-nav-tabs.panel-primary .nav-tabs > li > a:hover,
 .with-nav-tabs.panel-primary .nav-tabs > li > a:focus {
 	color: #fff;
-	background-color: #3071a9;
+	background-color: #8e44ad;
 	border-color: transparent;
 }
 .with-nav-tabs.panel-primary .nav-tabs > li.active > a,
 .with-nav-tabs.panel-primary .nav-tabs > li.active > a:hover,
 .with-nav-tabs.panel-primary .nav-tabs > li.active > a:focus {
-	color: #428bca;
+	color: #9b59b6;
 	background-color: #fff;
-	border-color: #428bca;
+	border-color: #9b59b6;
 	border-bottom-color: transparent;
 }
 .previewBtn {
@@ -537,6 +537,58 @@ p.multiParagraph {
   margin-bottom: 10px;
 }
 
+a textarea.explore-textarea {
+  resize: none;
+  font-size: 16px;
+}
+
+a.explore-anckor {
+  display: block;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+
+fieldset, label { margin: 0; padding: 0; }
+
+/****** Style Star Rating Widget *****/
+
+fieldset.rating {
+  padding: 0;
+  margin: 0;
+  border: none;
+  float: left;
+}
+
+.rating > input { display: none; }
+.rating > label:before {
+  margin: 5px;
+  font-size: 1.25em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
+}
+
+.rating > .half:before {
+  content: "\f089";
+  position: absolute;
+}
+
+.rating > label {
+  color: #ddd;
+ float: right;
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+
+.rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
 
 /* mahmoud rating */
 
