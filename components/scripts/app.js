@@ -13,8 +13,8 @@ var app = angular.module('myApp', ['ngRoute']);
                 templateUrl : 'pages/Signup.html',
                 controller  : 'signupController'
             })
-            
-            
+
+
             // route for the about page
             .when('/search', {
                 templateUrl : 'pages/search.html',
@@ -24,8 +24,8 @@ var app = angular.module('myApp', ['ngRoute']);
             // route for the about page
             .when('/explore', {
                 templateUrl : 'pages/explore.html',
-                
-                
+
+
 
             })
             .when('/language/:lanid', {
@@ -34,22 +34,24 @@ var app = angular.module('myApp', ['ngRoute']);
 
 
       })
-        
+
             // route for the about page
             .when('/add', {
                 templateUrl : 'pages/add.html',
                 controller  : 'addController'
             })
-            
+
             // route for the contact page
             .when('/request', {
                 templateUrl : 'pages/request.html',
                 controller  : 'requestController'
             })
 
+
              .otherwise({redirectTo: 'pages/Signin.html'
          });
     });
+
 
 /*run.$inject = ['$rootScope', '$location', '$cookieStore', '$http'];
     function run($rootScope, $location, $cookieStore, $http) {
@@ -58,7 +60,7 @@ var app = angular.module('myApp', ['ngRoute']);
         if ($rootScope.globals.currentUser) {
             $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
         }
- 
+
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // redirect to login page if not logged in and trying to access a restricted page
             var restrictedPage = $.inArray($location.path(), ['/Signin', '/register']) === -1;

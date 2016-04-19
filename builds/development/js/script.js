@@ -16,8 +16,8 @@ var app = angular.module('myApp', ['ngRoute']);
                 templateUrl : 'pages/Signup.html',
                 controller  : 'signupController'
             })
-            
-            
+
+
             // route for the about page
             .when('/search', {
                 templateUrl : 'pages/search.html',
@@ -27,8 +27,8 @@ var app = angular.module('myApp', ['ngRoute']);
             // route for the about page
             .when('/explore', {
                 templateUrl : 'pages/explore.html',
-                
-                
+
+
 
             })
             .when('/language/:lanid', {
@@ -37,22 +37,24 @@ var app = angular.module('myApp', ['ngRoute']);
 
 
       })
-        
+
             // route for the about page
             .when('/add', {
                 templateUrl : 'pages/add.html',
                 controller  : 'addController'
             })
-            
+
             // route for the contact page
             .when('/request', {
                 templateUrl : 'pages/request.html',
                 controller  : 'requestController'
             })
 
+
              .otherwise({redirectTo: 'pages/Signin.html'
          });
     });
+
 
 /*run.$inject = ['$rootScope', '$location', '$cookieStore', '$http'];
     function run($rootScope, $location, $cookieStore, $http) {
@@ -61,7 +63,7 @@ var app = angular.module('myApp', ['ngRoute']);
         if ($rootScope.globals.currentUser) {
             $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
         }
- 
+
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // redirect to login page if not logged in and trying to access a restricted page
             var restrictedPage = $.inArray($location.path(), ['/Signin', '/register']) === -1;
@@ -256,24 +258,54 @@ app.directive('starRating', function () {
   });
 
 
-/*app.controller('expController', ['$scope', '$http','$routeParams', function($scope, $http,$routeParams) {
-      var parameters = $routeParams.langId;
-      var config = {
-        params: parameters
-      };
-
-        $http.get("http://41.35.100.129:6543/api/explore/snippets/langId")
+app.controller('requestController', ['$scope', '$http', function($scope, $http) {
+      $http.get("http://www.koodet.com:6543/api/elements")
          .success(function(data) {
           $scope.result=data;
           console.log(data);
       console.log(status);
-      $scope.tit = [];
-      angular.forEach($scope.result.title, function(item) {
-             $scope.tit.push(item);
+      $scope.lan = [];
+      angular.forEach($scope.result.language, function(item) {
+             $scope.lan.push(item);
             })
-        })
-      }]);
-*/
+      $scope.con = [];
+      angular.forEach($scope.result.context, function(item) {
+             $scope.con.push(item);
+            })
+      $scope.typ = [];
+      angular.forEach($scope.result.code_type, function(item) {
+            $scope.typ.push(item);
+            })
+         
+           })
+
+         $scope.Postquestion=function(){
+        var snap = {'title': $scope.inputData.Title,
+                    'description': $scope.inputData.Description,
+                    'context': $scope.inputData.Context.id,
+                    'tags': $scope.inputData.Tags,
+                    'language': $scope.inputData.Language.id,
+                    'code_type': $scope.inputData.Codetype.id,
+                };
+          $http({
+        method: 'POST',
+        url: 'http://www.koodet.com:6543/api/questions',
+        data:JSON.stringify(snap),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+           })
+            .success(function(data, status, headers, config) {
+          console.log(data);
+          console.log(status);
+
+                    })
+        }
+        
+
+
+        }]);
+
+
+
 
 app.controller('expController', ['$scope', '$http','$routeParams', function($scope, $http,$routeParams) {
   var snap = {
