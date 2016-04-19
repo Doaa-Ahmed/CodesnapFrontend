@@ -2,7 +2,6 @@
 @import "mixins";
 
 
-
 .fill2 {
   height: 100%;
   background-image: url("../images/2.jpg");
@@ -146,7 +145,7 @@ end of dropdown and setting menue style */
 
 #searchRow {
   position: absolute;
-  top: 35%;
+  top: 32%;
 }
 
 #searchCol {
@@ -179,31 +178,26 @@ end of dropdown and setting menue style */
 /* end of search bar style */
 
 /* footer style */
-#footer {
-  position: absolute;
+.fixed-footer {
+  position: relative;
   bottom: 0;
-  left: 0;
   right: 0;
-  padding: 20px 0 10px 0;
-  background-color: #333;
-  border-top: solid 2px #000;
-  border-right: solid 2px #000;
-  border-left: solid 2px #000;
-  border-bottom: 0;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
+  left: 0;
+  padding-top: 20px;
+  background-color: #000000;
+  padding-bottom: 10px;
 }
 
-#footer a.faclass {
+.fixed-footer a.faclass {
   text-decoration: none;
   color: white;
 }
 
-#footer a.faclass:hover {
+.fixed-footer a.faclass:hover {
   color: #1376d7;
 }
 
-#footer ul li.navclass {
+.fixed-footer ul li.navclass {
   float: left;
   border-right: 1px solid #333;
   margin: 0 15px 20px 0;
@@ -214,13 +208,13 @@ end of dropdown and setting menue style */
 	color: white;
 }
 
-#footer ul li:last-child {
+.fixed-footer ul li:last-child {
   margin-right: 0;
   padding-right: 0;
   border-right: none;
 }
 
-#footer ul {
+.fixed-footer ul {
   padding: 0;
   margin: 0;
 }
@@ -232,7 +226,7 @@ end of dropdown and setting menue style */
   font-size: 16px;
 }
 
-#footer i.iclass {
+.fixed-footer i.iclass {
 	color: white;
 	font-size:14px;
 	padding: 7px;
@@ -241,22 +235,22 @@ end of dropdown and setting menue style */
 	margin-bottom: 20px;
 }
 
-#footer i.iclass:hover {
+.fixed-footer i.iclass:hover {
 	color: #1da1f2;
 }
 
-#footer a.famailclass {
+.fixed-footer a.famailclass {
 	text-decoration: none;
 	color: #FFFFFF;
 	font-family: monospace;;
 	font-weight: bolder;
 }
 
-#footer a.famailclass:hover {
+.fixed-footer a.famailclass:hover {
 	color: #1da1f2;
 }
 
-#footer a.fisocialclass {
+.fixed-footer a.fisocialclass {
 	text-decoration: none;
 	font-size: 30px;
 	color: white;
@@ -264,19 +258,19 @@ end of dropdown and setting menue style */
 	background-color: transparent;
 }
 
-#footer a.fbooklclass:hover {
+.fixed-footer a.fbooklclass:hover {
 	color: #3b5998;
 }
 
-#footer a.twitterclass:hover {
+.fixed-footer a.twitterclass:hover {
 	color: #1da1f2;
 }
 
-#footer a.ytubeclass:hover {
+.fixed-footer a.ytubeclass:hover {
 	color: #E62117;
 }
 
-#footer a.ghubclass:hover {
+.fixed-footer a.ghubclass:hover {
 	color: #ccc;
 }
 
@@ -331,7 +325,6 @@ textarea.addTextarea {
 
 .reqSnipContainer {
   background-color: #EEE;
-  padding-bottom: 100px;
 }
 
 #reqMainHeader {
