@@ -4,7 +4,6 @@
 
 
 .fill2 {
-  position: absoulute;
   height: 100%;
   background-image: url("../images/2.jpg");
   background-position: center center;
@@ -181,7 +180,7 @@ end of dropdown and setting menue style */
 
 /* footer style */
 #footer {
-  position: relative;
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
