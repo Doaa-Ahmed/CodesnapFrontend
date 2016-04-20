@@ -22,7 +22,7 @@
 #mainNavbar a.navAnchor:hover {
   transition-duration: 0.6s;
   color: #ffffff;
-  background-color: #1abc9c;
+  background-color: #27ae60;
   border-top-left-radius: 2px;
   border-top-right-radius: 2px; }
 
@@ -31,6 +31,10 @@
   background-color: #ffffff;
   border-top-left-radius: 2px;
   border-top-right-radius: 2px; }
+
+#mainNavbar a.navAnchor:active {
+  color: #000;
+  background-color: yellow; }
 
 #mainNavbar .logoImg {
   width: 50px;
@@ -317,7 +321,7 @@ textarea.reqTextarea {
   font-weight: bolder; }
 
 .EXPSubH {
-  color: gray;
+  color: #6599FF;
   font-family: monospace;
   font-style: italic;
   margin-bottom: 0; }
