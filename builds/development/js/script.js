@@ -427,7 +427,7 @@ function configurator($routeProvider) {
         // route for the about page
         .when('/add', {
                 templateUrl : 'pages/add.html',
-                controller  : 'addController'
+                controller  : 'addSnippetController'
         })
         // route for the contact page
         .when('/request', {
