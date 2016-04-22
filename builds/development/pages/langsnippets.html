@@ -1,8 +1,110 @@
-<div ng-controller="expController">
-		 <ul>
-		        <li ng-repeat="item in result">
-		          <a href="#/">{{item.title}}</a>
-		        </li>
-		 </ul>
-
-</div> 
+<div class="container-fluid" style="padding-top:90px;">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4>Context</h4></div>
+        <div class="panel-body">
+          <ul class="list-unstyled">
+            <li><label><input type="checkbox"> Web</label></li>
+            <li><label><input type="checkbox"> Desktop</label></li>
+            <li><label><input type="checkbox"> IOS</label></li>
+            <li><label><input type="checkbox"> Android</label></li>
+            <li><label><input type="checkbox"> ...</label></li>
+          </ul>
+        </div>
+        <div class="panel-footer text-center">
+          <button class="btn btn-info btn-block" style="background-color:#9b59b6; border-color:transparent;">Filter</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="langsnippets/#tab1primary" data-toggle="tab">Snippets</a></li>
+            <li><a href="langsnippets/#tab2primary" data-toggle="tab">Requests</a></li>
+          </ul>
+        </div>
+        <div class="panel-body">
+          <div class="tab-content">
+            <div class="tab-pane fade in active" id="tab1primary">
+              <div class="col-md-2">
+                <fieldset class="rating">
+                    <input type="radio" id="star5" name="rating" value="5" />
+                    <label class = "full" for="star5" title="Awesome - 5 stars"></label>
+                    <input type="radio" id="star4half" name="rating" value="4 and a half" />
+                    <label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+                    <input type="radio" id="star4" name="rating" value="4" />
+                    <label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+                    <input type="radio" id="star3half" name="rating" value="3 and a half" />
+                    <label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+                    <input type="radio" id="star3" name="rating" value="3" />
+                    <label class = "full" for="star3" title="Meh - 3 stars"></label>
+                    <input type="radio" id="star2half" name="rating" value="2 and a half" />
+                    <label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+                    <input type="radio" id="star2" name="rating" value="2" />
+                    <label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+                    <input type="radio" id="star1half" name="rating" value="1 and a half" />
+                    <label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+                    <input type="radio" id="star1" name="rating" value="1" />
+                    <label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+                    <input type="radio" id="starhalf" name="rating" value="half" />
+                    <label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+                </fieldset>
+                <br>
+                <b>100</b>
+                <span> votes</span>
+                <br>
+                <b>300</b>
+                <span> views</span>
+                <br>
+                <b>5</b>
+                <span> answers</span>
+                <br>
+                <span title="Author" class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <span title="Author" style="font-size:14px;font-family:sans-serif"> username</span>
+                <br>
+                <b>posted</b>
+                <span>April 19,2016</span>
+              </div>
+              <div class="col-md-10">
+                <a class="explore-anckor" href="">
+                  <textarea class="form-control explore-textarea" rows="7" readonly>
+                    hena hykon fy el title w el discripttion bta3 el snippet
+                    ...........
+                    .........
+                    ........................................
+                    ..........................................................
+                  </textarea>
+                </a>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="tab2primary">
+              <div class="col-md-2">
+                <b>300</b>
+                <span> views</span>
+                <br>
+                <span title="Author" class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <span title="Author" style="font-size:14px;font-family:sans-serif"> username</span>
+                <br>
+                <b>posted</b>
+                <span>April 19,2016</span>
+              </div>
+              <div class="col-md-10">
+                <a class="explore-anckor" href="">
+                  <textarea class="form-control explore-textarea" rows="7" readonly>
+                    hena hykon fy el title w el discripttion bta3 el request
+                    ...........
+                    .........
+                    ........................................
+                    ..........................................................
+                  </textarea>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
