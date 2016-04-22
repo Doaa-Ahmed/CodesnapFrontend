@@ -1,89 +1,72 @@
-<div class="box">
 
-   <div class="container-fluid addSnippetContainer" ng-init="init()">
-     <div class="row addSnippet1stRow">
-       <div class="col-md-12" style="padding:40px;">
-         <div class="row">
-           <div class="col-md-12">
-             <h2 id="addMainHeader">Add A Snippet?</h2>
-           </div>
-         </div>
-         <div class="row">
-           <div class="col-md-8 form-group">
-             <label for="problemTitle"><h5>Problem Title:</h5></label>
-             <input type="text" class="form-control" id="problemTitle" placeholder="Title" required name="title" ng-model="title"></textarea>
-           </div>
-         </div>
-         <div class="row">
-           <div class="col-md-8 form-group">
-             <label for="problemDescription"><h5>Description:</h5></label>
-             <textarea class="form-control addTextarea" name="descriptionofcode" ng-model="description" placeholder="Add your describtion here..." rows="15" id="problemDescription" required tabindex="101" data-min-length=""></textarea>
-           </div>
-         </div>
-       </div>
-     </div>
+<div style="padding-bottom:100px;" class="container-fluid addSnippetContainer" ng-controller="snippetController">
+  <div class="row addSnippet1stRow">
+    <div class="col-md-12" style="padding-left:40px;">
+      <div class="row">
+        <div class="col-md-12">
+          <h2 id="addMainHeader">Add A Snippet?</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8 form-group">
+          <label for="problemTitle"><h5>Problem Title:</h5></label>
+          <input type="text" class="form-control" id="problemTitle" placeholder="Title" required name="title" ng-model="inputData.Title "></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8 form-group">
+          <label for="problemDescription"><h5>Description:</h5></label>
+          <textarea class="form-control addTextarea" name="descriptionofcode" ng-model="inputData.Description" placeholder="Add your describtion here..." rows="7" id="problemDescription" required tabindex="101" data-min-length=""></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
 
-     <div class="row addSnippet2ndRow">
-       <div class="col-md-12" style="padding:40px;">
-         <div class="row">
-           <div class="col-md-8 form-group">
-             <label for="addSnippet"><h5>Add your snippet here:</h5></label>
-             <textarea name="submitCode" class="form-control addTextarea" ng-model="code" rows="25" id="addSnippet" required tabindex="101" data-min-length=""></textarea>
-           </div>
-         </div>
-         <div class="row" style="padding-top:20px;">
-           <div class="labels">
-             <label for="language"><h5 class="addLabels">Language</h5></label>
-           </div>
-           <div class="col-md-2 form-group">
-             <select class="form-control" id="language" ng-model="inputData.Language" ng-options="x.name for x in languages" required>
-             </select>
-           </div>
-           <div class="labels">
-             <label for="type"><h5 class="addLabels">Type</h5></label>
-           </div>
-           <div class="col-md-2 form-group">
-               <select class="form-control" id="type" ng-model="inputData.Codetype" ng-options="x.name for x in types" required>
-                 <option value="class">Class</option>
-                 <option value="method">2</option>
-                 <option value="3">3</option>
-                 <option value="4">4</option>
-               </select>
-           </div>
-           <div class="col-md-1 col-md-offset-2">
-             <button type="submit" class="btn btn-default">Compile</button>
-           </div>
-         </div>
+  <div class="row addSnippet2ndRow">
+    <div class="col-md-12" style="padding-left:40px;">
+      <div class="row">
+        <div class="col-md-8 form-group">
+          <label for="addSnippet"><h5>Add your snippet here:</h5></label>
+          <textarea name="submitCode" class="form-control addTextarea" ng-model="inputData.Code" rows="25" id="addSnippet" required tabindex="101" data-min-length=""></textarea>
+        </div>
+      </div>
+      <div class="row" style="padding-top:20px;">
+        <div class="labels">
+          <label for="language"><h5 class="addLabels">Language</h5></label>
+        </div>
+        <div class="col-md-2 form-group">
+          <select class="form-control" id="language" ng-model="inputData.Language" ng-options="x.name for x in lan" required>
+          </select>
+        </div>
+        <div class="labels">
+          <label for="type"><h5 class="addLabels">Type</h5></label>
+        </div>
+        <div class="col-md-2 form-group">
+            <select class="form-control" id="type" ng-model="inputData.Codetype" ng-options="x.name for x in typ" required>
+            </select>
+        </div>
+      </div>
 
-         <div class="row">
-           <div class="labels">
-             <label for="context"><h5 class="addLabels">Context</h5></label>
-           </div>
-           <div class="col-md-2 form-group">
-             <select class="form-control" id="context" ng-model="inputData.Context" ng-options="x.name for x in con" required>
-               <option value="1">1</option>
-               <option value="2">2</option>
-               <option value="3">3</option>
-               <option value="4">4</option>
-             </select>
-           </div>
-           <div class="labels">
-             <label for="tags"><h5 class="addLabels">Tags</h5></label>
-           </div>
-           <div class="col-md-4 form-group">
-             <input type="text" class="form-control" id="tags" ng-model="inputData.Tags">
-           </div>
-           <div class="col-md-1">
-             <button type="submit" class="btn btn-default">View</button>
-           </div>
-         </div>
-         <div class="row" style="padding-bottom:20px;">
-           <div class="col-md-2">
-             <button id="addSnippetBtn" type="submit" class="btn btn-warning" ng-click="Postsnippet()">Submit</button>
-           </div>
-         </div>
-
-       </div>
-     </div>
-   </div>
+      <div class="row">
+        <div class="labels">
+          <label for="context"><h5 class="addLabels">Context</h5></label>
+        </div>
+        <div class="col-md-2 form-group">
+          <select class="form-control" id="context" ng-model="inputData.Context" ng-options="x.name for x in con" required>
+          </select>
+        </div>
+        <div class="labels">
+          <label for="tags"><h5 class="addLabels">Tags</h5></label>
+        </div>
+        <div class="col-md-4 form-group">
+          <input type="text" class="form-control" id="tags" ng-model="inputData.Tags">
+        </div>
+      </div>
+      <div class="row" style="padding-bottom:20px;">
+        <div class="col-md-2">
+          <button id="addSnippetBtn" type="submit" class="btn btn-warning" ng-click="Postsnippet()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

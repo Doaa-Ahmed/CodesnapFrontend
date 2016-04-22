@@ -12,7 +12,6 @@ function listSnippetsController($scope, $http) {
 		$http.get('http://www.koodet.com:6543/api/explore/' + langId + '/snippets')
 		.success(function(data) {
 			$scope.snippets = data;
-			console.log($scope.snippets);
 
 		})	
 	}

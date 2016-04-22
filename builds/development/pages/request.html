@@ -1,6 +1,6 @@
-<div class="container-fluid reqSnipContainer">
+<div class="container-fluid reqSnipContainer" ng-controller="requestController">
   <div class="row reqSnippetRow">
-    <div class="col-md-12" style="padding:40px;">
+    <div class="col-md-12" style="padding-left:40px;">
       <div class="row">
         <div class="col-md-8">
           <h2 id="reqMainHeader">Request A Snippet?</h2>
@@ -9,13 +9,13 @@
       <div class="row">
         <div class="col-md-8 form-group">
           <label for="probTitle"><h5>Problem Title:</h5></label>
-          <input type="text" class="form-control" id="probTitle" placeholder="Title" required></textarea>
+          <input type="text" class="form-control" id="probTitle" placeholder="Title" required ng-model="inputData.Title"></textarea>
         </div>
       </div>
       <div class="row">
         <div class="col-md-8 form-group">
           <label for="probDescription"><h5>Description:</h5></label>
-          <textarea class="form-control reqTextarea" placeholder="Add your describtion here..." rows="15" id="probDescription" required tabindex="101" data-min-length=""></textarea>
+          <textarea class="form-control reqTextarea" placeholder="Add your describtion here..." rows="15" id="probDescription" required tabindex="101" data-min-length="" ng-model="inputData.Description"></textarea>
         </div>
       </div>
       <div class="row" style="padding-top:20px;">
@@ -23,22 +23,15 @@
           <label for="lang"><h5 class="addLabels">Language</h5></label>
         </div>
         <div class="col-md-2 form-group">
-          <select class="form-control" id="lang" required>
-            <option>C++</option>
-            <option>C#</option>
-            <option>Java</option>
-            <option>PHP</option>
+          <select class="form-control" id="language" ng-model="inputData.Language" ng-options="x.name for x in lan" >
           </select>
         </div>
         <div class="labels">
           <label for="snipType"><h5 class="addLabels">Type</h5></label>
         </div>
         <div class="col-md-2 form-group">
-            <select class="form-control" id="snipType" required>
-              <option value="class">Class</option>
-              <option value="method">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
+            <select class="form-control" id="type" ng-model="inputData.Codetype" ng-options="x.name for x in typ" required>
+
             </select>
         </div>
       </div>
@@ -47,24 +40,20 @@
           <label for="reqContext"><h5 class="addLabels">Context</h5></label>
         </div>
         <div class="col-md-2 form-group">
-          <select class="form-control" id="reqContext" required>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
+          <select class="form-control" id="context" ng-model="inputData.Context" ng-options="x.name for x in con" required>
+
           </select>
         </div>
         <div class="labels">
           <label for="reqTags"><h5 class="addLabels">Tags</h5></label>
         </div>
         <div class="col-md-4 form-group">
-          <input type="text" class="form-control" id="reqTags" ng-model="inputData.Tags">
-        </div>
+<input type="text" class="form-control" id="tags" ng-model="inputData.Tags">
+  </div>
       </div>
       <div class="row" style="padding:30px 0 30px;">
         <div class="col-md-2">
-          <button id="addSnippetBtn" type="submit" class="btn btn-warning">Submit</button>
-        </div>
+<button id="addSnippetBtn" type="submit" class="btn btn-warning" ng-click="Postquestion()">Submit</button>        </div>
       </div>
     </div>
   </div>

@@ -4,7 +4,7 @@ angular
 
 function starRating() {
 
-	return {
+    return {
       restrict: 'A',
       template: '<ul class="rating">' +
                   '<li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)">' +
@@ -40,5 +40,5 @@ function starRating() {
           }
         });
       }
-    }
+    }	
 }

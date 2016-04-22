@@ -1,10 +1,10 @@
-<nav id="mainNavbar" class="navbar navbar-inverse navbar-fixed-top">
+<nav id="mainNavbar" class="navbar navbar-fixed-top">
   <div class="container-fluid">
     <div class="row">
-      <div class="navbar-header col-md-1">
+      <div class="col-md-1">
         <img class="img-responsive logoImg" src="images/logo.jpg" alt="logo" />
       </div>
-      <div class="col-md-3" style="padding:0;">
+      <div class="col-md-4">
         <ul class="nav navbar-nav">
           <li><a class="navAnchor" href="#/">Home</a></li>
           <li><a class="navAnchor" href="#/explore">explore</a></li>
@@ -12,15 +12,15 @@
           <li><a class="navAnchor" href="#/request">request</a></li>
         </ul>
       </div>
-      <div class="col-md-5 headSearchCol">
+      <div class="col-md-4 headSearchCol">
         <input type="search" class="form-control headSearchInput" placeholder="Search For Snippet!">
         <span class="headSearchSpan">
-          <button class="btn btn-primary headSearchSpanBtn" type="button">
-            <span class="glyphicon glyphicon-search"></span>
+          <button class="btn headSearchSpanBtn" type="button">
+            <span style="color:#fff;" class="glyphicon glyphicon-search"></span>
           </button>
         </span>
       </div>
-     <div class="col-md-3" ng-hide="currentUserSignedIn">
+      <div class="col-md-3" ng-hide="currentUserSignedIn">
         <ul class="nav navbar-nav" style="float:right;">
           <li>
             <a class="navAnchor" data-toggle="modal" data-target="#signUpModal"  style="cursor:pointer;">
@@ -33,27 +33,23 @@
             </a>
           </li>
         </ul>
-    </div>                        
+      </div>
     <!--<span ng-show="currentUserSignedIn">{{welcome}}</span>-->
 
 
-<!--    <div class="col-md-3">
-      <div class="dropdown">
-        <a style="color:#6599FF;"class="dropdown-toggle caretSpan" data-toggle="dropdown">
-          <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-right">
-          <li><a href="#">SETTING</a></li>
-          <li><a href="#">LOGOUT</a></li>
-        </ul>
+<!-- start of dropdown setting and logout menue
+      <div class="css-dropdown col-md-2 col-md-offset-1">
+        <button class="dropbtn"><span class="user-name">mostafa <span class="caret"></span></span></button>
+        <div class="dropdown-content">
+          <a href="#"><span class="dropdown-options">Setting</span></a>
+          <a href="#"><span class="dropdown-options">Logout</span></a>
+        </div>
       </div>
-      <span class="loggedinUser">MFAIbrahem</span>
-    </div>
--->
+end of the dropdown -->
 
-  </div> <!-- end of row -->
+    </div> <!-- end of row -->
+  </div>
 </nav>
-
 
 <div id="loginModal" class="modal fade" role="dialog" ng-controller="PostController as postCtrl" >
   <div class="modal-dialog" style="width:100%;">
@@ -123,14 +119,6 @@
                   <div class="form-group">
                     <label for="inputPassword">Password</label>
                     <input type="password" class="form-control" id="Password" placeholder="Password" required ng-model="signupData.password">
-                  </div>
-                  <div class="form-group">
-                    <label for="avatar">Avatar</label>
-                    <input type="text" class="form-control" id="avatar" placeholder="Avatar" required ng-model="signupData.avatar">
-                  </div>
-                  <div class="form-group">
-                    <label for="country">Country </label>
-                    <input type="text" class="form-control" id="avatar" placeholder="Country" required ng-model="signupData.country">
                   </div>
                   <button type="submit" class="btn btn-primary">Signup</button>
                 </form>
