@@ -9,59 +9,46 @@ angular
 
 
  //-------------------------------
+/* controller registeration */
 angular
 	.module('myApp')
 	.controller('addSnippetController', addSnippetController);
 
+/* dependency injection */
+addSnippetController.$inject = ['$scope', '$http', '$location', 'optionsService', 'snippetService'];
 
-function addSnippetController($scope, $http) {
+/* controller implementation */
+function addSnippetController($scope, $http, $location, optionsService, snippetService) {
+    
+    $scope.snippet = {};
+    $scope.options = {};
+    $scope.postSnippet = postSnippet;
+    $scope.populateOptions = populateOptions;
+    $scope.prepareSnippet = prepareSnippet;
 
-	$http.get("http://www.koodet.com:6543/api/elements")
-        .success(function(data) {
-         	$scope.result=data;
-         	console.log(data);
-			console.log(status);
-			$scope.lan = [];
-			angular.forEach($scope.result.language, function(item) {
-                $scope.lan.push(item);
+    function populateOptions() {
+        optionsService
+            .getOptions()
+            .success(function(data) {
+                $scope.options = data;    
             });
+    }
 
-		    $scope.con = [];
-			angular.forEach($scope.result.context, function(item) {
-                $scope.con.push(item);
-            });
+    function prepareSnippet() {
+        $scope.snippet.language = $scope.snippet.language.id;
+        $scope.snippet.context = $scope.snippet.context.id;
+        $scope.snippet.code_type = $scope.snippet.code_type.id;   
 
-			$scope.typ = [];
-			angular.forEach($scope.result.code_type, function(item) {
-                $scope.typ.push(item);
-            });
-         
-        });
+    }
 
-        $scope.Postsnippet=function(){
-            var snap = {
-                'title': $scope.inputData.Title,
-                'description': $scope.inputData.Description,
-                'code': $scope.inputData.Code,
-                'context': $scope.inputData.Context.id,
-                'tags': $scope.inputData.Tags,
-                'language': $scope.inputData.Language.id,
-                'code_type': $scope.inputData.Codetype.id,
-            };
-
-            $http({
-                method: 'POST',
-                url: 'http://www.koodet.com:6543/api/snippets',
-                data:JSON.stringify(snap),
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            })
-
-            .success(function(data, status, headers, config) {
+    function postSnippet() {
+        prepareSnippet();
+        snippetService
+            .createSnippet($scope.snippet)
+            .success(function(data) {
                 console.log(data);
-                console.log(status);
-
             })
-        }   
+    }
 }
 
  //-------------------------------
@@ -75,52 +62,55 @@ function addSnippetController($scope, $http) {
  //-------------------------------
 angular
 	.module('myApp')
-	.controller('expController', expController);
+	.controller('listLangsController', listLangsController);
 
-function expController($scope, $http, $routeParams) {
+function listLangsController($scope, $http, $routeParams) {
+    $scope.languages = [];
+	$scope.fetchLangs = fetchLangs;
 
-	var snap = {
-        'language':$routeParams.lanid
-    };
-
-    $http({
-        method: 'POST',
-        url: 'http://www.koodet.com:6543/api/explore/snippets',
-        data:JSON.stringify(snap),
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    })
-    .success(function(data, status, headers, config) {
-        console.log(data);
-        console.log(status);
-        $scope.result=data;
-
-        $scope.tit = [];
-        angular.forEach($scope.result, function(item) {
-         	$scope.tit.push(item);
-            console.log(item.title);
-        })
-    })
+    function fetchLangs() {
+        
+    }
 }
 
  //-------------------------------
+/* controller registeration */
 angular
 	.module('myApp')
 	.controller('listSnippetsController', listSnippetsController);
 
-function listSnippetsController($scope, $http) {
+/* dependency injection */
+listSnippetsController.$inject = ['$scope', '$http', '$routeParams', 'snippetService', 'questionService'];
+
+/* controller implementation */
+function listSnippetsController($scope, $http, $routeParams, snippetService, questionService) {
 
 	$scope.fetchSnippets = fetchSnippets;
+	$scope.fetchQuestions = fetchQuestions;
 	$scope.snippets = [];
+	$scope.questions = [];
 	
-	function fetchSnippets(langId) {
-		$http.get('http://www.koodet.com:6543/api/explore/' + langId + '/snippets')
-		.success(function(data) {
-			$scope.snippets = data;
+	function fetchSnippets() {
+		snippetService
+			.getLangSnippets($routeParams.lanid)
+			.success(function(data){
+				$scope.snippets = data;
+			});
+	}
 
-		})	
+	function fetchQuestions() {
+		questionService
+			.getLangQuestions($routeParams.lanid)
+			.success(function(data) {
+				$scope.questions = data;
+				console.log($scope.questions)
+			})
 	}
 	
 }
+
+
+
 
  //-------------------------------
 angular
@@ -350,6 +340,43 @@ function starCtrl($scope, $http) {
  //-------------------------------
 angular
 	.module('myApp')
+	.controller('viewQuestionController', viewQuestionController);
+
+function viewQuestionController($scope, $http, $routeParams, questionService) {
+	$scope.fetchQuestion = fetchQuestion;
+	$scope.question = {};
+
+	function fetchQuestion() {
+		questionService
+			.getQuestion($routeParams.qid)
+			.success(function(data) {
+				$scope.question = data;
+			})
+	}
+
+}
+
+ //-------------------------------
+angular
+	.module('myApp')
+	.controller('viewSnippetController', viewSnippetController);
+
+function viewSnippetController($scope, $http, $routeParams, snippetService) {
+	$scope.fetchSnippet = fetchSnippet;
+	$scope.snippet = {};
+
+	function fetchSnippet() {
+		snippetService
+			.getSnippet($routeParams.sid)
+			.success(function(data) {
+				$scope.snippet = data;
+			});
+	}
+}
+
+ //-------------------------------
+angular
+	.module('myApp')
 	.directive('starRating', starRating);
 
 function starRating() {
@@ -417,15 +444,24 @@ function configurator($routeProvider) {
         })
         // route for the about page
         .when('/explore', {
-        		templateUrl : 'pages/explore.html',
+        		templateUrl : 'pages/list.langs.html',
+                controller : 'listLangsController'
         })
         .when('/language/:lanid', {
                 templateUrl: 'pages/langsnippets.html',
                 controller: 'listSnippetsController'
         })
+        .when('/snippet/:sid', {
+                templateUrl: 'pages/view.snippet.html',
+                controller: 'viewSnippetController'
+        })
+        .when('/question/:qid', {
+                templateUrl: 'pages/view.question.html',
+                controller: 'viewQuestionController'
+        })
         // route for the about page
         .when('/add', {
-                templateUrl : 'pages/add.html',
+                templateUrl : 'pages/add.snippet.html',
                 controller  : 'addSnippetController'
         })
         // route for the contact page
@@ -439,45 +475,138 @@ function configurator($routeProvider) {
 }	
 
  //-------------------------------
+/* service registration */
 angular
 	.module('myApp')
-	.factory('option', option);
+	.factory('langService', langService);
 
-option.$inject = ['$http'];
+/* dependency injection */
+langService.$inject = ['$http'];
 
-function option() {
-	return {
-		getOptions: getOptions
+/* service implementation */
+function langService($http) {
+	var service = {
+		getLangs : getLangs,
+		getLang : getLang
 	};
 
+	return service;
+
+	function getLangs() {
+		//get all languages
+	}
+
+	function getLang(langId) {
+		//get a specific language
+	}
+}
+
+ //-------------------------------
+/* service registration */
+angular
+	.module('myApp')
+	.factory('optionsService', optionsService);
+
+/* dependency injection */
+optionsService.$inject = ['$http'];
+
+/* service implementation */
+function optionsService($http) {
+	var service = {
+		getOptions : getOptions
+	};
+
+	return service;
+
 	function getOptions() {
-		return $http.get('http://www.koodet.com:6543/api/options')
-			.then(getOptionsComplete)
-			.catch(getoptionsFailed)
+		return $http
+		.get('http://www.koodet.com:6543/api/elements');
+	}
 
-		function getOptionsComplete(response) {
-			return response.data;
-		}
+}
 
-		function getOptionsFailed(error) {
-			//logger.error("Failed"+ error.data);
+ //-------------------------------
+angular
+	.module('myApp')
+	.factory('questionService', questionService);
 
-		}
+function questionService($http) {
+	var service = {
+		getLangQuestions : getLangQuestions,	
+		getQuestion : getQuestion,
+		createQuestion : createQuestion	
+	};
 
+	return service;
+	
+	function getLangQuestions(langId) {
+		return $http
+		.get('http://www.koodet.com:6543/api/explore/' + langId + '/questions');
+	}
+
+	function getQuestion(qid) {
+		return $http
+		.get('http://www.koodet.com:6543/api/questions/' + qid);
+	}
+
+	function createQuestion(question) {
+		return $http
+		.post('http://www.koodet.com:6543/api/questions/', question)
 	}
 }
 
  //-------------------------------
 angular
 	.module('myApp')
-	.factory('Snippet', Snippet);
+	.factory('snippetService', snippetService);
 
-function Snippet($http) {
-	var Snippet = {};
+function snippetService($http) {
+	var service = {
+		getLangSnippets : getLangSnippets,
+		getSnippet : getSnippet,
+		createSnippet : createSnippet
+	};
 
-	Snippet.getLangSnippets = function(langId) {
-		return $http.get('http://www.koodet.com:6543/api/explore/' + langId + '/snippets').success(function(response) {
-			return response.data;
-		})
+	return service;
+	
+	function getLangSnippets(langId) {
+		return $http
+		.get('http://www.koodet.com:6543/api/explore/' + langId + '/snippets');
+			
 	}
+
+	function getSnippet(sid) {
+		return $http
+		.get('http://koodet.com:6543/api/snippets/' + sid);
+	}
+
+	function createSnippet(snippet) {
+		return $http
+		.post('http://www.koodet.com:6543/api/snippets/', snippet);
+	}	
+}
+
+ //-------------------------------
+/* service registration */
+angular
+	.module('myApp')
+	.factory('userService', userService);
+
+/* dependency injection */
+userService.$inject = ['$http'];
+
+/* service implementation */
+function userService($http) {
+	var service = {
+		getUser : geUser,
+		createUser : createUser
+	};
+
+	return service;
+
+	function getUser(uid) {
+		return $http
+		.get('http://www.koodet.com:6543/api/elements');
+	}
+
 }

@@ -21,15 +21,24 @@ function configurator($routeProvider) {
         })
         // route for the about page
         .when('/explore', {
-        		templateUrl : 'pages/explore.html',
+        		templateUrl : 'pages/list.langs.html',
+                controller : 'listLangsController'
         })
         .when('/language/:lanid', {
                 templateUrl: 'pages/langsnippets.html',
                 controller: 'listSnippetsController'
         })
+        .when('/snippet/:sid', {
+                templateUrl: 'pages/view.snippet.html',
+                controller: 'viewSnippetController'
+        })
+        .when('/question/:qid', {
+                templateUrl: 'pages/view.question.html',
+                controller: 'viewQuestionController'
+        })
         // route for the about page
         .when('/add', {
-                templateUrl : 'pages/add.html',
+                templateUrl : 'pages/add.snippet.html',
                 controller  : 'addSnippetController'
         })
         // route for the contact page

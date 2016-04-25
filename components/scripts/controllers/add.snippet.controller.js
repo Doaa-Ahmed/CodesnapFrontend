@@ -1,54 +1,41 @@
+/* controller registeration */
 angular
 	.module('myApp')
 	.controller('addSnippetController', addSnippetController);
 
+/* dependency injection */
+addSnippetController.$inject = ['$scope', '$http', '$location', 'optionsService', 'snippetService'];
 
-function addSnippetController($scope, $http) {
+/* controller implementation */
+function addSnippetController($scope, $http, $location, optionsService, snippetService) {
+    
+    $scope.snippet = {};
+    $scope.options = {};
+    $scope.postSnippet = postSnippet;
+    $scope.populateOptions = populateOptions;
+    $scope.prepareSnippet = prepareSnippet;
 
-	$http.get("http://www.koodet.com:6543/api/elements")
-        .success(function(data) {
-         	$scope.result=data;
-         	console.log(data);
-			console.log(status);
-			$scope.lan = [];
-			angular.forEach($scope.result.language, function(item) {
-                $scope.lan.push(item);
+    function populateOptions() {
+        optionsService
+            .getOptions()
+            .success(function(data) {
+                $scope.options = data;    
             });
+    }
 
-		    $scope.con = [];
-			angular.forEach($scope.result.context, function(item) {
-                $scope.con.push(item);
-            });
+    function prepareSnippet() {
+        $scope.snippet.language = $scope.snippet.language.id;
+        $scope.snippet.context = $scope.snippet.context.id;
+        $scope.snippet.code_type = $scope.snippet.code_type.id;   
 
-			$scope.typ = [];
-			angular.forEach($scope.result.code_type, function(item) {
-                $scope.typ.push(item);
-            });
-         
-        });
+    }
 
-        $scope.Postsnippet=function(){
-            var snap = {
-                'title': $scope.inputData.Title,
-                'description': $scope.inputData.Description,
-                'code': $scope.inputData.Code,
-                'context': $scope.inputData.Context.id,
-                'tags': $scope.inputData.Tags,
-                'language': $scope.inputData.Language.id,
-                'code_type': $scope.inputData.Codetype.id,
-            };
-
-            $http({
-                method: 'POST',
-                url: 'http://www.koodet.com:6543/api/snippets',
-                data:JSON.stringify(snap),
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            })
-
-            .success(function(data, status, headers, config) {
+    function postSnippet() {
+        prepareSnippet();
+        snippetService
+            .createSnippet($scope.snippet)
+            .success(function(data) {
                 console.log(data);
-                console.log(status);
-
             })
-        }   
+    }
 }

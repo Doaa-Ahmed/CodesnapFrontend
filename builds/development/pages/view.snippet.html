@@ -1,10 +1,11 @@
-<div class="container-fluid" style="padding-top:90px;">
+<div class="container-fluid" style="padding-top:90px;" ng-init="fetchSnippet()">
   <div class="row">
     <div class="col-md-12">
       <div class="row">
         <div class="col-md-2">
           <div class="row">
             <div class="col-md-12">
+
               <fieldset class="rating">
                   <input type="radio" id="star5" name="rating" value="5" />
                   <label class = "full" for="star5" title="Awesome - 5 stars"></label>
@@ -27,9 +28,11 @@
                   <input type="radio" id="starhalf" name="rating" value="half" />
                   <label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
               </fieldset>
+
             </div>
           </div>
           <div class="row">
+
             <div class="col-md-12">
               <b>100</b>
               <span> votes</span>
@@ -38,21 +41,26 @@
               <span> views</span>
               <br>
               <span title="Author" class="glyphicon glyphicon-user" aria-hidden="true"></span>
-              <span title="Author" style="font-size:14px;font-family:sans-serif"> username</span>
+              <span title="Author" style="font-size:14px;font-family:sans-serif"> {{snippet.username}}</span>
               <br>
               <b>posted</b>
               <span>April 19,2016</span>
             </div>
+
           </div>
         </div>
         <div class="col-md-6">
           <h5>Problem Title:</h5>
-          <textarea class="form-control" rows="1" readonly style="resize:none;"></textarea>
+          <textarea class="form-control" rows="1" readonly style="resize:none;">
+            {{snippet.title}}
+          </textarea>
         </div>
       </div>
       <div class="row" style="margin-top:10px;">
         <div class="col-md-8 form-group">
-          <textarea class="form-control" rows="7" readonly style="resize:none;"></textarea>
+          <textarea class="form-control" rows="7" readonly style="resize:none;">
+            {{snippet.description}}
+          </textarea>
         </div>
       </div>
     </div>
@@ -62,7 +70,9 @@
       <div class="row">
         <div class="col-md-8 form-group">
           <h4>Snippet:</h4>
-          <textarea class="form-control" rows="25" readonly style="resize:none;"></textarea>
+          <textarea class="form-control" rows="25" readonly style="resize:none;">
+            {{snippet.code}}
+          </textarea>
         </div>
       </div>
       <div class="row" style="padding-top:20px;">
@@ -70,13 +80,17 @@
           <h5 class="addLabels">Language</h5>
         </div>
         <div class="col-md-2 form-group">
-          <textarea class="form-control" rows="1" readonly style="resize:none;"></textarea>
+          <textarea class="form-control" rows="1" readonly style="resize:none;">
+            {{snippet.language}}
+          </textarea>
         </div>
         <div class="labels">
           <h5 class="addLabels">Type</h5>
         </div>
         <div class="col-md-2 form-group">
-            <textarea class="form-control" rows="1" readonly style="resize:none;"></textarea>
+            <textarea class="form-control" rows="1" readonly style="resize:none;">
+              {{snippet.code_type}}
+            </textarea>
         </div>
       </div>
 
@@ -85,13 +99,18 @@
           <h5 class="addLabels">Context</h5>
         </div>
         <div class="col-md-2 form-group">
-          <textarea class="form-control" rows="1" readonly style="resize:none;"></textarea>
+          <textarea class="form-control" rows="1" readonly style="resize:none;">
+            {{snippet.code_type}}
+          </textarea>
         </div>
         <div class="labels">
           <h5 class="addLabels">Tags</h5>
         </div>
         <div class="col-md-4 form-group">
-          <textarea class="form-control" rows="1" readonly style="resize:none;"></textarea>
+          <textarea class="form-control" rows="1" readonly style="resize:none;">
+
+        
+          </textarea>
         </div>
       </div>
     </div>
