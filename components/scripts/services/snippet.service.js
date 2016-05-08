@@ -26,4 +26,8 @@ function snippetService($http) {
 		return $http
 		.post('http://www.koodet.com:6543/api/snippets/', snippet);
 	}	
+
+	function compileSnippet(code) {
+		return $http.post('http://www.koodet.com/6543/api/compile', code)
+	}
 }
