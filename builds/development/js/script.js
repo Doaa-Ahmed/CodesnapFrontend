@@ -4,7 +4,7 @@
 (function() {
 	'use strict';
 
-	var app = angular.module('myApp',['ngRoute', 'ui.ace']);
+	var app = angular.module('myApp',['ngRoute']);
 
 })();
 
