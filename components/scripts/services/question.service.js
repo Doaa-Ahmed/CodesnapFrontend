@@ -1,8 +1,14 @@
+/* service registration */
 angular
 	.module('myApp')
 	.factory('questionService', questionService);
 
+/* dependency injection */
+questionService.$inject = ['$http']; 	
+
+/* service implementation */
 function questionService($http) {
+	
 	var service = {
 		getLangQuestions : getLangQuestions,	
 		getQuestion : getQuestion,

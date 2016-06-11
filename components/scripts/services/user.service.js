@@ -8,8 +8,9 @@ userService.$inject = ['$http'];
 
 /* service implementation */
 function userService($http) {
+
 	var service = {
-		getUser : geUser,
+		getUser : getUser,
 		createUser : createUser
 	};
 
