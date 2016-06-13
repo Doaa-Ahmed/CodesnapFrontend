@@ -1,10 +1,9 @@
 
 
  //-------------------------------
-var app = 
-
-angular
-    .module('myApp',['ngRoute']);
+var app = angular.module('myApp',[
+	'ngRoute'
+  ]);
 
 
 
@@ -50,14 +49,6 @@ function addSnippetController($scope, $http, $location, optionsService, snippetS
             })
     }
 }
-
- //-------------------------------
-
-
-
-
-
-
 
  //-------------------------------
 angular
@@ -117,8 +108,9 @@ angular
   .module('myApp')
   .controller('PostController', PostController);
 
+
 function PostController($scope, $http, $rootScope) {
-    this.postForm = function() {
+    this.postForm = function() { 
       
     var obj = {
             'username': $scope.inputData.username,
@@ -130,10 +122,14 @@ function PostController($scope, $http, $rootScope) {
 
       method: 'POST',
       url: 'http://www.koodet.com:6543/api/login',
+      //withCredentials: true,  
+
       data:JSON.stringify(obj),
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     })
-    .success(function(data, status, headers, config) {
+               .success(function(data, status, headers, config) {
+      //globalService.setUser(newUser);
+
       console.log(data);
       console.log(status);
             $rootScope.currentUserSignedIn = true;
@@ -144,7 +140,6 @@ function PostController($scope, $http, $rootScope) {
       console.log(data);
       console.log(status);
         });
-
 
     this.signupForm = function() {
         var upobject = {
@@ -345,6 +340,7 @@ angular
 function viewQuestionController($scope, $http, $routeParams, questionService) {
 	$scope.fetchQuestion = fetchQuestion;
 	$scope.question = {};
+	
 
 	function fetchQuestion() {
 		questionService
@@ -423,10 +419,10 @@ function starRating() {
  //-------------------------------
 angular
 	.module('myApp')
-	.config(configurator);
+	.config(configurator)
+function configurator($routeProvider,$httpProvider) {
 
-function configurator($routeProvider) {
-
+     //$httpProvider.defaults.withCredentials = true;
 	$routeProvider
     // route for the home page
         .when('/', {
@@ -472,7 +468,43 @@ function configurator($routeProvider) {
         .otherwise({
         		redirectTo: 'pages/Signin.html'
         });
-}	
+}
+
+
+ //-------------------------------
+angular
+    .module('myApp')
+    .factory('globalService', globalService);
+   globalService.$inject = ['$http','$cookieStore', '$location', '$filter'];
+
+    function globalService($http, $cookieStore, $location, $filter) {
+    var service = {
+        isAuth : isAuth,    
+        setUser : setUser,
+        getUser : getUser 
+    };
+
+    return service;
+   globalService.user = null;
+
+    function isAuth () {
+        if (globalService.user == null) {
+            globalService.user = $cookieStore.get('user');
+        }
+        return (globalService.user != null);
+    }
+    
+    function setUser(newUser) {
+        globalService.user = newUser;
+        if (globalService.user == null) $cookieStore.remove('user');
+        else $cookieStore.put('user', globalService.user);
+    }
+    function getUser() {
+                return globalService.user;
+
+    }
+
+}
 
  //-------------------------------
 /* service registration */

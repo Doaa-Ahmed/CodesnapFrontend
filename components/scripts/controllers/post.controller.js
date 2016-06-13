@@ -2,8 +2,9 @@ angular
   .module('myApp')
   .controller('PostController', PostController);
 
+
 function PostController($scope, $http, $rootScope) {
-    this.postForm = function() {
+    this.postForm = function() { 
       
     var obj = {
             'username': $scope.inputData.username,
@@ -15,10 +16,14 @@ function PostController($scope, $http, $rootScope) {
 
       method: 'POST',
       url: 'http://www.koodet.com:6543/api/login',
+      //withCredentials: true,  
+
       data:JSON.stringify(obj),
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     })
-    .success(function(data, status, headers, config) {
+               .success(function(data, status, headers, config) {
+      //globalService.setUser(newUser);
+
       console.log(data);
       console.log(status);
             $rootScope.currentUserSignedIn = true;
@@ -29,7 +34,6 @@ function PostController($scope, $http, $rootScope) {
       console.log(data);
       console.log(status);
         });
-
 
     this.signupForm = function() {
         var upobject = {

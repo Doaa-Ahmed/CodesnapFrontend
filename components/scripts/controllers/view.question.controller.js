@@ -5,6 +5,7 @@ angular
 function viewQuestionController($scope, $http, $routeParams, questionService) {
 	$scope.fetchQuestion = fetchQuestion;
 	$scope.question = {};
+	
 
 	function fetchQuestion() {
 		questionService

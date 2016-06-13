@@ -1,9 +1,9 @@
 angular
 	.module('myApp')
-	.config(configurator);
+	.config(configurator)
+function configurator($routeProvider,$httpProvider) {
 
-function configurator($routeProvider) {
-
+     //$httpProvider.defaults.withCredentials = true;
 	$routeProvider
     // route for the home page
         .when('/', {
@@ -49,4 +49,4 @@ function configurator($routeProvider) {
         .otherwise({
         		redirectTo: 'pages/Signin.html'
         });
-}	
+}
