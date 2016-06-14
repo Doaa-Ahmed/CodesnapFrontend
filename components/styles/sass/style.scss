@@ -1,6 +1,9 @@
 @import "variables";
 @import "mixins";
 
+body {
+	background-color: #34495e;
+}
 
 .fill2 {
   height: 100%;
@@ -50,7 +53,6 @@
 #mainNavbar .logoImg {
   width: 50px;
   height: 50px;
-  border-radius: 50%;
   float: right;
 }
 
@@ -307,7 +309,6 @@ end of dropdown and setting menue style */
 
 
 .addSnippetContainer {
-  background-color: #EEE;
   padding-bottom: 40px;
 }
 
@@ -316,9 +317,10 @@ end of dropdown and setting menue style */
 }
 
 #addMainHeader {
-  color: #3498db;
+  color: #fff;
   font-weight: bolder;
   font-family: cursive;
+  text-shadow: 2px 2px 2px #000;
 }
 
 
@@ -350,14 +352,11 @@ textarea.addTextarea {
 
 /* request snippet style */
 
-.reqSnipContainer {
-  background-color: #EEE;
-}
-
 #reqMainHeader {
-  color: #3498db;
+  color: #fff;
   font-weight: bolder;
   font-family: cursive;
+  text-shadow: 2px 2px 2px #000;
 }
 
 .reqSnippetRow {
@@ -378,20 +377,21 @@ textarea.reqTextarea {
 .langContainer {
   padding-top: 50px;
   padding-bottom: 20px;
-  background-color: #EEE;
 }
 
 .EXPMainH {
-  color: #9b59b6;
+  color: #fff;
   font-family: cursive;
   font-weight: bolder;
+	text-shadow: 2px 2px 2px #000;
 }
 
 .EXPSubH {
-  color: #6599FF;
+  color: #fff;
   font-family: monospace;
   font-style: italic;
   margin-bottom: 0;
+  text-shadow: 2px 2px 2px #000;
 }
 
 .langMainCol {
@@ -443,11 +443,12 @@ textarea.reqTextarea {
 
 
 .langImg {
-  width: 70px;
-  height: 70px;
-  padding: 10px;
-  background-color: #8e44ad;
-  border: 4px solid #FFFF00;
+  width: 100px;
+  height: 100px;
+  padding: 8px;
+/*padding: 10px;
+  background-color: #9b59b6;
+  border: 6px solid #2c3e50; */
   border-radius: 50%;
 }
 
@@ -463,36 +464,36 @@ textarea.reqTextarea {
 }
 
 a.anchorList:hover {
-  padding-top: 6px;
-  border: 3px solid #6599FF;
   border-radius: 50%;
   background: #6599FF;
   transition-duration: 0.3s;
-
 }
 
 a.anchorListFirst:hover {
-  padding-right: 6px;
   border-radius: 50%;
   background: #6599FF;
   transition-duration: 0.3s;
 }
 
 a.anchorListLast:hover {
-  padding-left: 6px;
   border-radius: 50%;
   background: #6599FF;
   transition-duration: 0.3s;
 }
 
+.exp2ndrow {
+  background-color: #EEE;
+}
+
 h3.EXPImgsHeader {
   font-family: monospace;
   font-weight: bolder;
-  color: gray;
+  color: #000;
+  text-shadow: 1px 1px 1px #34495e;
 }
 
 h4.EXPMiniH {
-  color: #9b59b6;
+  color: #7FC1C2;
   font-family: cursive;
   font-weight: bolder;
   width: 60%;
@@ -501,12 +502,14 @@ h4.EXPMiniH {
 
 img.EXPImgs {
   width: 60%;
-  border-radius: 50%;
+
 }
 
 p.multiParagraph {
   width: 60%;
   margin: 0 auto 20px;
+  font-family: monospace;
+  font-weight: bolder;
 }
 /* end of expolore style */
 
