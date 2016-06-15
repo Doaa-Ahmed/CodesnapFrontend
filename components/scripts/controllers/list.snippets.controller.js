@@ -27,6 +27,7 @@ function listSnippetsController($scope, $http, $routeParams, snippetService, que
 			.getLangQuestions($routeParams.lanid)
 			.success(function(data) {
 				$scope.questions = data;
+				console.log($scope.questions)
 			})
 	}
 	
