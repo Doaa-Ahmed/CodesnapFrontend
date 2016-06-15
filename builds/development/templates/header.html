@@ -12,7 +12,7 @@
           <li><a class="navAnchor" href="#/request">request</a></li>
         </ul>
       </div>
-      <div class="col-md-4 headSearchCol">
+      <div ng-controller="searchController"  ng-hide="isActive('/')" class="col-md-4 headSearchCol">
         <input type="search" class="form-control headSearchInput" placeholder="Search For Snippet!">
         <span class="headSearchSpan">
           <button class="btn headSearchSpanBtn" type="button">
@@ -20,7 +20,7 @@
           </button>
         </span>
       </div>
-      <div class="col-md-3" ng-hide="currentUserSignedIn">
+      <div class="col-md-3" ng-hide="currentUserSignedIn" ng-show="currentUserLogedout">
         <ul class="nav navbar-nav" style="float:right;">
           <li>
             <a class="navAnchor" data-toggle="modal" data-target="#signUpModal"  style="cursor:pointer;">
@@ -34,18 +34,24 @@
           </li>
         </ul>
       </div>
-    <!--<span ng-show="currentUserSignedIn">{{welcome}}</span>-->
-
-
-<!-- start of dropdown setting and logout menue
-      <div class="css-dropdown col-md-2 col-md-offset-1">
-        <button class="dropbtn"><span class="user-name">mostafa <span class="caret"></span></span></button>
-        <div class="dropdown-content">
-          <a href="#"><span class="dropdown-options">Setting</span></a>
-          <a href="#"><span class="dropdown-options">Logout</span></a>
-        </div>
+  
+ <div class="col-md-3" class="nav navbar-nav" style="float:right; " ng-show="currentUserSignedIn"  >
+    <div ng-hide="currentUserLogedout">
+    <span style="color: white; font-weight: bolder; font-family: Arial; border-radius: 5px;">Welcome {{username}}</span>
+    </div>
       </div>
-end of the dropdown -->
+
+  <div ng-controller="LogoutController" class="col-md-3" class="nav navbar-nav" style="float:right;" ng-show="currentUserSignedIn" >
+    <div ng-hide="currentUserLogedout">
+      <a href="#/"> 
+        <span ng-click="logout()" style="color: white; font-weight: bolder; font-family: Arial; border-radius: 5px;">Logout
+        </span>
+      </a>
+      </div>
+  </div>
+
+      </div>
+
 
     </div> <!-- end of row -->
   </div>

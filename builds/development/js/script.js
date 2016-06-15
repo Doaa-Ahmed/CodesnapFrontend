@@ -8,6 +8,7 @@ angular
 
 
 app.config(function ($httpProvider) {
+	withCredentials: true,
   $httpProvider.defaults.headers.common = {};
   $httpProvider.defaults.headers.post = {};
   $httpProvider.defaults.headers.put = {};
@@ -65,6 +66,7 @@ function addQuestionController($scope, $http, $location, optionsService, questio
             }
         })
         .success(function(data) {
+            $location.path('/question/:qid');
             console.log(data);
         })
     }
@@ -77,10 +79,10 @@ angular
 	.controller('addSnippetController', addSnippetController);
 
 /* dependency injection */
-addSnippetController.$inject = ['$scope', '$http', '$location', 'optionsService', 'snippetService', 'compileService'];
+addSnippetController.$inject = ['$window','$scope', '$http', '$location', 'optionsService', 'snippetService', 'compileService'];
 
 /* controller implementation */
-function addSnippetController($scope, $http, $location, optionsService, snippetService, complileService) {
+function addSnippetController($window,$scope, $http, $location, optionsService, snippetService, complileService) {
     
     $scope.snippet = {};
     $scope.options = {};
@@ -122,6 +124,7 @@ function addSnippetController($scope, $http, $location, optionsService, snippetS
             }
         })
         .success(function(data) {
+            $location.path('/language/:lanid');
             console.log(data)
         })
     }
@@ -194,11 +197,29 @@ function listSnippetsController($scope, $http, $routeParams, snippetService, que
 
  //-------------------------------
 angular
+	.module('myApp')
+	.controller('LogoutController', LogoutController);
+LogoutController.$inject = ['$scope','$rootScope','$window'];
+
+function LogoutController($scope,$rootScope, $location, $route) {
+$scope.logout = function () {
+	             //$route.reload();
+                //localStorage.clearAll();
+                //$location.path('/home');
+                 $rootScope.currentUserLogedout = true;
+            }
+        }
+
+ //-------------------------------
+angular
   .module('myApp')
   .controller('PostController', PostController);
+  PostController.$inject = ['$scope', '$http','$rootScope','$window'];
 
-function PostController($scope, $http, $rootScope) {
+function PostController($scope, $http, $rootScope,$window) {
+$scope.message = '';
     this.postForm = function() {
+
       
     var obj = {
             'username': $scope.inputData.username,
@@ -214,16 +235,20 @@ function PostController($scope, $http, $rootScope) {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     })
     .success(function(data, status, headers, config) {
+      
+      
       console.log(data);
       console.log(status);
-            $rootScope.currentUserSignedIn = true;
-            // $rootScope.currentUser.username = data.username;
+      $rootScope.currentUserSignedIn = true;
+      //Auth.setUser();
+      $rootScope.username = data.username;
         })
     .error(function(data, status, headers, config) {
-      //$scope.errorMsg = 'Unable to submit form';
+      $log.error("error handler message");
       console.log(data);
       console.log(status);
         });
+    
 
 
     this.signupForm = function() {
@@ -260,7 +285,6 @@ function PostController($scope, $http, $rootScope) {
       }
     
   } 
-
 }
 
  //-------------------------------
@@ -316,6 +340,22 @@ function requestController($scope, $http) {
         })
    	}
 }
+
+ //-------------------------------
+angular
+	.module('myApp')
+	.controller('searchController',searchController);
+
+function searchController($scope,$rootScope, $location) {
+$scope.isActive = function (viewLocation) {
+	             return viewLocation === $location.path();
+            }
+        }
+
+
+
+
+
 
  //-------------------------------
 angular
@@ -484,48 +524,116 @@ function configurator($routeProvider) {
     // route for the home page
         .when('/', {
                 templateUrl : 'pages/home.html',
-                controller  : 'PostController'
+                controller  : 'PostController',
+                
         })
         .when('/register', {
                 templateUrl : 'pages/Signup.html',
-                controller  : 'signupController'
+                controller  : 'signupController',
+                
         })
+        //.when('/Logout', {
+          //      templateUrl : '',
+            //controller  : 'LogoutController'
+
+        //})
         // route for the about page
         .when('/search', {
                 templateUrl : 'pages/search.html',
-                controller  : 'searchController'
+                controller  : 'searchController',
+                
         })
         // route for the about page
         .when('/explore', {
         		templateUrl : 'pages/list.langs.html',
-                controller : 'listLangsController'
+                controller : 'listLangsController',
+                
         })
         .when('/language/:lanid', {
                 templateUrl: 'pages/langsnippets.html',
-                controller: 'listSnippetsController'
+                controller: 'listSnippetsController',
         })
         .when('/snippet/:sid', {
                 templateUrl: 'pages/view.snippet.html',
-                controller: 'viewSnippetController'
+                controller: 'viewSnippetController',
         })
         .when('/question/:qid', {
                 templateUrl: 'pages/view.question.html',
-                controller: 'viewQuestionController'
+                controller: 'viewQuestionController',
         })
         // route for the about page
         .when('/add', {
                 templateUrl : 'pages/add.snippet.html',
-                controller  : 'addSnippetController'
+                controller  : 'addSnippetController',
         })
         // route for the contact page
         .when('/request', {
                 templateUrl : 'pages/add.question.html',
-                controller  : 'addQuestionController'
+                controller  : 'addQuestionController',
+               
         })
         .otherwise({
-        		redirectTo: 'pages/Signin.html'
+        		redirectTo: 'pages/home.html',
+                //withCredentials: true
         });
 }	
+/*app.run(['$rootScope', '$location', 'Auth', function ($rootScope, $location, Auth) {
+    $rootScope.$on('$routeChangeStart', function (event) {
+
+        if (Auth.isLoggedIn()) {
+            console.log('DENY');
+            event.preventDefault();
+            //$location.path('/home');
+        }
+        else {
+            console.log('ALLOW');
+            //$location.path('/home');
+        }
+    });
+}]);
+
+/*app.run(['$rootScope', '$location', 'Auth',function($rootScope, $location, $route,Auth) {
+
+    var routesOpenToPublic = [];
+    angular.forEach($route.routes, function(route, path) {
+        // push route onto routesOpenToPublic if it has a truthy publicAccess value
+        route.publicAccess && (routesOpenToPublic.push(path));
+    });
+
+    $rootScope.$on('$routeChangeStart', function(event, nextLoc, currentLoc) {
+        var closedToPublic = (-1 == routesOpenToPublic.indexOf($location.path()));
+        if(closedToPublic && !user.isLoggedIn()) {
+            $location.path('/home');
+        }
+    });
+}]);*/
+
+ //-------------------------------
+/*angular
+	.module('myApp')
+	.factory('Auth', Auth);
+
+Auth.$inject = ['$http','$location'];
+
+
+function Auth($http,$location) {
+
+var user= {
+        setUser : setUser,	
+		isLoggedIn : isLoggedIn
+};
+return user;
+
+function setUser(aUser) {
+		return user = aUser;
+	}
+
+function isLoggedIn() {
+		return isLogged: false;
+	}
+
+  }
+*/
 
  //-------------------------------
 /* service registration */

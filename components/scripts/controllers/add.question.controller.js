@@ -45,6 +45,7 @@ function addQuestionController($scope, $http, $location, optionsService, questio
             }
         })
         .success(function(data) {
+            $location.path('/question/:qid');
             console.log(data);
         })
     }

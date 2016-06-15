@@ -5,6 +5,7 @@ angular
 
 
 app.config(function ($httpProvider) {
+	withCredentials: true,
   $httpProvider.defaults.headers.common = {};
   $httpProvider.defaults.headers.post = {};
   $httpProvider.defaults.headers.put = {};

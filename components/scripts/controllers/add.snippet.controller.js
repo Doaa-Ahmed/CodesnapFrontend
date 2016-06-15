@@ -4,10 +4,10 @@ angular
 	.controller('addSnippetController', addSnippetController);
 
 /* dependency injection */
-addSnippetController.$inject = ['$scope', '$http', '$location', 'optionsService', 'snippetService', 'compileService'];
+addSnippetController.$inject = ['$window','$scope', '$http', '$location', 'optionsService', 'snippetService', 'compileService'];
 
 /* controller implementation */
-function addSnippetController($scope, $http, $location, optionsService, snippetService, complileService) {
+function addSnippetController($window,$scope, $http, $location, optionsService, snippetService, complileService) {
     
     $scope.snippet = {};
     $scope.options = {};
@@ -49,6 +49,7 @@ function addSnippetController($scope, $http, $location, optionsService, snippetS
             }
         })
         .success(function(data) {
+            $location.path('/language/:lanid');
             console.log(data)
         })
     }
