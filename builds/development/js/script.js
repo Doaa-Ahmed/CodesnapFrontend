@@ -89,12 +89,13 @@ function listSnippetsController($scope, $http, $routeParams, snippetService, que
 	$scope.fetchQuestions = fetchQuestions;
 	$scope.snippets = [];
 	$scope.questions = [];
-	
+
 	function fetchSnippets() {
 		snippetService
 			.getLangSnippets($routeParams.lanid)
 			.success(function(data){
 				$scope.snippets = data;
+				console.log($scope.snippets)
 			});
 	}
 
@@ -102,14 +103,13 @@ function listSnippetsController($scope, $http, $routeParams, snippetService, que
 		questionService
 			.getLangQuestions($routeParams.lanid)
 			.success(function(data) {
+				console.log(data);
 				$scope.questions = data;
 				console.log($scope.questions)
 			})
 	}
-	
+
 }
-
-
 
 
  //-------------------------------
