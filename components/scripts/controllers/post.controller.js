@@ -1,10 +1,14 @@
 angular
   .module('myApp')
   .controller('PostController', PostController);
+  PostController.$inject = ['$scope', '$http','$rootScope','$window'];
 
 
-function PostController($scope, $http, $rootScope) {
-    this.postForm = function() { 
+function PostController($scope, $http, $rootScope,$window) {
+$scope.message = '';
+    this.postForm = function() {
+
+
       
     var obj = {
             'username': $scope.inputData.username,
@@ -21,19 +25,20 @@ function PostController($scope, $http, $rootScope) {
       data:JSON.stringify(obj),
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     })
-               .success(function(data, status, headers, config) {
-      //globalService.setUser(newUser);
 
+    .success(function(data, status, headers, config) {
       console.log(data);
       console.log(status);
-            $rootScope.currentUserSignedIn = true;
-            // $rootScope.currentUser.username = data.username;
+      $rootScope.currentUserSignedIn = true;
+      //Auth.setUser();
+      $rootScope.username = data.username;
         })
     .error(function(data, status, headers, config) {
-      //$scope.errorMsg = 'Unable to submit form';
+      $log.error("error handler message");
       console.log(data);
       console.log(status);
         });
+    
 
     this.signupForm = function() {
         var upobject = {
@@ -69,5 +74,4 @@ function PostController($scope, $http, $rootScope) {
       }
     
   } 
-
 }

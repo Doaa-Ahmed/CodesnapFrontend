@@ -4,19 +4,23 @@ angular
 	.controller('addSnippetController', addSnippetController);
 
 /* dependency injection */
-addSnippetController.$inject = ['$scope', '$http', '$location', 'optionsService', 'snippetService'];
+addSnippetController.$inject = ['$window','$scope', '$http', '$location', 'optionsService', 'snippetService', 'compileService'];
 
 /* controller implementation */
-function addSnippetController($scope, $http, $location, optionsService, snippetService) {
+function addSnippetController($window,$scope, $http, $location, optionsService, snippetService, complileService) {
     
     $scope.snippet = {};
     $scope.options = {};
+    $scope.output = {};
+
     $scope.postSnippet = postSnippet;
     $scope.populateOptions = populateOptions;
     $scope.prepareSnippet = prepareSnippet;
+    $scope.compileSnippet = compileSnippet;
 
+    
     function populateOptions() {
-        optionsService
+        optionsService  
             .getOptions()
             .success(function(data) {
                 $scope.options = data;    
@@ -32,10 +36,34 @@ function addSnippetController($scope, $http, $location, optionsService, snippetS
 
     function postSnippet() {
         prepareSnippet();
-        snippetService
-            .createSnippet($scope.snippet)
+        var snap = JSON.stringify($scope.snippet);
+        console.log(snap);
+
+        $http({
+            method: 'POST',
+            url: 'http://www.koodet.com:6543/api/snippets',
+            data: JSON.stringify($scope.snippet),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+                
+            }
+        })
+        .success(function(data) {
+            $location.path('/language/:lanid');
+            console.log(data)
+        })
+    }
+
+    function compileSnippet() {
+        var compile = {
+            code : $scope.snippet.code
+        };
+
+        compileService
+            .createSnippet(JSON.stringify(compile))
             .success(function(data) {
-                console.log(data);
+                $scope.output = data;
             })
     }
+
 }
