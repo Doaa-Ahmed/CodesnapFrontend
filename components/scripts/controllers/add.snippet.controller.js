@@ -4,23 +4,21 @@ angular
 	.controller('addSnippetController', addSnippetController);
 
 /* dependency injection */
-addSnippetController.$inject = ['$scope', '$http', '$location', 'optionsService', 'snippetService', 'compileService'];
+addSnippetController.$inject = ['$scope', '$http', '$location', 'optionsService', 'snippetService'];
 
 /* controller implementation */
-function addSnippetController($scope, $http, $location, optionsService, snippetService, complileService) {
-    
+function addSnippetController($scope, $http, $location, optionsService, snippetService) {
+
     $scope.snippet = {};
     $scope.options = {};
-    $scope.output = {};
-
-    $scope.postSnippet = postSnippet;
+    // $scope.postSnippet = postSnippet;
     $scope.populateOptions = populateOptions;
     $scope.prepareSnippet = prepareSnippet;
-    $scope.compileSnippet = compileSnippet;
+    // $scope.compileSnippet = compileSnippet
+    // $scope.snippet.code = $scope.snippet.code;
 
-    
     function populateOptions() {
-        optionsService  
+        optionsService
             .getOptions()
             .success(function(data) {
                 $scope.options = data;    
@@ -30,39 +28,64 @@ function addSnippetController($scope, $http, $location, optionsService, snippetS
     function prepareSnippet() {
         $scope.snippet.language = $scope.snippet.language.id;
         $scope.snippet.context = $scope.snippet.context.id;
-        $scope.snippet.code_type = $scope.snippet.code_type.id;   
-
+        $scope.snippet.code_type = $scope.snippet.code_type.id; 
     }
 
-    function postSnippet() {
-        prepareSnippet();
-        var snap = JSON.stringify($scope.snippet);
-        console.log(snap);
+    // function compileSnippet() {
+    //     snippetService.compileSnippet(JSON.stringify($scope.snippet.code)).success(function(data){
+    //         console.log(data);
+    //     })
+    // }
+
+    $scope.compileSnippet=function(){
+
+        var snap = {
+            'code': $scope.snippet.code
+        };
 
         $http({
             method: 'POST',
-            url: 'http://www.koodet.com:6543/api/snippets',
-            data: JSON.stringify($scope.snippet),
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-                
-            }
+            url: 'http://www.koodet.com:6543/api/compile',
+            data:JSON.stringify(snap),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         })
-        .success(function(data) {
-            console.log(data)
+        .success(function(data, status, headers, config) {
+            $scope.snippet.output = data.output;
+            console.log(status);
+
         })
     }
 
-    function compileSnippet() {
-        var compile = {
-            code : $scope.snippet.code
-        };
+    $scope.postSnippet=function(){
+    var snap = {
+            'title': $scope.snippet.title,
+            'description': $scope.snippet.description,
+            'code': $scope.snippet.code,
+            'context': $scope.snippet.context.id,
+            'tags': $scope.snippet.tags,
+            'language': $scope.snippet.language.id,
+            'code_type': $scope.snippet.code_type.id
+    };
 
-        compileService
-            .createSnippet(JSON.stringify(compile))
-            .success(function(data) {
-                $scope.output = data;
-            })
+    $http({
+        method: 'POST',
+        url: 'http://www.koodet.com:6543/api/snippets',
+        data:JSON.stringify(snap),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    })
+    .success(function(data, status, headers, config) {
+        console.log($scope.snippet.output)
+        console.log(status);
+
+    })
     }
 
+    // function postSnippet() {
+    //     prepareSnippet();
+    //     snippetService
+    //         .createSnippet($scope.snippet)
+    //         .success(function(data) {
+    //             console.log(data);
+    //         })
+    // }
 }

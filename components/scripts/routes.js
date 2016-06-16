@@ -43,8 +43,8 @@ function configurator($routeProvider) {
         })
         // route for the contact page
         .when('/request', {
-                templateUrl : 'pages/add.question.html',
-                controller  : 'addQuestionController'
+                templateUrl : 'pages/request.html',
+                controller  : 'requestController'
         })
         .otherwise({
         		redirectTo: 'pages/Signin.html'
