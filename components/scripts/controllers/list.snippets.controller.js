@@ -29,7 +29,6 @@ function listSnippetsController($scope, $http, $routeParams, snippetService, que
 			.success(function(data) {
 				console.log(data);
 				$scope.questions = data;
-				console.log($scope.questions)
 			})
 	}
 
