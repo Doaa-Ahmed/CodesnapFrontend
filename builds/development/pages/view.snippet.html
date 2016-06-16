@@ -1,6 +1,6 @@
 <div class="container-fluid" style="padding-top:90px;" ng-init="fetchSnippet()">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12" style="padding-left:40px;">
       <div class="row">
         <div class="col-md-2">
           <div class="row">
@@ -32,8 +32,7 @@
             </div>
           </div>
           <div class="row">
-
-            <div class="col-md-12">
+            <div class="col-md-12" style="color:#95a5a6;">
               <b>100</b>
               <span> votes</span>
               <br>
@@ -49,8 +48,7 @@
 
           </div>
         </div>
-        <div class="col-md-6">
-          <h5>Problem Title:</h5>
+        <div class="col-md-6" style="margin-top:50px;padding-left:0px;">
           <textarea class="form-control" rows="1" readonly style="resize:none;">
             {{snippet.title}}
           </textarea>
@@ -66,10 +64,10 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12" style="padding-left:40px;">
       <div class="row">
         <div class="col-md-8 form-group">
-          <h4>Snippet:</h4>
+          <h4 class="SnippHeader">Snippet</h4>
           <textarea class="form-control" rows="25" readonly style="resize:none;">
             {{snippet.code}}
           </textarea>
@@ -77,7 +75,7 @@
       </div>
       <div class="row" style="padding-top:20px;">
         <div class="labels">
-          <h5 class="addLabels">Language</h5>
+          <h5 class="addLabels labelsFont">Language</h5>
         </div>
         <div class="col-md-2 form-group">
           <textarea class="form-control" rows="1" readonly style="resize:none;">
@@ -85,7 +83,7 @@
           </textarea>
         </div>
         <div class="labels">
-          <h5 class="addLabels">Type</h5>
+          <h5 class="addLabels labelsFont">Type</h5>
         </div>
         <div class="col-md-2 form-group">
             <textarea class="form-control" rows="1" readonly style="resize:none;">
@@ -96,7 +94,7 @@
 
       <div class="row">
         <div class="labels">
-          <h5 class="addLabels">Context</h5>
+          <h5 class="addLabels labelsFont">Context</h5>
         </div>
         <div class="col-md-2 form-group">
           <textarea class="form-control" rows="1" readonly style="resize:none;">
@@ -104,12 +102,12 @@
           </textarea>
         </div>
         <div class="labels">
-          <h5 class="addLabels">Tags</h5>
+          <h5 class="addLabels labelsFont">Tags</h5>
         </div>
         <div class="col-md-4 form-group">
           <textarea class="form-control" rows="1" readonly style="resize:none;">
 
-        
+
           </textarea>
         </div>
       </div>

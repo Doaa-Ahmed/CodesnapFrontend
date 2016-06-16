@@ -1,20 +1,12 @@
 
 
  //-------------------------------
-var app = angular.module('myApp',[
-	'ngRoute'
-  ]);
 
+(function() {
+	'use strict';
 
-app.config(function ($httpProvider) {
-	withCredentials: true,
-  $httpProvider.defaults.headers.common = {};
-  $httpProvider.defaults.headers.post = {};
-  $httpProvider.defaults.headers.put = {};
-  $httpProvider.defaults.headers.patch = {};
-  
-});	
-
+	var app = angular.module('myApp',['ngRoute']);
+})();
 
 
  //-------------------------------
@@ -74,27 +66,25 @@ function addQuestionController($scope, $http, $location, optionsService, questio
  //-------------------------------
 /* controller registeration */
 angular
-	.module('myApp')
-	.controller('addSnippetController', addSnippetController);
+    .module('myApp')
+    .controller('addSnippetController', addSnippetController);
 
 /* dependency injection */
-addSnippetController.$inject = ['$window','$scope', '$http', '$location', 'optionsService', 'snippetService', 'compileService'];
+addSnippetController.$inject = ['$scope', '$http', '$location', 'optionsService', 'snippetService'];
 
 /* controller implementation */
-function addSnippetController($window,$scope, $http, $location, optionsService, snippetService, complileService) {
-    
+function addSnippetController($scope, $http, $location, optionsService, snippetService) {
+
     $scope.snippet = {};
     $scope.options = {};
-    $scope.output = {};
-
-    $scope.postSnippet = postSnippet;
+    // $scope.postSnippet = postSnippet;
     $scope.populateOptions = populateOptions;
     $scope.prepareSnippet = prepareSnippet;
-    $scope.compileSnippet = compileSnippet;
+    // $scope.compileSnippet = compileSnippet
+    // $scope.snippet.code = $scope.snippet.code;
 
-    
     function populateOptions() {
-        optionsService  
+        optionsService
             .getOptions()
             .success(function(data) {
                 $scope.options = data;    
@@ -104,43 +94,75 @@ function addSnippetController($window,$scope, $http, $location, optionsService, 
     function prepareSnippet() {
         $scope.snippet.language = $scope.snippet.language.id;
         $scope.snippet.context = $scope.snippet.context.id;
-        $scope.snippet.code_type = $scope.snippet.code_type.id;   
-
+        $scope.snippet.code_type = $scope.snippet.code_type.id; 
     }
 
-    function postSnippet() {
-        prepareSnippet();
-        var snap = JSON.stringify($scope.snippet);
-        console.log(snap);
+    // function compileSnippet() {
+    //     snippetService.compileSnippet(JSON.stringify($scope.snippet.code)).success(function(data){
+    //         console.log(data);
+    //     })
+    // }
+
+    $scope.compileSnippet=function(){
+
+        var snap = {
+            'code': $scope.snippet.code
+        };
 
         $http({
             method: 'POST',
-            url: 'http://www.koodet.com:6543/api/snippets',
-            data: JSON.stringify($scope.snippet),
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-                
-            }
+            url: 'http://www.koodet.com:6543/api/compile',
+            data:JSON.stringify(snap),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         })
-        .success(function(data) {
-            $location.path('/language/:lanid');
-            console.log(data)
+        .success(function(data, status, headers, config) {
+            $scope.snippet.output = data.output;
+            console.log(status);
+
         })
     }
 
-    function compileSnippet() {
-        var compile = {
-            code : $scope.snippet.code
-        };
+    $scope.postSnippet=function(){
+    var snap = {
+            'title': $scope.snippet.title,
+            'description': $scope.snippet.description,
+            'code': $scope.snippet.code,
+            'context': $scope.snippet.context.id,
+            'tags': $scope.snippet.tags,
+            'language': $scope.snippet.language.id,
+            'code_type': $scope.snippet.code_type.id
+    };
 
-        compileService
-            .createSnippet(JSON.stringify(compile))
-            .success(function(data) {
-                $scope.output = data;
-            })
+    $http({
+        method: 'POST',
+        url: 'http://www.koodet.com:6543/api/snippets',
+        data:JSON.stringify(snap),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    })
+    .success(function(data, status, headers, config) {
+        console.log($scope.snippet.output)
+        console.log(status);
+
+    })
     }
 
+    // function postSnippet() {
+    //     prepareSnippet();
+    //     snippetService
+    //         .createSnippet($scope.snippet)
+    //         .success(function(data) {
+    //             console.log(data);
+    //         })
+    // }
 }
+
+ //-------------------------------
+
+
+
+
+
+
 
  //-------------------------------
 angular
@@ -172,12 +194,13 @@ function listSnippetsController($scope, $http, $routeParams, snippetService, que
 	$scope.fetchQuestions = fetchQuestions;
 	$scope.snippets = [];
 	$scope.questions = [];
-	
+
 	function fetchSnippets() {
 		snippetService
 			.getLangSnippets($routeParams.lanid)
 			.success(function(data){
 				$scope.snippets = data;
+				console.log($scope.snippets)
 			});
 	}
 
@@ -185,13 +208,13 @@ function listSnippetsController($scope, $http, $routeParams, snippetService, que
 		questionService
 			.getLangQuestions($routeParams.lanid)
 			.success(function(data) {
+				console.log(data);
 				$scope.questions = data;
+				console.log($scope.questions)
 			})
 	}
-	
+
 }
-
-
 
 
  //-------------------------------
@@ -215,16 +238,12 @@ angular
   .controller('PostController', PostController);
   PostController.$inject = ['$scope', '$http','$rootScope','$window'];
 
-<<<<<<< HEAD
 
-function PostController($scope, $http, $rootScope) {
-    this.postForm = function() { 
-=======
 function PostController($scope, $http, $rootScope,$window) {
 $scope.message = '';
     this.postForm = function() {
 
->>>>>>> dev
+
       
     var obj = {
             'username': $scope.inputData.username,
@@ -241,15 +260,8 @@ $scope.message = '';
       data:JSON.stringify(obj),
       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     })
-<<<<<<< HEAD
-               .success(function(data, status, headers, config) {
-      //globalService.setUser(newUser);
 
-=======
     .success(function(data, status, headers, config) {
-      
-      
->>>>>>> dev
       console.log(data);
       console.log(status);
       $rootScope.currentUserSignedIn = true;
@@ -348,6 +360,7 @@ function requestController($scope, $http) {
         .success(function(data, status, headers, config) {
         	console.log(data);
         	console.log(status);
+          $location.path('/question/:qid');
 
         })
    	}
@@ -413,6 +426,38 @@ function signupController($scope, $http) {
  //-------------------------------
 angular
 	.module('myApp')
+	.controller('snippetController', snippetController);
+
+function snippetController($scope, $http) {
+
+	$scope.Postsnippet = function() {
+    	var snap = {
+    			'title': $scope.inputData.Title,
+            	'description': $scope.inputData.Description,
+    			'code': $scope.inputData.Code,
+    			'context': $scope.inputData.Context.id,
+    			'tags': $scope.inputData.Tags,
+    			'language': $scope.inputData.Language.id,
+    			'code_type': $scope.inputData.Codetype.id,
+    		};
+
+    	    $http({
+				method: 'POST',
+				url: 'http://www.koodet.com:6543/api/snippets',
+				data:JSON.stringify(snap),
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+			})
+			.success(function(data, status, headers, config) {
+			console.log(data);
+			console.log(status);
+
+            })
+	}
+}
+
+ //-------------------------------
+angular
+	.module('myApp')
 	.controller('starCtrl', starCtrl);
 
 function starCtrl($scope, $http) {
@@ -458,15 +503,10 @@ function viewQuestionController($scope, $http, $routeParams, questionService) {
 }
 
  //-------------------------------
-/* controller registration */
 angular
 	.module('myApp')
 	.controller('viewSnippetController', viewSnippetController);
 
-/* dependency injection */
-viewSnippetController.$inject = ['$scope', '$http', '$routeParams', 'snippetService'];	
-
-/* controller implementation */
 function viewSnippetController($scope, $http, $routeParams, snippetService) {
 	$scope.fetchSnippet = fetchSnippet;
 	$scope.snippet = {};
@@ -581,17 +621,15 @@ function configurator($routeProvider,$httpProvider) {
         })
         // route for the contact page
         .when('/request', {
-                templateUrl : 'pages/add.question.html',
-                controller  : 'addQuestionController',
-               
+
+                templateUrl : 'pages/request.html',
+                controller  : 'requestController'
         })
         .otherwise({
         		redirectTo: 'pages/home.html',
                 //withCredentials: true
         });
-<<<<<<< HEAD
-}
-=======
+
 }	
 /*app.run(['$rootScope', '$location', 'Auth', function ($rootScope, $location, Auth) {
     $rootScope.$on('$routeChangeStart', function (event) {
@@ -623,7 +661,7 @@ function configurator($routeProvider,$httpProvider) {
         }
     });
 }]);*/
->>>>>>> dev
+
 
 
  //-------------------------------
@@ -652,29 +690,6 @@ function isLoggedIn() {
 
   }
 */
-
- //-------------------------------
-/* service registration */
-angular
-	.module('myApp')
-	.factory('compileService', compileService);
-
-/* dependency injection */
-compileService.$inject = ['$http'];	
-
-/* service implementation */
-function compileService($http) {
-	var service = {
-		createCompile: createCompile		
-	};
-
-	return service;
-	
-	function createCompile(compile) { 
-		return $http
-		.post('http://www.koodet.com:6543/api/compile', compile);
-	}	
-}
 
  //-------------------------------
 angular
@@ -763,17 +778,11 @@ function optionsService($http) {
 }
 
  //-------------------------------
-/* service registration */
 angular
 	.module('myApp')
 	.factory('questionService', questionService);
 
-/* dependency injection */
-questionService.$inject = ['$http']; 	
-
-/* service implementation */
 function questionService($http) {
-	
 	var service = {
 		getLangQuestions : getLangQuestions,	
 		getQuestion : getQuestion,
@@ -799,15 +808,10 @@ function questionService($http) {
 }
 
  //-------------------------------
-/* service registration */
 angular
 	.module('myApp')
 	.factory('snippetService', snippetService);
 
-/* dependency injection */
-snippetService.$inject = ['$http'];	
-
-/* service implementation */
 function snippetService($http) {
 	var service = {
 		getLangSnippets : getLangSnippets,
@@ -828,9 +832,14 @@ function snippetService($http) {
 		.get('http://koodet.com:6543/api/snippets/' + sid);
 	}
 
-	function createSnippet(snippet) { 
-
+	function createSnippet(snippet) {
+		return $http
+		.post('http://www.koodet.com:6543/api/snippets/', snippet);
 	}	
+
+	function compileSnippet(code) {
+		return $http.post('http://www.koodet.com/6543/api/compile', code)
+	}
 }
 
  //-------------------------------
@@ -844,9 +853,8 @@ userService.$inject = ['$http'];
 
 /* service implementation */
 function userService($http) {
-
 	var service = {
-		getUser : getUser,
+		getUser : geUser,
 		createUser : createUser
 	};
 

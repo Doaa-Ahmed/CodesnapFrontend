@@ -1,12 +1,7 @@
-/* service registration */
 angular
 	.module('myApp')
 	.factory('snippetService', snippetService);
 
-/* dependency injection */
-snippetService.$inject = ['$http'];	
-
-/* service implementation */
 function snippetService($http) {
 	var service = {
 		getLangSnippets : getLangSnippets,
@@ -27,7 +22,12 @@ function snippetService($http) {
 		.get('http://koodet.com:6543/api/snippets/' + sid);
 	}
 
-	function createSnippet(snippet) { 
-
+	function createSnippet(snippet) {
+		return $http
+		.post('http://www.koodet.com:6543/api/snippets/', snippet);
 	}	
+
+	function compileSnippet(code) {
+		return $http.post('http://www.koodet.com/6543/api/compile', code)
+	}
 }

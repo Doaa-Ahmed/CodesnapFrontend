@@ -46,6 +46,7 @@ function requestController($scope, $http) {
         .success(function(data, status, headers, config) {
         	console.log(data);
         	console.log(status);
+          $location.path('/question/:qid');
 
         })
    	}

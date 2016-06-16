@@ -1,14 +1,6 @@
-var app = angular.module('myApp',[
-	'ngRoute'
-  ]);
 
+(function() {
+	'use strict';
 
-app.config(function ($httpProvider) {
-	withCredentials: true,
-  $httpProvider.defaults.headers.common = {};
-  $httpProvider.defaults.headers.post = {};
-  $httpProvider.defaults.headers.put = {};
-  $httpProvider.defaults.headers.patch = {};
-  
-});	
-
+	var app = angular.module('myApp',['ngRoute']);
+})();
