@@ -2,7 +2,7 @@ angular
 	.module('myApp')
 	.controller('requestController', requestController);
 
-function requestController($scope, $http) {
+function requestController($scope, $http,$location) {
 
 	$http.get("http://www.koodet.com:6543/api/elements")
     	.success(function(data) {
@@ -46,7 +46,7 @@ function requestController($scope, $http) {
         .success(function(data, status, headers, config) {
         	console.log(data);
         	console.log(status);
-          $location.path('/question/:qid');
+          $location.path('/question/'+ data.question_id);
 
         })
    	}

@@ -76,6 +76,7 @@ function addSnippetController($scope, $http, $location, optionsService, snippetS
     .success(function(data, status, headers, config) {
         console.log($scope.snippet.output)
         console.log(status);
+        $location.path('/snippet/'+ data.snippet_id);
 
     })
     }
