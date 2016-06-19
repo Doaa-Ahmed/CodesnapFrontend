@@ -34,7 +34,7 @@ function configurator($routeProvider, $httpProvider, $locationProvider) {
             controller: 'listLangsController',
 
         })
-        .when('/language/:lanid', {
+        .when('/:feature/:fname', {
             templateUrl: 'pages/langsnippets.html',
             controller: 'listSnippetsController',
         })

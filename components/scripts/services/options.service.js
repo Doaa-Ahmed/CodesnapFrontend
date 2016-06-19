@@ -16,7 +16,7 @@ function optionsService($http) {
 
 	function getOptions() {
 		return $http
-		.get('http://www.koodet.com:6543/api/elements');
+		.get('http://0.0.0.0:6543/api/elements');
 	}
 
 }

@@ -16,7 +16,7 @@ function listSnippetsController($scope, $http, $routeParams, snippetService, que
 
 	function fetchSnippets() {
 		snippetService
-			.getLangSnippets($routeParams.lanid)
+			.getLangSnippets($routeParams.feature,$routeParams.fname)
 			.success(function(data){
 				$scope.snippets = data;
 				console.log($scope.snippets)
@@ -25,7 +25,7 @@ function listSnippetsController($scope, $http, $routeParams, snippetService, que
 
 	function fetchQuestions() {
 		questionService
-			.getLangQuestions($routeParams.lanid)
+			.getLangQuestions($routeParams.feature,$routeParams.fname)
 			.success(function(data) {
 				console.log(data);
 				$scope.questions = data;

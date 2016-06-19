@@ -197,7 +197,7 @@ function listSnippetsController($scope, $http, $routeParams, snippetService, que
 
 	function fetchSnippets() {
 		snippetService
-			.getLangSnippets($routeParams.lanid)
+			.getLangSnippets($routeParams.feature,$routeParams.fname)
 			.success(function(data){
 				$scope.snippets = data;
 				console.log($scope.snippets)
@@ -206,7 +206,7 @@ function listSnippetsController($scope, $http, $routeParams, snippetService, que
 
 	function fetchQuestions() {
 		questionService
-			.getLangQuestions($routeParams.lanid)
+			.getLangQuestions($routeParams.feature,$routeParams.fname)
 			.success(function(data) {
 				console.log(data);
 				$scope.questions = data;
@@ -603,7 +603,7 @@ function configurator($routeProvider, $httpProvider, $locationProvider) {
             controller: 'listLangsController',
 
         })
-        .when('/language/:lanid', {
+        .when('/:feature/:fname', {
             templateUrl: 'pages/langsnippets.html',
             controller: 'listSnippetsController',
         })
@@ -784,7 +784,7 @@ function optionsService($http) {
 
 	function getOptions() {
 		return $http
-		.get('http://www.koodet.com:6543/api/elements');
+		.get('http://0.0.0.0:6543/api/elements');
 	}
 
 }
@@ -803,9 +803,9 @@ function questionService($http) {
 
 	return service;
 	
-	function getLangQuestions(langId) {
+	function getLangQuestions(feature,fname) {
 		return $http
-		.get('http://www.koodet.com:6543/api/explore/' + langId + '/questions');
+		.get('http://www.koodet.com:6543/api/explore/'+feature+'/'+ fname + '/questions');
 	}
 
 	function getQuestion(qid) {
@@ -833,15 +833,15 @@ function snippetService($http) {
 
 	return service;
 	
-	function getLangSnippets(langId) {
+	function getLangSnippets(feature,fname) {
 		return $http
-		.get('http://www.koodet.com:6543/api/explore/' + langId + '/snippets');
+		.get('http://www.koodet.com:6543/api/explore/' +feature+'/'+ fname + '/snippets');
 			
 	}
 
 	function getSnippet(sid) {
 		return $http
-		.get('http://koodet.com:6543/api/snippets/' + sid);
+		.get('http://www.koodet.com:6543/api/snippets/' + sid);
 	}
 
 	function createSnippet(snippet) {

@@ -11,9 +11,9 @@ function questionService($http) {
 
 	return service;
 	
-	function getLangQuestions(langId) {
+	function getLangQuestions(feature,fname) {
 		return $http
-		.get('http://www.koodet.com:6543/api/explore/' + langId + '/questions');
+		.get('http://www.koodet.com:6543/api/explore/'+feature+'/'+ fname + '/questions');
 	}
 
 	function getQuestion(qid) {
