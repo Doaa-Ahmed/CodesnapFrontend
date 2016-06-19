@@ -24,8 +24,8 @@
 
         <div class="panel-heading">
           <ul class="nav nav-tabs">
-            <li class="active"><a href="langsnippets/#tab1primary" data-toggle="tab">Snippets</a></li>
-            <li><a href="langsnippets/#tab2primary" data-toggle="tab">Requests</a></li>
+            <li class="active"><a href="#tab1primary" data-toggle="tab">Snippets</a></li>
+            <li><a href="#tab2primary" data-toggle="tab">Questions</li>
           </ul>
         </div>
 
@@ -73,7 +73,7 @@
 									<div class="col-md-8" style="padding-left:0;">
 										<div class="row">
 											<div class="col-md-12">
-												<a class="explore-anckor" ng-href="#snippet/{{snippet.id}}">
+												<a class="explore-anckor" ng-href="snippet/{{snippet.id}}">
 													<h4 class="snip-title">
 														{{snippet.title}}
 													</h4>
@@ -128,7 +128,7 @@
 									<div class="col-md-8" style="padding-left:0;">
 										<div class="row">
 											<div class="col-md-12">
-												<a class="explore-anckor" ng-href="#question/{{question.id}}">
+												<a class="explore-anckor" ng-href="question/{{question.id}}">
 													<h4 class="snip-title">
 														{{question.title}}
 													</h4>
