@@ -603,10 +603,6 @@ function configurator($routeProvider, $httpProvider, $locationProvider) {
             controller: 'listLangsController',
 
         })
-        .when('/:feature/:fname', {
-            templateUrl: 'pages/langsnippets.html',
-            controller: 'listSnippetsController',
-        })
         .when('/snippet/:sid', {
             templateUrl: 'pages/view.snippet.html',
             controller: 'viewSnippetController',
@@ -615,6 +611,12 @@ function configurator($routeProvider, $httpProvider, $locationProvider) {
             templateUrl: 'pages/view.question.html',
             controller: 'viewQuestionController',
         })
+
+        .when('/:feature/:fname', {
+            templateUrl: 'pages/langsnippets.html',
+            controller: 'listSnippetsController',
+        })
+
         // route for the about page
         .when('/add', {
             templateUrl: 'pages/add.snippet.html',
@@ -784,7 +786,7 @@ function optionsService($http) {
 
 	function getOptions() {
 		return $http
-		.get('http://0.0.0.0:6543/api/elements');
+		.get('http://www.koodet.com:6543/api/elements');
 	}
 
 }
