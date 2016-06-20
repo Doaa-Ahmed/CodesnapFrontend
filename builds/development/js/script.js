@@ -629,7 +629,7 @@ function configurator($routeProvider, $httpProvider, $locationProvider) {
             controller: 'requestController'
         })
         .otherwise({
-            redirectTo: 'pages/home.html',
+            redirectTo: '/',
             //withCredentials: true
         });
 
