@@ -24,8 +24,8 @@
 
         <div class="panel-heading">
           <ul class="nav nav-tabs">
-            <li class="active"><a href="langsnippets/#tab1primary" data-toggle="tab">Snippets</a></li>
-            <li><a href="langsnippets/#tab2primary" data-toggle="tab">Requests</a></li>
+            <li class="active"><a href="#tab1primary" data-toggle="tab">Snippets</a></li>
+            <li><a href="#tab2primary" data-toggle="tab">Questions</li>
           </ul>
         </div>
 
@@ -103,6 +103,38 @@
 											</div>
 										</div>
 									</div>
+									<div class="col-md-8" style="padding-left:0;">
+										<div class="row">
+											<div class="col-md-12">
+												<a class="explore-anckor" ng-href="snippet/{{snippet.id}}">
+													<h4 class="snip-title">
+														{{snippet.title}}
+													</h4>
+												</a>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-2">
+												<b>300</b>
+												<span> views</span>
+											</div>
+											<div class="col-md-8">
+												<ul class="ul-tags">
+													<li class="li-tag"><a class="li-tag-a"><span class="tag-span">tag1</span></a></li>
+													<li class="li-tag"><a class="li-tag-a"><span class="tag-span">tag2</span></a></li>
+													<li class="li-tag"><a class="li-tag-a"><span class="tag-span">tag3</span></a></li>
+													<li class="li-tag"><a class="li-tag-a"><span class="tag-span">tag4</span></a></li>
+													<li class="li-tag"><a class="li-tag-a"><span class="tag-span">tag5</span></a></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-2">
+										<span title="Author" class="glyphicon glyphicon-user" aria-hidden="true"></span>
+										<span title="Author" style="font-size:14px;font-family:sans-serif"> username</span>
+										<br>
+										<span>April 19,2016</span>
+									</div>
 								</div>
 							</div>
 
@@ -129,7 +161,7 @@
 									<div class="col-md-8 col-sm-8" style="padding-left:0;">
 										<div class="row">
 											<div class="col-md-12 col-sm-12">
-												<a class="explore-anckor" ng-href="#question/{{question.id}}">
+												<a class="explore-anckor" ng-href="question/{{question.id}}">
 													<h4 class="snip-title">
 														{{question.title}}
 													</h4>

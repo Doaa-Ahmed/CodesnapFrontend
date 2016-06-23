@@ -197,7 +197,7 @@ function listSnippetsController($scope, $http, $routeParams, snippetService, que
 
 	function fetchSnippets() {
 		snippetService
-			.getLangSnippets($routeParams.lanid)
+			.getLangSnippets($routeParams.feature,$routeParams.fname)
 			.success(function(data){
 				$scope.snippets = data;
 				console.log($scope.snippets)
@@ -206,7 +206,7 @@ function listSnippetsController($scope, $http, $routeParams, snippetService, que
 
 	function fetchQuestions() {
 		questionService
-			.getLangQuestions($routeParams.lanid)
+			.getLangQuestions($routeParams.feature,$routeParams.fname)
 			.success(function(data) {
 				console.log(data);
 				$scope.questions = data;
@@ -568,69 +568,85 @@ function starRating() {
 
  //-------------------------------
 angular
-	.module('myApp')
-	.config(configurator)
-function configurator($routeProvider,$httpProvider) {
+    .module('myApp')
+    .config(configurator)
 
-     //$httpProvider.defaults.withCredentials = true;
-	$routeProvider
+function configurator($routeProvider, $httpProvider, $locationProvider) {
+
+    //$httpProvider.defaults.withCredentials = true;
+    $routeProvider
     // route for the home page
         .when('/', {
-                templateUrl : 'pages/home.html',
-                controller  : 'PostController',
-                
+            templateUrl: 'pages/home.html',
+            controller: 'PostController',
+
         })
         .when('/register', {
-                templateUrl : 'pages/Signup.html',
-                controller  : 'signupController',
-                
+            templateUrl: 'pages/Signup.html',
+            controller: 'signupController',
+
         })
         //.when('/Logout', {
-          //      templateUrl : '',
-            //controller  : 'LogoutController'
+        //      templateUrl : '',
+        //controller  : 'LogoutController'
 
-        //})
-        // route for the about page
-        .when('/search', {
-                templateUrl : 'pages/search.html',
-                controller  : 'searchController',
-                
+    //})
+    // route for the about page
+    .when('/search', {
+            templateUrl: 'pages/search.html',
+            controller: 'searchController',
+
         })
         // route for the about page
         .when('/explore', {
-        		templateUrl : 'pages/list.langs.html',
-                controller : 'listLangsController',
-                
-        })
-        .when('/language/:lanid', {
-                templateUrl: 'pages/langsnippets.html',
-                controller: 'listSnippetsController',
+            templateUrl: 'pages/list.langs.html',
+            controller: 'listLangsController',
+
         })
         .when('/snippet/:sid', {
-                templateUrl: 'pages/view.snippet.html',
-                controller: 'viewSnippetController',
+            templateUrl: 'pages/view.snippet.html',
+            controller: 'viewSnippetController',
         })
         .when('/question/:qid', {
-                templateUrl: 'pages/view.question.html',
-                controller: 'viewQuestionController',
+            templateUrl: 'pages/view.question.html',
+            controller: 'viewQuestionController',
         })
+
+        .when('/:feature/:fname', {
+            templateUrl: 'pages/langsnippets.html',
+            controller: 'listSnippetsController',
+        })
+
         // route for the about page
         .when('/add', {
-                templateUrl : 'pages/add.snippet.html',
-                controller  : 'addSnippetController',
+            templateUrl: 'pages/add.snippet.html',
+            controller: 'addSnippetController',
         })
         // route for the contact page
         .when('/request', {
 
-                templateUrl : 'pages/request.html',
-                controller  : 'requestController'
+            templateUrl: 'pages/request.html',
+            controller: 'requestController'
         })
         .otherwise({
-        		redirectTo: 'pages/home.html',
-                //withCredentials: true
+            redirectTo: '/',
+            //withCredentials: true
         });
 
-}	
+        $locationProvider.html5Mode(true);
+
+    // if (window.history && window.history.pushState) {
+    //     //$locationProvider.html5Mode(true); will cause an error $location in HTML5 mode requires a  tag to be present! Unless you set baseUrl tag after head tag like so: <head> <base href="/">
+
+    //     // to know more about setting base URL visit: https://docs.angularjs.org/error/$location/nobase
+
+    //     // if you don't wish to set base URL then use this
+    //     $locationProvider.html5Mode({
+    //         enabled: true,
+    //         requireBase: false
+    //     });
+    // }
+}
 /*app.run(['$rootScope', '$location', 'Auth', function ($rootScope, $location, Auth) {
     $rootScope.$on('$routeChangeStart', function (event) {
 
@@ -661,8 +677,6 @@ function configurator($routeProvider,$httpProvider) {
         }
     });
 }]);*/
-
-
 
  //-------------------------------
 /*angular
@@ -791,9 +805,9 @@ function questionService($http) {
 
 	return service;
 	
-	function getLangQuestions(langId) {
+	function getLangQuestions(feature,fname) {
 		return $http
-		.get('http://www.koodet.com:6543/api/explore/' + langId + '/questions');
+		.get('http://www.koodet.com:6543/api/explore/'+feature+'/'+ fname + '/questions');
 	}
 
 	function getQuestion(qid) {
@@ -821,15 +835,15 @@ function snippetService($http) {
 
 	return service;
 	
-	function getLangSnippets(langId) {
+	function getLangSnippets(feature,fname) {
 		return $http
-		.get('http://www.koodet.com:6543/api/explore/' + langId + '/snippets');
+		.get('http://www.koodet.com:6543/api/explore/' +feature+'/'+ fname + '/snippets');
 			
 	}
 
 	function getSnippet(sid) {
 		return $http
-		.get('http://koodet.com:6543/api/snippets/' + sid);
+		.get('http://www.koodet.com:6543/api/snippets/' + sid);
 	}
 
 	function createSnippet(snippet) {

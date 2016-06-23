@@ -11,15 +11,15 @@ function snippetService($http) {
 
 	return service;
 	
-	function getLangSnippets(langId) {
+	function getLangSnippets(feature,fname) {
 		return $http
-		.get('http://www.koodet.com:6543/api/explore/' + langId + '/snippets');
+		.get('http://www.koodet.com:6543/api/explore/' +feature+'/'+ fname + '/snippets');
 			
 	}
 
 	function getSnippet(sid) {
 		return $http
-		.get('http://koodet.com:6543/api/snippets/' + sid);
+		.get('http://www.koodet.com:6543/api/snippets/' + sid);
 	}
 
 	function createSnippet(snippet) {
