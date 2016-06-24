@@ -32,7 +32,7 @@ module.exports = function(grunt) {
             options: {
                 middleware: function(connect, options, middlewares) {
                     var rules = [
-                        "!\\.html|\\.js|\\.css|\\.svg|\\.jp(e?)g|\\.png|\\.gif|\\.woff|\\.woff2|\\.ttf|\\.eot$ /index.html"
+                        "!\\.html|\\.xml|\\.js|\\.css|\\.svg|\\.jp(e?)g|\\.png|\\.gif|\\.woff|\\.woff2|\\.ttf|\\.eot$ /index.html"
                     ];
                     middlewares.unshift(rewrite(rules));
                     return middlewares;
