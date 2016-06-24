@@ -2,16 +2,10 @@ angular
   .module('myApp')
   .controller('PostController', PostController);
 
+PostController.$inject = ['$scope', '$http','$rootScope','authService','$cookies'];
 
-PostController.$inject = ['$scope', '$http','$rootScope','$window','authService'];
-
-
-function PostController($scope, $http, $rootScope,$window,authService) {
-
-    this.postForm = postForm;
-
-      function postForm() { 
-
+function PostController($scope, $http, $rootScope,authService,$cookies) {
+  this.postForm = function() {
       var obj = {
               'username': $scope.inputData.username,
               'password': $scope.inputData.password
@@ -20,22 +14,22 @@ function PostController($scope, $http, $rootScope,$window,authService) {
       console.log(JSON.stringify(obj));
 
       $http({
-
         method: 'POST',
         url: 'http://www.koodet.com:6543/api/login',
-
         data:JSON.stringify(obj),
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-      })
+        xhrFields: {withCredentials: true},
+        headers:{'Content-Type': 'application/x-www-form-urlencoded'}
 
-      .success(function(data, status, headers, config) {
+      })
+        .success(function(data, status, headers, config) {
+
         console.log(data);
         console.log(status);
-        $rootScope.userInfo = authService.getCookieData();
-        $rootScope.username = data.username;
-        console.log("hi");
+        $rootScope.currentUserSignedIn =true;
+
         authService.setCookieData(data);
-        console.log("hey");
+        $rootScope.username = data.username;
+        
       })
       .error(function(data, status, headers, config) {
         console.log(data);

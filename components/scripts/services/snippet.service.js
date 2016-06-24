@@ -2,7 +2,7 @@ angular
 	.module('myApp')
 	.factory('snippetService', snippetService);
 
-function snippetService($http) {
+function snippetService($http,authService,$cookies) {
 	var service = {
 		getLangSnippets : getLangSnippets,
 		getSnippet : getSnippet,
@@ -12,22 +12,52 @@ function snippetService($http) {
 	return service;
 	
 	function getLangSnippets(langId) {
-		return $http
-		.get('http://www.koodet.com:6543/api/explore/' + langId + '/snippets');
-			
+
+		var obj =$cookies.get("access_token");
+    return $http({
+            method: 'GET',
+            url: 'http://www.koodet.com:6543/api/explore/' + langId + '/snippets',
+            crossDomain: true, 
+            xhrFields: { withCredentials: true},
+            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
+                
+         })
 	}
 
 	function getSnippet(sid) {
-		return $http
-		.get('http://koodet.com:6543/api/snippets/' + sid);
-	}
+		//var obj =$cookies.get("access_token");
+        return $http({
+            method: 'GET',
+            url: 'http://www.koodet.com:6543/api/snippets/' + sid,
+            crossDomain: true, 
+            xhrFields: { withCredentials: true},
+            headers: {"Cookie":"obj"}
+	})
+}
 
 	function createSnippet(snippet) {
-		return $http
-		.post('http://www.koodet.com:6543/api/snippets/', snippet);
-	}	
-
+		//var obj =$cookies.get("access_token");
+		return $http({
+            method: 'POST',
+            url: 'http://www.koodet.com:6543/api/snippets/',
+            data: snippet,
+            crossDomain: true, 
+            xhrFields: { withCredentials: true},
+            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
+           
+	})
+	
+    }	
+	
 	function compileSnippet(code) {
-		return $http.post('http://www.koodet.com/6543/api/compile', code)
-	}
+		var obj =$cookies.get("access_token");
+		return $http({
+            method: 'POST',
+            url: 'http://www.koodet.com/6543/api/compile', code,
+            crossDomain: true, 
+            xhrFields: { withCredentials: true},
+            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
+	})
+	
+    }
 }

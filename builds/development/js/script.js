@@ -5,7 +5,7 @@
 (function() {
 	'use strict';
 
-	var app = angular.module('myApp',['ngRoute']);
+	var app = angular.module('myApp',['ngRoute' ,'ngCookies']);
 })();
 
 
@@ -16,10 +16,10 @@ angular
 	.controller('addQuestionController', addQuestionController);
 
 /* dependency injection */
-addQuestionController.$inject = ['$scope', '$http', '$location', 'optionsService', 'questionService'];
+addQuestionController.$inject = ['$scope', '$http', '$location', 'optionsService', 'questionService','authService'];
 
 /* controller implementation */
-function addQuestionController($scope, $http, $location, optionsService, questionService) {
+function addQuestionController($scope, $http, $location, optionsService, questionService,authService) {
     
     $scope.question = {};
     $scope.options = {};
@@ -46,15 +46,22 @@ function addQuestionController($scope, $http, $location, optionsService, questio
         prepareQuestion();
         var snap = JSON.stringify($scope.question);
         console.log(snap);
+        var object = {
+              'Cookie': authService.getCookieData
+      };
 
         $http({
             method: 'POST',
             url: 'http://www.koodet.com:6543/api/questions',
             data: JSON.stringify($scope.question),
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
+                "Cookie":JSON.stringify(object.access_token)
                 
-            }
+            },
+            xhrFields: {
+            withCredentials: true
+        }
         })
         .success(function(data) {
             $location.path('/question/:qid');
@@ -70,10 +77,10 @@ angular
     .controller('addSnippetController', addSnippetController);
 
 /* dependency injection */
-addSnippetController.$inject = ['$scope', '$http', '$location', 'optionsService', 'snippetService'];
+addSnippetController.$inject = ['$scope','$cookies', '$http', '$location', 'optionsService', 'snippetService','authService'];
 
 /* controller implementation */
-function addSnippetController($scope, $http, $location, optionsService, snippetService) {
+function addSnippetController($scope,$cookies, $http, $location, optionsService, snippetService,authService) {
 
     $scope.snippet = {};
     $scope.options = {};
@@ -97,23 +104,21 @@ function addSnippetController($scope, $http, $location, optionsService, snippetS
         $scope.snippet.code_type = $scope.snippet.code_type.id; 
     }
 
-    // function compileSnippet() {
-    //     snippetService.compileSnippet(JSON.stringify($scope.snippet.code)).success(function(data){
-    //         console.log(data);
-    //     })
-    // }
 
     $scope.compileSnippet=function(){
 
         var snap = {
             'code': $scope.snippet.code
-        };
 
+        };
         $http({
             method: 'POST',
             url: 'http://www.koodet.com:6543/api/compile',
             data:JSON.stringify(snap),
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            crossDomain: true, 
+            xhrFields: { withCredentials: true},
+            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
+        
         })
         .success(function(data, status, headers, config) {
             $scope.snippet.output = data.output;
@@ -130,30 +135,26 @@ function addSnippetController($scope, $http, $location, optionsService, snippetS
             'context': $scope.snippet.context.id,
             'tags': $scope.snippet.tags,
             'language': $scope.snippet.language.id,
-            'code_type': $scope.snippet.code_type.id
+            'code_type': $scope.snippet.code_type.id,
+            'user_id':$cookies.get("user_id")
     };
 
     $http({
         method: 'POST',
         url: 'http://www.koodet.com:6543/api/snippets',
         data:JSON.stringify(snap),
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    })
+        crossDomain: true, 
+        xhrFields: { withCredentials: true},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded' }
+       })
     .success(function(data, status, headers, config) {
-        console.log($scope.snippet.output)
+        console.log($scope.snippet.output);
         console.log(status);
+        $location.path('/snippet/'+ data.snippet_id);
 
     })
     }
 
-    // function postSnippet() {
-    //     prepareSnippet();
-    //     snippetService
-    //         .createSnippet($scope.snippet)
-    //         .success(function(data) {
-    //             console.log(data);
-    //         })
-    // }
 }
 
  //-------------------------------
@@ -169,7 +170,7 @@ angular
 	.module('myApp')
 	.controller('listLangsController', listLangsController);
 
-function listLangsController($scope, $http, $routeParams) {
+function listLangsController($scope, $http, $routeParams,authService) {
     $scope.languages = [];
 	$scope.fetchLangs = fetchLangs;
 
@@ -185,10 +186,10 @@ angular
 	.controller('listSnippetsController', listSnippetsController);
 
 /* dependency injection */
-listSnippetsController.$inject = ['$scope', '$http', '$routeParams', 'snippetService', 'questionService'];
+listSnippetsController.$inject = ['$scope', '$http', '$routeParams', 'snippetService', 'questionService','authService'];
 
 /* controller implementation */
-function listSnippetsController($scope, $http, $routeParams, snippetService, questionService) {
+function listSnippetsController($scope, $http, $routeParams, snippetService, questionService,authService) {
 
 	$scope.fetchSnippets = fetchSnippets;
 	$scope.fetchQuestions = fetchQuestions;
@@ -219,107 +220,111 @@ function listSnippetsController($scope, $http, $routeParams, snippetService, que
 
  //-------------------------------
 angular
-	.module('myApp')
-	.controller('LogoutController', LogoutController);
-LogoutController.$inject = ['$scope','$rootScope','$window'];
+  .module('myApp')
+  .controller('LogoutController', LogoutController);
+LogoutController.$inject = ['$http','$scope','$rootScope','$location','authService','$cookies'];
 
-function LogoutController($scope,$rootScope, $location, $route) {
-$scope.logout = function () {
-	             //$route.reload();
-                //localStorage.clearAll();
-                //$location.path('/home');
-                 $rootScope.currentUserLogedout = true;
-            }
-        }
+function LogoutController($http,$scope,$rootScope, $location,authService,$cookies) {
+  $scope.logout = logout;
+    
+    function logout() {
+      
+       $rootScope.currentUserSignedIn=false;
+        //$rootScope.userInfo = authService.getCookieData;
+        //console.log(status);
+        //console.log("hi");
+        //$cookies.remove("auth");
+        authService.clearCookieData();
+        //console.log("hey");
+        $location.path('/');
+      }
+  }
 
  //-------------------------------
 angular
   .module('myApp')
   .controller('PostController', PostController);
-  PostController.$inject = ['$scope', '$http','$rootScope','$window'];
 
+PostController.$inject = ['$scope', '$http','$rootScope','authService','$cookies'];
 
-function PostController($scope, $http, $rootScope,$window) {
-$scope.message = '';
-    this.postForm = function() {
+function PostController($scope, $http, $rootScope,authService,$cookies) {
+  this.postForm = function() {
+      var obj = {
+              'username': $scope.inputData.username,
+              'password': $scope.inputData.password
+      };
 
+      console.log(JSON.stringify(obj));
 
-      
-    var obj = {
-            'username': $scope.inputData.username,
-            'password': $scope.inputData.password
-    };
-    console.log(JSON.stringify(obj));
+      $http({
+        method: 'POST',
+        url: 'http://www.koodet.com:6543/api/login',
+        data:JSON.stringify(obj),
+        xhrFields: {withCredentials: true},
+        headers:{'Content-Type': 'application/x-www-form-urlencoded'}
 
-    $http({
-
-      method: 'POST',
-      url: 'http://www.koodet.com:6543/api/login',
-      //withCredentials: true,  
-
-      data:JSON.stringify(obj),
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    })
-
-    .success(function(data, status, headers, config) {
-      console.log(data);
-      console.log(status);
-      $rootScope.currentUserSignedIn = true;
-      //Auth.setUser();
-      $rootScope.username = data.username;
-        })
-    .error(function(data, status, headers, config) {
-      $log.error("error handler message");
-      console.log(data);
-      console.log(status);
-        });
-    
-
-    this.signupForm = function() {
-        var upobject = {
-                'first_name':$scope.signupData.firstname,
-              'last_name': $scope.signupData.lastname,
-            'username': $scope.signupData.username,
-            'email': $scope.signupData.email,
-            'password': $scope.signupData.password,
-            'avatar': $scope.signupData.avatar,
-            'country': $scope.signupData.country
-            };
-
-            console.log(JSON.stringify(upobject));
-
-
-        $http({
-          method: 'POST',
-          url: 'http://www.koodet.com:6543/api/users',
-          data:JSON.stringify(upobject),
-          headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        })
+      })
         .success(function(data, status, headers, config) {
-          //window.location.href = 'index.html';
-          console.log(data);
-          console.log(status);
-            })
-          
-            .error(function(data, status, headers, config) {
-          //$scope.errorMsg = 'Unable to signup the form';
-          console.log(data);
-          console.log(status);
-        });
-      }
-    
+
+        console.log(data);
+        console.log(status);
+        $rootScope.currentUserSignedIn =true;
+
+        authService.setCookieData(data);
+        $rootScope.username = data.username;
+        
+      })
+      .error(function(data, status, headers, config) {
+        console.log(data);
+        console.log(status);
+      });
   } 
 }
+
+ //-------------------------------
+angular
+    .module('myApp')
+    .controller('profileController', profileController);
+
+profileController.$inject = ['$scope','$cookies','$http','$location'];
+
+function profileController($scope,$cookies, $http, $location){
+
+     var user_id = $cookies.get("user_id");
+      
+      $http({
+            method: 'GET',
+            url: 'http://www.koodet.com:6543/api/users/'+user_id,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'} ,
+            xhrFields: {withCredentials: true }
+        })
+    	   .success(function(data) {
+    	   	console.log(data);
+	      	$scope.username = data.username;
+	      	$scope.firstname = data.firstname;
+	      	$scope.lastname = data.lastname;
+	      	$scope.email = data.email;
+	      })
+
+}
+
+
+
+
 
  //-------------------------------
 angular
 	.module('myApp')
 	.controller('requestController', requestController);
 
-function requestController($scope, $http) {
-
-	$http.get("http://www.koodet.com:6543/api/elements")
-    	.success(function(data) {
+function requestController($scope,$cookies, $http,$location,authService) {
+  $http({
+            method: 'GET',
+            url: 'http://www.koodet.com:6543/api/elements',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'} ,
+            xhrFields: {withCredentials: true }
+        })
+    	   .success(function(data) {
           	$scope.result=data;
 	      	$scope.lan = [];
 
@@ -349,18 +354,23 @@ function requestController($scope, $http) {
             'tags': $scope.inputData.Tags,
             'language': $scope.inputData.Language.id,
             'code_type': $scope.inputData.Codetype.id,
+            'user_id':$cookies.get("user_id")
         };
+      //var object = authService.getCookieData;
+        //var object = $cookies.get('auth');
+
 
         $http({
         	method: 'POST',
         	url: 'http://www.koodet.com:6543/api/questions',
         	data:JSON.stringify(snap),
-        	headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        	headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          xhrFields: {withCredentials: true}
         })
         .success(function(data, status, headers, config) {
         	console.log(data);
         	console.log(status);
-          $location.path('/question/:qid');
+          $location.path('/question/'+ data.question_id);
 
         })
    	}
@@ -369,210 +379,8 @@ function requestController($scope, $http) {
  //-------------------------------
 angular
 	.module('myApp')
-	.controller('searchController',searchController);
-
-function searchController($scope,$rootScope, $location) {
-$scope.isActive = function (viewLocation) {
-	             return viewLocation === $location.path();
-            }
-        }
-
-
-
-
-
-
- //-------------------------------
-angular
-  .module('myApp')
-  .controller('signupController', signupController);
-
-function signupController($scope, $http) {
-
-	this.signupForm = function() {
-		var	upobject = {
-			 		'first_name':$scope.signupData.firstname,
-					'last_name': $scope.signupData.lastname,
-					'username': $scope.signupData.username,
-					'email': $scope.signupData.email,
-					'password': $scope.signupData.password,
-					'avatar': $scope.signupData.avatar,
-					'country': $scope.signupData.country
-        		};
-          
-      console.log(JSON.stringify(upobject));
-
-
-		$http({
-			method: 'POST',
-			url: 'http://www.koodet.com:6543/api/users',
-			data:JSON.stringify(upobject),
-			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-		})
-			
-		.success(function(data, status, headers, config) {
-					//window.location.href = 'index.html';
-					console.log(data);
-					console.log(status);
-        })
-		.error(function(data, status, headers, config) {
-				//$scope.errorMsg = 'Unable to signup the form';
-				console.log(data);
-				console.log(status);
-		})
-	}
-}
-
- //-------------------------------
-angular
-	.module('myApp')
-	.controller('snippetController', snippetController);
-
-function snippetController($scope, $http) {
-
-	$scope.Postsnippet = function() {
-    	var snap = {
-    			'title': $scope.inputData.Title,
-            	'description': $scope.inputData.Description,
-    			'code': $scope.inputData.Code,
-    			'context': $scope.inputData.Context.id,
-    			'tags': $scope.inputData.Tags,
-    			'language': $scope.inputData.Language.id,
-    			'code_type': $scope.inputData.Codetype.id,
-    		};
-
-    	    $http({
-				method: 'POST',
-				url: 'http://www.koodet.com:6543/api/snippets',
-				data:JSON.stringify(snap),
-				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-			})
-			.success(function(data, status, headers, config) {
-			console.log(data);
-			console.log(status);
-
-            })
-	}
-}
-
- //-------------------------------
-angular
-	.module('myApp')
-	.controller('starCtrl', starCtrl);
-
-function starCtrl($scope, $http) {
-	$scope.rating = 0;
-    $scope.rateFunction = function(rating) {
-    	var obj = {rating: rating};
- 
-        $http({
-        	method: 'POST',
-        	url: 'http://www.koodet.com:6543/api',
-        	data:JSON.stringify(obj),
-        	headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-      	})
-      	.success(function(data, status, headers, config) {
-          console.log(data);
-          console.log(status);
-        })
-      	.error(function(data, status, headers, config) {
-        	console.log(data);
-        	console.log(status);
-      	})
-    };
-}
-
- //-------------------------------
-angular
-	.module('myApp')
-	.controller('viewQuestionController', viewQuestionController);
-
-function viewQuestionController($scope, $http, $routeParams, questionService) {
-	$scope.fetchQuestion = fetchQuestion;
-	$scope.question = {};
-	
-
-	function fetchQuestion() {
-		questionService
-			.getQuestion($routeParams.qid)
-			.success(function(data) {
-				$scope.question = data;
-			})
-	}
-
-}
-
- //-------------------------------
-angular
-	.module('myApp')
-	.controller('viewSnippetController', viewSnippetController);
-
-function viewSnippetController($scope, $http, $routeParams, snippetService) {
-	$scope.fetchSnippet = fetchSnippet;
-	$scope.snippet = {};
-
-	function fetchSnippet() {
-		snippetService
-			.getSnippet($routeParams.sid)
-			.success(function(data) {
-				$scope.snippet = data;
-			});
-	}
-}
-
- //-------------------------------
-angular
-	.module('myApp')
-	.directive('starRating', starRating);
-
-function starRating() {
-
-    return {
-      restrict: 'A',
-      template: '<ul class="rating">' +
-                  '<li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)">' +
-                    '\u2605' +
-                  '</li>' +
-                '</ul>',
-      scope: {
-        ratingValue: '=',
-        max: '=',
-        readonly: '@',
-        onRatingSelected: '&'
-      },
-      link: function (scope, elem, attrs) {
-
-        var updateStars = function() {
-          scope.stars = [];
-          for (var  i = 0; i < scope.max; i++) {
-            scope.stars.push({filled: i < scope.ratingValue});
-          }
-        };
-
-        scope.toggle = function(index) {
-          if (scope.readonly && scope.readonly === 'true') {
-            return;
-          }
-          scope.ratingValue = index +1;
-          scope.onRatingSelected({rating: index +1});
-        };
-
-        scope.$watch('ratingValue', function(newVal, oldVal) {
-          if (newVal || newVal === 0) {
-            updateStars();
-          }
-        });
-      }
-    }	
-}
-
- //-------------------------------
-angular
-	.module('myApp')
 	.config(configurator)
 function configurator($routeProvider,$httpProvider) {
-
-     //$httpProvider.defaults.withCredentials = true;
 	$routeProvider
     // route for the home page
         .when('/', {
@@ -665,39 +473,370 @@ function configurator($routeProvider,$httpProvider) {
 
 
  //-------------------------------
-/*angular
+angular
 	.module('myApp')
-	.factory('Auth', Auth);
+	.controller('searchController',searchController);
 
-Auth.$inject = ['$http','$location'];
+function searchController($scope,$rootScope, $location) {
+$scope.isActive = function (viewLocation) {
+	             return viewLocation === $location.path();
+            }
+        }
 
 
-function Auth($http,$location) {
 
-var user= {
-        setUser : setUser,	
-		isLoggedIn : isLoggedIn
-};
-return user;
 
-function setUser(aUser) {
-		return user = aUser;
+
+
+ //-------------------------------
+angular
+  .module('myApp')
+  .controller('signupController', signupController);
+
+function signupController($scope, $http) {
+
+	this.signupForm = function() {
+		var	upobject = {
+			 		'first_name':$scope.signupData.firstname,
+					'last_name': $scope.signupData.lastname,
+					'username': $scope.signupData.username,
+					'email': $scope.signupData.email,
+					'password': $scope.signupData.password,
+					'avatar': $scope.signupData.avatar,
+					'country': $scope.signupData.country
+        		};
+          
+      console.log(JSON.stringify(upobject));
+
+
+		$http({
+			method: 'POST',
+			url: 'http://www.koodet.com:6543/api/users',
+			data:JSON.stringify(upobject),
+			crossDomain: true, 
+             xhrFields: { withCredentials: true},
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+		})
+			
+		.success(function(data, status, headers, config) {
+					//window.location.href = 'index.html';
+					console.log(data);
+					console.log(status);
+        })
+		.error(function(data, status, headers, config) {
+				//$scope.errorMsg = 'Unable to signup the form';
+				console.log(data);
+				console.log(status);
+		})
+	}
+}
+
+ //-------------------------------
+angular
+	.module('myApp')
+	.controller('snippetController', snippetController);
+
+function snippetController($scope, $http) {
+
+	$scope.Postsnippet = function() {
+    	var snap = {
+    			'title': $scope.inputData.Title,
+            	'description': $scope.inputData.Description,
+    			'code': $scope.inputData.Code,
+    			'context': $scope.inputData.Context.id,
+    			'tags': $scope.inputData.Tags,
+    			'language': $scope.inputData.Language.id,
+    			'code_type': $scope.inputData.Codetype.id,
+    		};
+    		var object= {
+              'Cookie': authService.getCookieData()
+      };
+
+    	    $http({
+				method: 'POST',
+				url: 'http://www.koodet.com:6543/api/snippets',
+				data:JSON.stringify(snap),
+				headers: {'Content-Type': 'application/x-www-form-urlencoded',
+                          "Cookie":JSON.stringify(object.access_token)
+			             },
+                         xhrFields: {
+            withCredentials: true
+        }
+			})
+			.success(function(data, status, headers, config) {
+			console.log(data);
+			console.log(status);
+
+            })
+	}
+}
+
+ //-------------------------------
+angular
+	.module('myApp')
+	.controller('starCtrl', starCtrl);
+
+function starCtrl($scope, $http) {
+	$scope.rating = 0;
+    $scope.rateFunction = function(rating) {
+    	var obj = {rating: rating};
+ 
+        $http({
+        	method: 'POST',
+        	url: 'http://www.koodet.com:6543/api',
+        	data:JSON.stringify(obj),
+        	headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      	})
+      	.success(function(data, status, headers, config) {
+          console.log(data);
+          console.log(status);
+        })
+      	.error(function(data, status, headers, config) {
+        	console.log(data);
+        	console.log(status);
+      	})
+    };
+}
+
+ //-------------------------------
+angular
+	.module('myApp')
+	.controller('viewQuestionController', viewQuestionController);
+
+function viewQuestionController($scope, $http, $routeParams, questionService,authService) {
+	$scope.fetchQuestion = fetchQuestion;
+	$scope.question = {};
+	
+
+	function fetchQuestion() {
+		questionService
+			.getQuestion($routeParams.qid)
+			.success(function(data) {
+				$scope.question = data;
+			})
 	}
 
-function isLoggedIn() {
-		return isLogged: false;
+}
+
+ //-------------------------------
+angular
+	.module('myApp')
+	.controller('viewSnippetController', viewSnippetController);
+
+function viewSnippetController($scope, $http, $routeParams, snippetService,authService) {
+	$scope.fetchSnippet = fetchSnippet;
+	$scope.snippet = {};
+
+	function fetchSnippet() {
+		snippetService
+			.getSnippet($routeParams.sid)
+			.success(function(data) {
+				$scope.snippet = data;
+			});
 	}
+}
+
+ //-------------------------------
+angular
+	.module('myApp')
+	.directive('starRating', starRating);
+
+function starRating() {
+
+    return {
+      restrict: 'A',
+      template: '<ul class="rating">' +
+                  '<li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)">' +
+                    '\u2605' +
+                  '</li>' +
+                '</ul>',
+      scope: {
+        ratingValue: '=',
+        max: '=',
+        readonly: '@',
+        onRatingSelected: '&'
+      },
+      link: function (scope, elem, attrs) {
+
+        var updateStars = function() {
+          scope.stars = [];
+          for (var  i = 0; i < scope.max; i++) {
+            scope.stars.push({filled: i < scope.ratingValue});
+          }
+        };
+
+        scope.toggle = function(index) {
+          if (scope.readonly && scope.readonly === 'true') {
+            return;
+          }
+          scope.ratingValue = index +1;
+          scope.onRatingSelected({rating: index +1});
+        };
+
+        scope.$watch('ratingValue', function(newVal, oldVal) {
+          if (newVal || newVal === 0) {
+            updateStars();
+          }
+        });
+      }
+    }	
+}
+
+ //-------------------------------
+angular
+	.module('myApp')
+	.config(configurator)
+function configurator($routeProvider,$httpProvider) {
+
+	$routeProvider
+        .when('/', {
+                templateUrl : 'pages/home.html',
+                controller  : 'PostController',
+                
+        })
+        .when('/register', {
+                templateUrl : 'pages/Signup.html',
+                controller  : 'signupController',
+                
+        })
+       .when('/profile', {
+             templateUrl : 'pages/userprofile.html',
+             controller  : 'profileController',
+                
+        })
+        
+        .when('/search', {
+                templateUrl : 'pages/search.html',
+                controller  : 'searchController',
+                
+        })
+        .when('/explore', {
+        		templateUrl : 'pages/list.langs.html',
+                controller : 'listLangsController',
+                //authenticated:true
+        })
+        .when('/language/:lanid', {
+                templateUrl: 'pages/langsnippets.html',
+                controller: 'listSnippetsController',
+
+        })
+        .when('/snippet/:sid', {
+                templateUrl: 'pages/view.snippet.html',
+                controller: 'viewSnippetController',
+        })
+        .when('/question/:qid', {
+                templateUrl: 'pages/view.question.html',
+                controller: 'viewQuestionController',
+        })
+        .when('/add', {
+                templateUrl : 'pages/add.snippet.html',
+                controller  : 'addSnippetController',
+                //authenticated:true
+        })
+        .when('/request', {
+
+                templateUrl : 'pages/request.html',
+                controller  : 'requestController',
+                //authenticated:true
+        })
+        .otherwise({
+        		redirectTo: 'pages/home.html'
+        });
+
+}	
+
+
+  /*myApp.run(["$rootScope", "$location", 'authService', 
+     function ($rootScope, $location, authService) {
+    $rootScope.$on("$routeChangeStart"
+    , function (event ,next , current) {
+
+        if (next.$$route.authenticated) {
+            if(!authService.getAuthStatus()){
+            $location.path('/');
+            }
+        }
+        
+    });
+}]);
+
+*/
+
+ //-------------------------------
+angular
+	.module('myApp')
+	.factory('authService', authService);
+
+authService.$inject = ['$cookies'];
+
+
+function authService($cookies,$http,$location,$rootScope) {
+		var service =  {
+			setCookieData: setCookieData,
+			//getCookieData: getCookieData,
+			clearCookieData: clearCookieData,
+			getaccess_token:getaccess_token
+			//getAuthStatus:getAuthStatus
+		};
+
+		return service;
+
+		function setCookieData(data) {
+
+				//$cookies["user_id"] = data.user_id;
+				//$cookies["user_name"]= data.username;
+				//$cookies["access_token"]= data.token;
+				//$cookies["currentUserSignedIn"] = true;
+				$cookies.put("user_id",data.user_id);
+				$cookies.put("user_name",data.username);
+				$cookies.put("access_token",data.token);
+
+		}
+
+
+		function getaccess_token() {
+			var access_token=$cookies.get("access_token");
+				return access_token;
+		}
+
+		function getuser_id() {
+			var user_id = $cookies.get("user_id");
+			return user_id;
+		}
+
+		function getuser_name(){
+			var user_name = $cookies.get("user_name");
+			return user_name;
+		}
+
+		function clearCookieData() {
+				$cookies.remove("user_id");
+				$cookies.remove("user_name");
+				$cookies.remove("access_token");
+				$cookies.remove("currentUserSignedIn");
+
+		}
+
+	/* function getAuthStatus(){
+
+	 	var status=$cookies.get('auth');
+	 	if (status){
+	 		return true;
+	 	}else{
+	 		return false;
+	 	}
+	 }*/
 
   }
-*/
+
 
  //-------------------------------
 angular
     .module('myApp')
     .factory('globalService', globalService);
-   globalService.$inject = ['$http','$cookieStore', '$location', '$filter'];
+   globalService.$inject = ['$http','$cookies', '$location', '$filter','authService'];
 
-    function globalService($http, $cookieStore, $location, $filter) {
+    function globalService($http, $cookies, $location, $filter,authService) {
     var service = {
         isAuth : isAuth,    
         setUser : setUser,
@@ -709,15 +848,15 @@ angular
 
     function isAuth () {
         if (globalService.user == null) {
-            globalService.user = $cookieStore.get('user');
+            globalService.user = $cookies.get('user');
         }
         return (globalService.user != null);
     }
     
     function setUser(newUser) {
         globalService.user = newUser;
-        if (globalService.user == null) $cookieStore.remove('user');
-        else $cookieStore.put('user', globalService.user);
+        if (globalService.user == null) $cookies.remove('user');
+        else $cookies.put('user', globalService.user);
     }
     function getUser() {
                 return globalService.user;
@@ -733,10 +872,10 @@ angular
 	.factory('langService', langService);
 
 /* dependency injection */
-langService.$inject = ['$http'];
+langService.$inject = ['$http','authService'];
 
 /* service implementation */
-function langService($http) {
+function langService($http,authService) {
 	var service = {
 		getLangs : getLangs,
 		getLang : getLang
@@ -760,19 +899,26 @@ angular
 	.factory('optionsService', optionsService);
 
 /* dependency injection */
-optionsService.$inject = ['$http'];
+optionsService.$inject = ['$http','authService','$cookies'];
 
 /* service implementation */
-function optionsService($http) {
+function optionsService($http,authService,$cookies) {
+		//var object =authService.getaccess_token();
 	var service = {
 		getOptions : getOptions
 	};
 
 	return service;
-
+   // var obj =$cookies.get("access_token");
 	function getOptions() {
-		return $http
-		.get('http://www.koodet.com:6543/api/elements');
+		return $http({
+            method: 'GET',
+            url: 'http://www.koodet.com:6543/api/elements',
+            crossDomain: true, 
+            xhrFields: { withCredentials: true},
+            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
+                
+         })
 	}
 
 }
@@ -782,7 +928,9 @@ angular
 	.module('myApp')
 	.factory('questionService', questionService);
 
-function questionService($http) {
+function questionService($http,authService) {
+	    var object = authService.getCookieData;
+
 	var service = {
 		getLangQuestions : getLangQuestions,	
 		getQuestion : getQuestion,
@@ -792,13 +940,26 @@ function questionService($http) {
 	return service;
 	
 	function getLangQuestions(langId) {
-		return $http
-		.get('http://www.koodet.com:6543/api/explore/' + langId + '/questions');
+		return $http({
+            method: 'GET',
+            url: 'http://www.koodet.com:6543/api/explore/' + langId + '/questions',
+            crossDomain: true, 
+            xhrFields: { withCredentials: true},
+            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
+                
+         })
 	}
 
 	function getQuestion(qid) {
-		return $http
-		.get('http://www.koodet.com:6543/api/questions/' + qid);
+		return $http({
+            method: 'GET',
+            url: 'http://www.koodet.com:6543/api/questions/' + qid,
+            crossDomain: true, 
+            xhrFields: { withCredentials: true},
+            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
+                
+         })
+		
 	}
 
 	function createQuestion(question) {
@@ -812,7 +973,7 @@ angular
 	.module('myApp')
 	.factory('snippetService', snippetService);
 
-function snippetService($http) {
+function snippetService($http,authService,$cookies) {
 	var service = {
 		getLangSnippets : getLangSnippets,
 		getSnippet : getSnippet,
@@ -822,24 +983,54 @@ function snippetService($http) {
 	return service;
 	
 	function getLangSnippets(langId) {
-		return $http
-		.get('http://www.koodet.com:6543/api/explore/' + langId + '/snippets');
-			
+
+		var obj =$cookies.get("access_token");
+    return $http({
+            method: 'GET',
+            url: 'http://www.koodet.com:6543/api/explore/' + langId + '/snippets',
+            crossDomain: true, 
+            xhrFields: { withCredentials: true},
+            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
+                
+         })
 	}
 
 	function getSnippet(sid) {
-		return $http
-		.get('http://koodet.com:6543/api/snippets/' + sid);
-	}
+		//var obj =$cookies.get("access_token");
+        return $http({
+            method: 'GET',
+            url: 'http://www.koodet.com:6543/api/snippets/' + sid,
+            crossDomain: true, 
+            xhrFields: { withCredentials: true},
+            headers: {"Cookie":"obj"}
+	})
+}
 
 	function createSnippet(snippet) {
-		return $http
-		.post('http://www.koodet.com:6543/api/snippets/', snippet);
-	}	
-
+		//var obj =$cookies.get("access_token");
+		return $http({
+            method: 'POST',
+            url: 'http://www.koodet.com:6543/api/snippets/',
+            data: snippet,
+            crossDomain: true, 
+            xhrFields: { withCredentials: true},
+            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
+           
+	})
+	
+    }	
+	
 	function compileSnippet(code) {
-		return $http.post('http://www.koodet.com/6543/api/compile', code)
-	}
+		var obj =$cookies.get("access_token");
+		return $http({
+            method: 'POST',
+            url: 'http://www.koodet.com/6543/api/compile', code,
+            crossDomain: true, 
+            xhrFields: { withCredentials: true},
+            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
+	})
+	
+    }
 }
 
  //-------------------------------
@@ -849,10 +1040,10 @@ angular
 	.factory('userService', userService);
 
 /* dependency injection */
-userService.$inject = ['$http'];
+userService.$inject = ['$http','authService'];
 
 /* service implementation */
-function userService($http) {
+function userService($http,authService) {
 	var service = {
 		getUser : geUser,
 		createUser : createUser

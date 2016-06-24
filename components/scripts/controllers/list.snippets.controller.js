@@ -4,10 +4,10 @@ angular
 	.controller('listSnippetsController', listSnippetsController);
 
 /* dependency injection */
-listSnippetsController.$inject = ['$scope', '$http', '$routeParams', 'snippetService', 'questionService'];
+listSnippetsController.$inject = ['$scope', '$http', '$routeParams', 'snippetService', 'questionService','authService'];
 
 /* controller implementation */
-function listSnippetsController($scope, $http, $routeParams, snippetService, questionService) {
+function listSnippetsController($scope, $http, $routeParams, snippetService, questionService,authService) {
 
 	$scope.fetchSnippets = fetchSnippets;
 	$scope.fetchQuestions = fetchQuestions;

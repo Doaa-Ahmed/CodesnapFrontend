@@ -3,9 +3,7 @@ angular
 	.config(configurator)
 function configurator($routeProvider,$httpProvider) {
 
-     //$httpProvider.defaults.withCredentials = true;
 	$routeProvider
-    // route for the home page
         .when('/', {
                 templateUrl : 'pages/home.html',
                 controller  : 'PostController',
@@ -16,26 +14,26 @@ function configurator($routeProvider,$httpProvider) {
                 controller  : 'signupController',
                 
         })
-        //.when('/Logout', {
-          //      templateUrl : '',
-            //controller  : 'LogoutController'
-
-        //})
-        // route for the about page
+       .when('/profile', {
+             templateUrl : 'pages/userprofile.html',
+             controller  : 'profileController',
+                
+        })
+        
         .when('/search', {
                 templateUrl : 'pages/search.html',
                 controller  : 'searchController',
                 
         })
-        // route for the about page
         .when('/explore', {
         		templateUrl : 'pages/list.langs.html',
                 controller : 'listLangsController',
-                
+                //authenticated:true
         })
         .when('/language/:lanid', {
                 templateUrl: 'pages/langsnippets.html',
                 controller: 'listSnippetsController',
+
         })
         .when('/snippet/:sid', {
                 templateUrl: 'pages/view.snippet.html',
@@ -45,51 +43,36 @@ function configurator($routeProvider,$httpProvider) {
                 templateUrl: 'pages/view.question.html',
                 controller: 'viewQuestionController',
         })
-        // route for the about page
         .when('/add', {
                 templateUrl : 'pages/add.snippet.html',
                 controller  : 'addSnippetController',
+                //authenticated:true
         })
-        // route for the contact page
         .when('/request', {
 
                 templateUrl : 'pages/request.html',
-                controller  : 'requestController'
+                controller  : 'requestController',
+                //authenticated:true
         })
         .otherwise({
-        		redirectTo: 'pages/home.html',
-                //withCredentials: true
+        		redirectTo: 'pages/home.html'
         });
 
 }	
-/*app.run(['$rootScope', '$location', 'Auth', function ($rootScope, $location, Auth) {
-    $rootScope.$on('$routeChangeStart', function (event) {
 
-        if (Auth.isLoggedIn()) {
-            console.log('DENY');
-            event.preventDefault();
-            //$location.path('/home');
+
+  /*myApp.run(["$rootScope", "$location", 'authService', 
+     function ($rootScope, $location, authService) {
+    $rootScope.$on("$routeChangeStart"
+    , function (event ,next , current) {
+
+        if (next.$$route.authenticated) {
+            if(!authService.getAuthStatus()){
+            $location.path('/');
+            }
         }
-        else {
-            console.log('ALLOW');
-            //$location.path('/home');
-        }
+        
     });
 }]);
 
-/*app.run(['$rootScope', '$location', 'Auth',function($rootScope, $location, $route,Auth) {
-
-    var routesOpenToPublic = [];
-    angular.forEach($route.routes, function(route, path) {
-        // push route onto routesOpenToPublic if it has a truthy publicAccess value
-        route.publicAccess && (routesOpenToPublic.push(path));
-    });
-
-    $rootScope.$on('$routeChangeStart', function(event, nextLoc, currentLoc) {
-        var closedToPublic = (-1 == routesOpenToPublic.indexOf($location.path()));
-        if(closedToPublic && !user.isLoggedIn()) {
-            $location.path('/home');
-        }
-    });
-}]);*/
-
+*/

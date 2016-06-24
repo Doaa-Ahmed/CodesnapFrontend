@@ -4,10 +4,10 @@ angular
     .controller('addSnippetController', addSnippetController);
 
 /* dependency injection */
-addSnippetController.$inject = ['$scope', '$http', '$location', 'optionsService', 'snippetService'];
+addSnippetController.$inject = ['$scope','$cookies', '$http', '$location', 'optionsService', 'snippetService','authService'];
 
 /* controller implementation */
-function addSnippetController($scope, $http, $location, optionsService, snippetService) {
+function addSnippetController($scope,$cookies, $http, $location, optionsService, snippetService,authService) {
 
     $scope.snippet = {};
     $scope.options = {};
@@ -31,23 +31,21 @@ function addSnippetController($scope, $http, $location, optionsService, snippetS
         $scope.snippet.code_type = $scope.snippet.code_type.id; 
     }
 
-    // function compileSnippet() {
-    //     snippetService.compileSnippet(JSON.stringify($scope.snippet.code)).success(function(data){
-    //         console.log(data);
-    //     })
-    // }
 
     $scope.compileSnippet=function(){
 
         var snap = {
             'code': $scope.snippet.code
-        };
 
+        };
         $http({
             method: 'POST',
             url: 'http://www.koodet.com:6543/api/compile',
             data:JSON.stringify(snap),
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            crossDomain: true, 
+            xhrFields: { withCredentials: true},
+            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
+        
         })
         .success(function(data, status, headers, config) {
             $scope.snippet.output = data.output;
@@ -64,29 +62,24 @@ function addSnippetController($scope, $http, $location, optionsService, snippetS
             'context': $scope.snippet.context.id,
             'tags': $scope.snippet.tags,
             'language': $scope.snippet.language.id,
-            'code_type': $scope.snippet.code_type.id
+            'code_type': $scope.snippet.code_type.id,
+            'user_id':$cookies.get("user_id")
     };
 
     $http({
         method: 'POST',
         url: 'http://www.koodet.com:6543/api/snippets',
         data:JSON.stringify(snap),
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    })
+        crossDomain: true, 
+        xhrFields: { withCredentials: true},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded' }
+       })
     .success(function(data, status, headers, config) {
-        console.log($scope.snippet.output)
+        console.log($scope.snippet.output);
         console.log(status);
         $location.path('/snippet/'+ data.snippet_id);
 
     })
     }
 
-    // function postSnippet() {
-    //     prepareSnippet();
-    //     snippetService
-    //         .createSnippet($scope.snippet)
-    //         .success(function(data) {
-    //             console.log(data);
-    //         })
-    // }
 }

@@ -1,15 +1,20 @@
 angular
-	.module('myApp')
-	.controller('LogoutController', LogoutController);
-LogoutController.$inject = ['$scope','$rootScope','$window','authService'];
+  .module('myApp')
+  .controller('LogoutController', LogoutController);
+LogoutController.$inject = ['$http','$scope','$rootScope','$location','authService','$cookies'];
 
-function LogoutController($scope,$rootScope, $location, $route,authService) {
-	$scope.logout = logout;
-function logout() {
-	           
-                authService.clearCookieData();
-
-                 $rootScope.currentUserSignedIn = authService.getCookieData["currentUserSignedIn"];
-
-            }
-        }
+function LogoutController($http,$scope,$rootScope, $location,authService,$cookies) {
+  $scope.logout = logout;
+    
+    function logout() {
+      
+       $rootScope.currentUserSignedIn=false;
+        //$rootScope.userInfo = authService.getCookieData;
+        //console.log(status);
+        //console.log("hi");
+        //$cookies.remove("auth");
+        authService.clearCookieData();
+        //console.log("hey");
+        $location.path('/');
+      }
+  }

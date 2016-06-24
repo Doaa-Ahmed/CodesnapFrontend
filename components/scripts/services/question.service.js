@@ -2,7 +2,9 @@ angular
 	.module('myApp')
 	.factory('questionService', questionService);
 
-function questionService($http) {
+function questionService($http,authService) {
+	    var object = authService.getCookieData;
+
 	var service = {
 		getLangQuestions : getLangQuestions,	
 		getQuestion : getQuestion,
@@ -12,13 +14,26 @@ function questionService($http) {
 	return service;
 	
 	function getLangQuestions(langId) {
-		return $http
-		.get('http://www.koodet.com:6543/api/explore/' + langId + '/questions');
+		return $http({
+            method: 'GET',
+            url: 'http://www.koodet.com:6543/api/explore/' + langId + '/questions',
+            crossDomain: true, 
+            xhrFields: { withCredentials: true},
+            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
+                
+         })
 	}
 
 	function getQuestion(qid) {
-		return $http
-		.get('http://www.koodet.com:6543/api/questions/' + qid);
+		return $http({
+            method: 'GET',
+            url: 'http://www.koodet.com:6543/api/questions/' + qid,
+            crossDomain: true, 
+            xhrFields: { withCredentials: true},
+            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
+                
+         })
+		
 	}
 
 	function createQuestion(question) {
