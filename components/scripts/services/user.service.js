@@ -4,10 +4,10 @@ angular
 	.factory('userService', userService);
 
 /* dependency injection */
-userService.$inject = ['$http'];
+userService.$inject = ['$http','authService'];
 
 /* service implementation */
-function userService($http) {
+function userService($http,authService) {
 	var service = {
 		getUser : geUser,
 		createUser : createUser

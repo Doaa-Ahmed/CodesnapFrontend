@@ -14,12 +14,20 @@ function snippetController($scope, $http) {
     			'language': $scope.inputData.Language.id,
     			'code_type': $scope.inputData.Codetype.id,
     		};
+    		var object= {
+              'Cookie': authService.getCookieData()
+      };
 
     	    $http({
 				method: 'POST',
 				url: 'http://www.koodet.com:6543/api/snippets',
 				data:JSON.stringify(snap),
-				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+				headers: {'Content-Type': 'application/x-www-form-urlencoded',
+                          "Cookie":JSON.stringify(object.access_token)
+			             },
+                         xhrFields: {
+            withCredentials: true
+        }
 			})
 			.success(function(data, status, headers, config) {
 			console.log(data);

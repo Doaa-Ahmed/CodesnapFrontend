@@ -20,7 +20,9 @@
           </button>
         </span>
       </div>
-      <div class="col-md-3" ng-hide="currentUserSignedIn" ng-show="currentUserLogedout">
+
+      
+      <div class="col-md-3" ng-hide="currentUserSignedIn">
         <ul class="nav navbar-nav" style="float:right;">
           <li>
             <a class="navAnchor" data-toggle="modal" data-target="#signUpModal"  style="cursor:pointer;">
@@ -40,8 +42,16 @@
     <span style="color: white; font-weight: bolder; font-family: Arial; border-radius: 5px;">Welcome {{username}}</span>
     </div>
       </div>
+      <div ng-show="currentUserSignedIn" >
+        <div ng-hide="currentUserLogedout">
+          <a href="#/profile" class="navAnchor" data-toggle="modal" data-target="#loginModal" style="cursor:pointer;">
+            <span class="glyphicon glyphicon-log-in">profile</span> 
+          </a>
+        </div>
+       </div>
 
-  <div ng-controller="LogoutController" class="col-md-3" class="nav navbar-nav" style="float:right;" ng-show="currentUserSignedIn" >
+  <div ng-controller="LogoutController" class="col-md-3" class="nav navbar-nav" style="float:right;"
+        ng-show="currentUserSignedIn" >
     <div ng-hide="currentUserLogedout">
       <a href="/"> 
         <span ng-click="logout()" style="color: white; font-weight: bolder; font-family: Arial; border-radius: 5px;">Logout

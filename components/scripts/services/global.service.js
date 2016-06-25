@@ -1,9 +1,9 @@
 angular
     .module('myApp')
     .factory('globalService', globalService);
-   globalService.$inject = ['$http','$cookieStore', '$location', '$filter'];
+   globalService.$inject = ['$http','$cookies', '$location', '$filter','authService'];
 
-    function globalService($http, $cookieStore, $location, $filter) {
+    function globalService($http, $cookies, $location, $filter,authService) {
     var service = {
         isAuth : isAuth,    
         setUser : setUser,
@@ -15,15 +15,15 @@ angular
 
     function isAuth () {
         if (globalService.user == null) {
-            globalService.user = $cookieStore.get('user');
+            globalService.user = $cookies.get('user');
         }
         return (globalService.user != null);
     }
     
     function setUser(newUser) {
         globalService.user = newUser;
-        if (globalService.user == null) $cookieStore.remove('user');
-        else $cookieStore.put('user', globalService.user);
+        if (globalService.user == null) $cookies.remove('user');
+        else $cookies.put('user', globalService.user);
     }
     function getUser() {
                 return globalService.user;

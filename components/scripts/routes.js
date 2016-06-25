@@ -80,7 +80,6 @@ function configurator($routeProvider, $httpProvider, $locationProvider) {
 }
 /*app.run(['$rootScope', '$location', 'Auth', function ($rootScope, $location, Auth) {
     $rootScope.$on('$routeChangeStart', function (event) {
-
         if (Auth.isLoggedIn()) {
             console.log('DENY');
             event.preventDefault();
@@ -92,15 +91,12 @@ function configurator($routeProvider, $httpProvider, $locationProvider) {
         }
     });
 }]);
-
 /*app.run(['$rootScope', '$location', 'Auth',function($rootScope, $location, $route,Auth) {
-
     var routesOpenToPublic = [];
     angular.forEach($route.routes, function(route, path) {
         // push route onto routesOpenToPublic if it has a truthy publicAccess value
         route.publicAccess && (routesOpenToPublic.push(path));
     });
-
     $rootScope.$on('$routeChangeStart', function(event, nextLoc, currentLoc) {
         var closedToPublic = (-1 == routesOpenToPublic.indexOf($location.path()));
         if(closedToPublic && !user.isLoggedIn()) {
