@@ -58,6 +58,7 @@ function addSnippetController($scope, $http, $location, optionsService, snippetS
 
     $scope.postSnippet=function(){
     var snap = {
+            'user_id':1, 
             'title': $scope.snippet.title,
             'description': $scope.snippet.description,
             'code': $scope.snippet.code,

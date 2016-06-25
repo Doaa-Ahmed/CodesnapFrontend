@@ -124,6 +124,7 @@ function addSnippetController($scope, $http, $location, optionsService, snippetS
 
     $scope.postSnippet=function(){
     var snap = {
+            'user_id':1, 
             'title': $scope.snippet.title,
             'description': $scope.snippet.description,
             'code': $scope.snippet.code,
@@ -343,7 +344,8 @@ function requestController($scope, $http) {
     $scope.Postquestion=function(){
 
     	var snap = {
-    		'title': $scope.inputData.Title,
+            'user_id':1,
+    		    'title': $scope.inputData.Title,
             'description': $scope.inputData.Description,
            	'context': $scope.inputData.Context.id,
             'tags': $scope.inputData.Tags,
