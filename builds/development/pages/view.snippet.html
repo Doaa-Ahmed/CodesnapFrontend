@@ -20,7 +20,7 @@
               <span title="Author" style="font-size:14px;font-family:sans-serif"> {{snippet.username}}</span>
               <br>
               <b>posted</b>
-              <span>April 19,2016</span>
+              <span>{{snippet.date}}</span>
             </div>
 
           </div>
@@ -87,24 +87,38 @@
         </div>
         <div class="col-md-1 col-sm-1">
           <h5 class="wrap">
-            {{snippet.code_type}}
-          </h5>
-        <div class="col-md-2 form-group">
-          <textarea class="form-control" rows="1" readonly style="resize:none;">
             {{snippet.context}}
-          </textarea>
-        </div>
+          </h5>
+
         <div class="labels">
           <h5 class="addLabels labelsFont">Tags</h5>
         </div>
         <div class="col-md-6 col-sm-6">
           <ul class="snippet-tags">
-            <li class="li-tags"><a class="li-tags-a"><span class="tags-span">tag1</span></a></li>
-            <li class="li-tags"><a class="li-tags-a"><span class="tags-span">tag2</span></a></li>
-            <li class="li-tags"><a class="li-tags-a"><span class="tags-span">sfasacxs</span></a></li>
-            <li class="li-tags"><a class="li-tags-a"><span class="tags-span">sdfasdf</span></a></li>
-            <li class="li-tags"><a class="li-tags-a"><span class="tags-span">tag5</span></a></li>
+            <li class="li-tags"  ng-repeat="tag in snippet.tags"><a class="li-tags-a"><span class="tags-span" >{{tag}}</span></a></li>                         
           </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" ng-repeat="comment in snippet.comments">
+    <div class="col-md-12 col-sm-12" style="padding-left:40px;">
+      <div class="row prev-answer">
+        <div class="col-md-2 col-sm-2">
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <span title="Author" class="glyphicon glyphicon-user" aria-hidden="true"></span>
+              <span title="Author" style="font-size:14px;font-family:sans-serif"> {{comment.username}}</span>
+              <br>
+              <b>posted</b>
+              <span>{{comment.date}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8 col-sm-8" style="padding-left:0px;">
+          <textarea class="form-control addTextarea" rows="5" style="resize:none;" readonly>
+            {{comment.description}}
+          </textarea>
         </div>
       </div>
     </div>

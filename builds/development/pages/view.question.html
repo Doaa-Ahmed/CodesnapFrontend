@@ -12,10 +12,10 @@
               <span> answers</span>
               <br>
               <span title="Author" class="glyphicon glyphicon-user" aria-hidden="true"></span>
-              <span title="Author" style="font-size:14px;font-family:sans-serif"> {{snippet.username}}</span>
+              <span title="Author" style="font-size:14px;font-family:sans-serif"> {{question.username}}</span>
               <br>
               <b>posted</b>
-              <span>April 19,2016</span>
+              <span>{{question.date}}</span>
             </div>
           </div>
         </div>
@@ -23,12 +23,14 @@
           <div class="row">
             <div class="col-md-12 col-sm-12">
               <h3 class="snipp-header snipp-title">
+                {{question.title}}
               </h3>
             </div>
           </div>
           <div class="row" style="margin-top:10px;">
             <div class="col-md-9 col-sm-9">
               <p class="snipp-desc">
+                {{question.description}}
               </p>
             </div>
           </div>
@@ -45,6 +47,7 @@
         </div>
         <div class="col-md-1 col-sm-1">
           <h5 class="wrap">
+            {{question.language}}
           </h5>
         </div>
         <div class="labels">
@@ -52,6 +55,7 @@
         </div>
         <div class="col-md-1 col-sm-1">
           <h5 class="wrap">
+            {{question.code_type}}
           </h5>
         </div>
       </div>
@@ -61,6 +65,7 @@
         </div>
         <div class="col-md-1 col-sm-1">
           <h5 class="wrap">
+            {{question.context}}
           </h5>
         </div>
         <div class="labels">
@@ -68,11 +73,7 @@
         </div>
         <div class="col-md-6 col-sm-6">
           <ul class="snippet-tags">
-            <li class="li-tags"><a class="li-tags-a"><span class="tags-span">tag1</span></a></li>
-            <li class="li-tags"><a class="li-tags-a"><span class="tags-span">tag2</span></a></li>
-            <li class="li-tags"><a class="li-tags-a"><span class="tags-span">sfasacxs</span></a></li>
-            <li class="li-tags"><a class="li-tags-a"><span class="tags-span">sdfasdf</span></a></li>
-            <li class="li-tags"><a class="li-tags-a"><span class="tags-span">tag5</span></a></li>
+            <li class="li-tags"  ng-repeat="tag in question.tags"><a class="li-tags-a"><span class="tags-span" >{{tag}}</span></a></li>                         
           </ul>
         </div>
       </div>
@@ -112,23 +113,23 @@
       <h4 class="snipp-header">Previous Answers</h4>
     </div>
   </div>
-  <div class="row">
+  <div class="row" ng-repeat="answer in question.answers">
     <div class="col-md-12 col-sm-12" style="padding-left:40px;">
       <div class="row prev-answer">
         <div class="col-md-2 col-sm-2">
           <div class="row">
             <div class="col-md-12 col-sm-12">
               <span title="Author" class="glyphicon glyphicon-user" aria-hidden="true"></span>
-              <span title="Author" style="font-size:14px;font-family:sans-serif"> username</span>
+              <span title="Author" style="font-size:14px;font-family:sans-serif"> {{answer.username}}</span>
               <br>
               <b>posted</b>
-              <span>April 19,2016</span>
+              <span>{{answer.date}}</span>
             </div>
           </div>
         </div>
         <div class="col-md-8 col-sm-8" style="padding-left:0px;">
-          <textarea class="form-control addTextarea" rows="15" style="resize:none;" readonly>
-            hena hykon fy el previous answers 3la el snippet da
+          <textarea class="form-control addTextarea" rows="11" style="resize:none;" readonly>
+            {{answer.code}}
           </textarea>
         </div>
       </div>
