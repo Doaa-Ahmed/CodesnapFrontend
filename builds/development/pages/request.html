@@ -1,35 +1,35 @@
 <div class="container-fluid reqSnipContainer" ng-controller="requestController">
   <div class="row reqSnippetRow">
-    <div class="col-md-12" style="padding-left:40px;">
+    <div class="col-md-12 col-sm-12" style="padding-left:40px;">
       <div class="row">
-        <div class="col-md-8">
-          <h2 id="reqMainHeader">Request A Snippet?</h2>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+          <h2 class="snipp-header">Request A Snippet?</h2>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-8 form-group">
+        <div class="col-md-8 col-sm-8 labels form-group">
           <label for="probTitle"><h5>Problem Title:</h5></label>
-          <input type="text" class="form-control" id="probTitle" placeholder="Title" required ng-model="inputData.Title"></textarea>
+          <input type="text" class="form-control input-focus" id="probTitle" placeholder="Title" required ng-model="inputData.Title"></textarea>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-8 form-group">
+        <div class="col-md-8 col-sm-8 labels form-group">
           <label for="probDescription"><h5>Description:</h5></label>
-          <textarea class="form-control reqTextarea" placeholder="Add your describtion here..." rows="15" id="probDescription" required tabindex="101" data-min-length="" ng-model="inputData.Description"></textarea>
+          <textarea class="form-control reqTextarea input-focus" placeholder="Add your describtion here..." rows="5" id="probDescription" required tabindex="101" data-min-length="" ng-model="inputData.Description"></textarea>
         </div>
       </div>
       <div class="row" style="padding-top:20px;">
         <div class="labels">
           <label for="lang"><h5 class="addLabels">Language</h5></label>
         </div>
-        <div class="col-md-2 form-group">
+        <div class="col-md-2 col-sm-2 form-group">
           <select class="form-control" id="language" ng-model="inputData.Language" ng-options="x.name for x in lan" >
           </select>
         </div>
         <div class="labels">
           <label for="snipType"><h5 class="addLabels">Type</h5></label>
         </div>
-        <div class="col-md-2 form-group">
+        <div class="col-md-2 col-sm-2 form-group">
             <select class="form-control" id="type" ng-model="inputData.Codetype" ng-options="x.name for x in typ" required>
 
             </select>
@@ -39,21 +39,36 @@
         <div class="labels">
           <label for="reqContext"><h5 class="addLabels">Context</h5></label>
         </div>
-        <div class="col-md-2 form-group">
+        <div class="col-md-2 col-sm-2 form-group">
           <select class="form-control" id="context" ng-model="inputData.Context" ng-options="x.name for x in con" required>
 
           </select>
         </div>
         <div class="labels">
-          <label for="reqTags"><h5 class="addLabels">Tags</h5></label>
+          <h5 class="addLabels">Tags</h5>
         </div>
-        <div class="col-md-4 form-group">
-<input type="text" class="form-control" id="tags" ng-model="inputData.Tags">
-  </div>
+
+        <div class="col-md-6 col-sm-6">
+          <ul class="ul-input-tags">
+            <li class="input-li-tags">
+              <input class="input-tags" type="text" ng-model="inputData.Tags">
+            </li>
+            <li class="input-li-tags">
+              <input class="input-tags" type="text">
+            </li>
+            <li class="input-li-tags">
+              <input class="input-tags" type="text">
+            </li>
+            <li class="input-li-tags">
+              <input class="input-tags" type="text">
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="row" style="padding:30px 0 30px;">
-        <div class="col-md-2">
-<button id="addSnippetBtn" type="submit" class="btn btn-warning" ng-click="Postquestion()">Submit</button>        </div>
+      <div class="row" style="margin:10px 0 30px;">
+        <div class="col-md-2 col-sm-2" style="padding-left:0px;">
+          <button type="submit" class="btn sub-button" ng-click="Postquestion()">Submit</button>
+        </div>
       </div>
     </div>
   </div>

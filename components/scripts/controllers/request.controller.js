@@ -33,7 +33,8 @@ function requestController($scope,$cookies, $http,$location,authService) {
     $scope.Postquestion=function(){
 
     	var snap = {
-    		'title': $scope.inputData.Title,
+            'user_id':1,
+    		    'title': $scope.inputData.Title,
             'description': $scope.inputData.Description,
            	'context': $scope.inputData.Context.id,
             'tags': $scope.inputData.Tags,
