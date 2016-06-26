@@ -306,6 +306,9 @@ function profileController($scope,$cookies, $http, $location){
 	      	$scope.firstname = data.firstname;
 	      	$scope.lastname = data.lastname;
 	      	$scope.email = data.email;
+            $scope.country = data.country;
+            $scope.snippets = data.snippets;
+            $scope.questions = data.questions;
 	      })
 
 }
