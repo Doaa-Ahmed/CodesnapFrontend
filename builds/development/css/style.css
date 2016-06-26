@@ -941,3 +941,6 @@ li a.li-tags-a:hover > span {
   border-bottom: 1px solid #888;
   margin-bottom: 20px;
   padding-bottom: 20px; }
+
+.ace_editor {
+  height: 200px; }

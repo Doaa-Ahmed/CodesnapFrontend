@@ -5,7 +5,7 @@
 (function() {
 	'use strict';
 
-	var app = angular.module('myApp',['ngRoute' ,'ngCookies']);
+	var app = angular.module('myApp',['ngRoute' ,'ngCookies','ui.ace']);
 
 })();
 
@@ -106,6 +106,7 @@ function addSnippetController($scope,$cookies, $http, $location, optionsService,
     }
 
 
+    //snippet editor functions
     $scope.compileSnippet=function(){
 
         var snap = {
@@ -127,6 +128,27 @@ function addSnippetController($scope,$cookies, $http, $location, optionsService,
 
         })
     }
+
+    $scope.aceLoaded = function(_editor) {
+    // Options
+    console.log(_editor);
+        var _session = _editor.getSession();
+        var _renderer = _editor.renderer;
+
+        _editor.setValue("Add Your Code HERE!",1);
+        _session.setMode("ace/mode/javascript");
+
+        var code = _editor.getValue();
+        console.log(code);
+
+        // _editor.setReadOnly(true);
+    };
+
+    $scope.aceChanged = function(e) {
+        snippet.code= _editor.getValue();
+        console.log(e)
+    //
+    };
 
     $scope.postSnippet=function(){
     var snap = {
@@ -678,16 +700,46 @@ function viewSnippetController($scope, $http, $routeParams, $location, $route, $
 			});
 	}
 
-	function addComment() {
+	$scope.aceLoaded = function(_editor) {
+    // Options
+		_editor.setReadOnly(true);
 
-		var comment = {
+        _editor.setVale(snippet.code);
+        console.log(_editor);
+    };
 
-			"user_id": $cookies.get("user_id"),
-			"description": $scope.new_comment,
-			"snippet": $scope.snippet.snippet_id
-		};
+    $scope.compileSnippet=function(){
 
-		$http({
+        var snap = {
+            'code': $scope.snippet.code
+
+        };
+        $http({
+            method: 'POST',
+            url: 'http://www.koodet.com:6543/api/compile',
+            data:JSON.stringify(snap),
+            crossDomain: true, 
+            xhrFields: { withCredentials: true},
+            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
+        
+        })
+        .success(function(data, status, headers, config) {
+            $scope.snippet.output = data.output;
+            console.log(status);
+
+        })
+    };
+
+    function addComment() {
+
+        var comment = {
+
+            "user_id": $cookies.get("user_id"),
+            "description": $scope.new_comment,
+            "snippet": $scope.snippet.snippet_id
+        };
+
+        $http({
             method: 'POST',
             url: 'http://www.koodet.com:6543/api/comments',
             data: JSON.stringify(comment),
@@ -698,11 +750,11 @@ function viewSnippetController($scope, $http, $routeParams, $location, $route, $
         })
         .success(function(data, status, headers, config) {
             $scope.new_comment = "";
-            $route.reload();	
+            $route.reload();    
             console.log(status);
 
         })
-	}
+    }
 }
 
  //-------------------------------
