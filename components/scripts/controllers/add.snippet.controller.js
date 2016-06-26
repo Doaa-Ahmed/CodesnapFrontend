@@ -32,6 +32,7 @@ function addSnippetController($scope,$cookies, $http, $location, optionsService,
     }
 
 
+    //snippet editor functions
     $scope.compileSnippet=function(){
 
         var snap = {
@@ -53,6 +54,27 @@ function addSnippetController($scope,$cookies, $http, $location, optionsService,
 
         })
     }
+
+    $scope.aceLoaded = function(_editor) {
+    // Options
+    console.log(_editor);
+        var _session = _editor.getSession();
+        var _renderer = _editor.renderer;
+
+        _editor.setValue("Add Your Code HERE!",1);
+        _session.setMode("ace/mode/javascript");
+
+        var code = _editor.getValue();
+        console.log(code);
+
+        // _editor.setReadOnly(true);
+    };
+
+    $scope.aceChanged = function(e) {
+        snippet.code= _editor.getValue();
+        console.log(e)
+    //
+    };
 
     $scope.postSnippet=function(){
     var snap = {
