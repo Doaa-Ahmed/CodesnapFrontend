@@ -59,13 +59,13 @@
 											</div>
 											<div class="col-md-8 col-sm-8">
 												<ul class="ul-tags">
-													    <li class="li-tag"  ng-repeat="tag in ['ss','loll']"><a class="li-tag-a"><span class="tag-span" >{{tag}}</span></a></li>
+													    <li class="li-tag"  ng-repeat="tag in snippet.tags"><a class="li-tag-a"><span class="tag-span" >{{tag}}</span></a></li>
 													
 												</ul>
 											</div>
 										</div>
 									</div>
-                  <div class="col-md-2 col-sm-2">
+<!--                   <div class="col-md-2 col-sm-2">
 										<div class="row">
 											<div class="col-md-12 col-sm-12">
 
@@ -99,7 +99,20 @@
 												<span> votes</span>
 											</div>
 										</div>
-									</div>
+									</div> -->
+							<div class="col-md-2 col-sm-2 col-xs-2">
+		                      <div class="row">
+		                        <div class="col-md-12 col-sm-12 col-xs-12">
+		                          <span class="stars-container stars-{{snippet.rank}}">★★★★★</span>
+		                        </div>
+		                      </div>
+		                      <div class="row">
+		                        <div class="col-md-12 col-sm-12 col-xs-12">
+		                          <b>{{snippet.votes}}</b>
+		                          <span> votes</span>
+                                </div>
+                                </div>
+                                </div>
 								</div>
 							</div>
 

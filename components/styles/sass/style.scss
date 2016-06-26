@@ -149,6 +149,86 @@ end of dropdown and setting menue style */
 /* end of header style */
 
 
+body { font-size: 18px; }
+
+.stars-container {
+  position: relative;
+  display: inline-block;
+  color: transparent;
+}
+
+.stars-container:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '★★★★★';
+  color: lightgray;
+}
+
+.stars-container:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '★★★★★';
+  color: gold;
+  overflow: hidden;
+}
+
+.stars-0:after { width: 0%; }
+.stars-1:after { width: 2%; }
+.stars-2:after { width: 4%; }
+.stars-3:after { width: 6%; }
+.stars-4:after { width: 8%; }
+.stars-5:after { width: 10%; }
+.stars-6:after { width: 12%; }
+.stars-7:after { width: 14%; }
+.stars-8:after { width: 16%; }
+.stars-9:after { width: 18%; }
+.stars-10:after { width: 20%; }
+.stars-11:after { width: 22%; }
+.stars-12:after { width: 24%; }
+.stars-13:after { width: 26%; }
+.stars-14:after { width: 28%; }
+.stars-15:after { width: 30%; }
+.stars-16:after { width: 32%; }
+.stars-17:after { width: 34%; }
+.stars-18:after { width: 36%; }
+.stars-19:after { width: 38%; }
+.stars-20:after { width: 40%; }
+.stars-21:after { width: 42%; }
+.stars-22:after { width: 44%; }
+.stars-23:after { width: 46%; }
+.stars-24:after { width: 48%; }
+.stars-25:after { width: 50%; }
+.stars-26:after { width: 52%; }
+.stars-27:after { width: 54%; }
+.stars-28:after { width: 56%; }
+.stars-29:after { width: 58%; }
+.stars-30:after { width: 60%; }
+.stars-31:after { width: 62%; }
+.stars-32:after { width: 64%; }
+.stars-33:after { width: 66%; }
+.stars-34:after { width: 68%; }
+.stars-35:after { width: 70%; }
+.stars-36:after { width: 72%; }
+.stars-37:after { width: 74%; }
+.stars-38:after { width: 76%; }
+.stars-39:after { width: 78%; }
+.stars-40:after { width: 80%; }
+.stars-41:after { width: 82%; }
+.stars-42:after { width: 84%; }
+.stars-43:after { width: 86%; }
+.stars-44:after { width: 88%; }
+.stars-45:after { width: 90%; }
+.stars-46:after { width: 92%; }
+.stars-47:after { width: 94%; }
+.stars-48:after { width: 96%; }
+.stars-49:after { width: 98%; }
+.stars-50:after { width: 100; }
+
+
+
+
 /* search bar style */
 #inputSearch {
   height: 70px;

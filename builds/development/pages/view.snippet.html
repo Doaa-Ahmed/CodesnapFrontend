@@ -5,16 +5,17 @@
         <div class="col-md-2 col-sm-2">
           <div class="row">
             <div class="col-md-12 col-sm-12">
-              <span class="stars-container stars-8" style="font-size:20px;">★★★★★</span>
+
+              <span class="stars-container stars-{{snippet.rank}}">★★★★★</span>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12 col-sm-12">
-              <b>100</b>
+              <b>{{snippet.votes}}</b>
               <span> votes</span>
               <br>
               <b>300</b>
-              <span> views</span>
+              <span>{{snippet.views}}</span>
               <br>
               <span title="Author" class="glyphicon glyphicon-user" aria-hidden="true"></span>
               <span title="Author" style="font-size:14px;font-family:sans-serif"> {{snippet.username}}</span>
