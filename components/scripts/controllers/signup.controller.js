@@ -1,4 +1,4 @@
-angular
+	angular
   .module('myApp')
   .controller('signupController', signupController);
 

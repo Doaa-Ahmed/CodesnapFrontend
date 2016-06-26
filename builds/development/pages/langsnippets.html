@@ -33,19 +33,18 @@
           <div class="tab-content">
             <div class="tab-pane fade in active" id="tab1primary" ng-init=fetchSnippets()>
             <div ng-repeat="snippet in snippets">
-
-							<div class="col-md-12 col-sm-12 title-to-snippet">
-								<div class="row lang-snip-row">
-                  <div class="col-md-2 col-sm-2">
+				<div class="col-md-12 col-sm-12 title-to-snippet">
+					<div class="row lang-snip-row">
+                  	<div class="col-md-2 col-sm-2">
                     <span title="Author" class="glyphicon glyphicon-user" aria-hidden="true"></span>
                     <span title="Author" style="font-size:14px;font-family:sans-serif"> {{snippet.username}}</span>
                     <br>
                     <span>{{snippet.date}}</span>
-                  </div>
-									<div class="col-md-8 col-sm-8" style="padding-left:0;">
+                  	</div>
+						<div class="col-md-8 col-sm-8" style="padding-left:0;">
 										<div class="row">
 											<div class="col-md-12 col-sm-12">
-												<a class="explore-anckor" ng-href="snippet/{{snippet.id}}">
+												<a class="explore-anckor" ng-href="/snippet/{{snippet.id}}">
 													<h4 class="snip-title">
 														{{snippet.title}}
 													</h4>

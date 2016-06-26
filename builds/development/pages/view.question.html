@@ -87,25 +87,26 @@
           <h4 class="snipp-header">Add your snippet here:</h4>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-2 col-sm-2">
-          <div class="row">
-            <div class="col-md-12 col-sm-12">
-              <span title="Author" class="glyphicon glyphicon-user" aria-hidden="true"></span>
-              <span title="Author" style="font-size:14px;font-family:sans-serif"> username</span>
-              <br>
-              <b>posted</b>
-              <span>April 19,2016</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-8 col-sm-8" style="padding-left:0px;">
-          <textarea class="form-control input-focus addTextarea" rows="15" style="resize:none;"></textarea>
-          <button type="submit" class="btn sub-button pull-right" style="margin-top:5px;">
-            Submit
-          </button>
+
+    <div class="row" style="margin-left: 5px;">
+
+      <div class="form-group">
+        <label style="margin-top:10px; " class="col-sm-1 control-label">Description</label>
+        <div class="col-sm-11">
+          <textarea style="margin: 10px 5px 20px 5px; width:750px; height: 70px" type="text" class="form-control" placeholder="Description.." ng-model="new_answer.description"></textarea>
         </div>
       </div>
+
+      <div class="form-group">
+        <label style="margin-top:10px " class="col-sm-1 control-label">Code</label>
+        <div class="col-sm-11">
+          <textarea style="margin: 10px 5px 20px 5px; width:750px; height:120px" type="text" class="form-control" placeholder="Code.." ng-model="new_answer.code"></textarea>
+        </div>
+      </div>
+
+      <button float="right" style="margin:5px 20px 20px 15px; width: 100px; height: 50px" type="submit" class="btn sub-button" ng-click="addAnswer()">Submit</button>
+    </div>
+
     </div>
   </div>
   <div class="row">
@@ -114,6 +115,7 @@
     </div>
   </div>
   <div class="row" ng-repeat="answer in question.answers">
+
     <div class="col-md-12 col-sm-12" style="padding-left:40px;">
       <div class="row prev-answer">
         <div class="col-md-2 col-sm-2">
@@ -128,11 +130,14 @@
           </div>
         </div>
         <div class="col-md-8 col-sm-8" style="padding-left:0px;">
-          <textarea class="form-control addTextarea" rows="11" style="resize:none;" readonly>
+          <textarea  class="form-control addTextarea" rows="11" style="resize:none; height: 120px" readonly>
             {{answer.code}}
           </textarea>
         </div>
       </div>
     </div>
+
+
+
   </div>
 </div>

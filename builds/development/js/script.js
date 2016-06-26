@@ -492,7 +492,7 @@ $scope.isActive = function (viewLocation) {
 
 
  //-------------------------------
-angular
+	angular
   .module('myApp')
   .controller('signupController', signupController);
 
@@ -606,9 +606,12 @@ angular
 	.module('myApp')
 	.controller('viewQuestionController', viewQuestionController);
 
-function viewQuestionController($scope, $http, $routeParams, questionService,authService) {
+function viewQuestionController($scope, $http, $routeParams, $cookies, $route, questionService,authService) {
 	$scope.fetchQuestion = fetchQuestion;
+	$scope.addAnswer = addAnswer;
+	$scope.new_answer = {};
 	$scope.question = {};
+	$scope.question.answers = [];
 	
 
 	function fetchQuestion() {
@@ -619,6 +622,36 @@ function viewQuestionController($scope, $http, $routeParams, questionService,aut
 			})
 	}
 
+	function addAnswer() {
+
+		var answer = {
+			"user_id": $cookies.get("user_id"),
+			"description": $scope.new_answer.description,
+			"code": $scope.new_answer.code,
+			"question": $scope.question.question_id
+
+		};
+
+		$http({
+            method: 'POST',
+            url: 'http://www.koodet.com:6543/api/answers',
+            data: JSON.stringify(answer),
+            crossDomain: true, 
+            xhrFields: { withCredentials: true},
+            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
+        
+        })
+        .success(function(data, status, headers, config) {
+            $scope.new_answer = {};
+            $route.reload();	
+            console.log(status);
+
+        })
+
+
+
+	}
+
 }
 
  //-------------------------------
@@ -626,9 +659,13 @@ angular
 	.module('myApp')
 	.controller('viewSnippetController', viewSnippetController);
 
-function viewSnippetController($scope, $http, $routeParams, snippetService,authService) {
+function viewSnippetController($scope, $http, $routeParams, $location, $route, $cookies, snippetService,authService) {
+
 	$scope.fetchSnippet = fetchSnippet;
+	$scope.addComment = addComment;
 	$scope.snippet = {};
+	$scope.new_comment = "";
+	$scope.snippet.comments = [];
 
 	function fetchSnippet() {
 		snippetService
@@ -636,6 +673,32 @@ function viewSnippetController($scope, $http, $routeParams, snippetService,authS
 			.success(function(data) {
 				$scope.snippet = data;
 			});
+	}
+
+	function addComment() {
+
+		var comment = {
+
+			"user_id": $cookies.get("user_id"),
+			"description": $scope.new_comment,
+			"snippet": $scope.snippet.snippet_id
+		};
+
+		$http({
+            method: 'POST',
+            url: 'http://www.koodet.com:6543/api/comments',
+            data: JSON.stringify(comment),
+            crossDomain: true, 
+            xhrFields: { withCredentials: true},
+            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
+        
+        })
+        .success(function(data, status, headers, config) {
+            $scope.new_comment = "";
+            $route.reload();	
+            console.log(status);
+
+        })
 	}
 }
 
