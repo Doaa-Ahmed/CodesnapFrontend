@@ -915,6 +915,20 @@ h5.wrap {
   font-weight: bolder;
 }
 
+span.related-wrap {
+  text-align: center;
+  padding: 2px 4px;
+  background-color: #777;
+  border-radius: 2px;
+  display: inline-block;
+  color: #fff;
+}
+
+span.related-wrap i.related-eye-icon {
+  font-size: 10px;
+  color: #fff;
+}
+
 ul.snippet-tags {
   list-style-type: none;
   padding-left: 0px;
@@ -978,4 +992,21 @@ li a span.tag-span {
 	font-family: monospace;
 	font-size: 14px;
 	color: #fff;
+}
+
+ul.related-snipp {
+  list-style-type: none;
+  padding-left: 0px;
+}
+
+ul.related-snipp li a {
+  text-decoration: none;
+}
+
+ul.related-snipp span.related-span {
+  font-size: 14px;
+}
+
+ul.related-snipp li a:hover {
+  color: #3af;
 }

@@ -41,34 +41,87 @@
     </div>
   </div>
   <div class="row" style="margin-top:15px;">
-    <div class="col-md-12 col-sm-12" style="padding-left:40px;">
-      <div class="row">
-        <div class="col-md-8 col-sm-8 form-group">
+
+        <div class="col-md-8 col-sm-8 form-group" style="padding-left:40px;">
           <div class="row">
 <!--           <div class="col-md-12 col-sm-12">
               <textarea class="form-control addTextarea" rows="15" readonly style="resize:none;">
                 {{snippet.code}}
               </textarea> -->
 
-              <div ui-ace = "{
-                  require: ['ace/ext/language_tools'],
-                  advanced: {
-                      enableSnippets: true,
-                      enableBasicAutocompletion: true,
-                      enableLiveAutocompletion: true
-                  }
-                }" ng-model="snippet.code">
-              </div>
+            <div ui-ace = "{
+                require: ['ace/ext/language_tools'],
+                advanced: {
+                    enableSnippets: true,
+                    enableBasicAutocompletion: true,
+                    enableLiveAutocompletion: true
+                }
+              }" ng-model="snippet.code">
             </div>
-              <div class="row">
-                <div class="col-md-2 col-sm-2">
-                  <button class="btn btn-warning" ng-click="compile()" data-toggle="modal" data-target="#myModal">Run</button>
-                </div>
-              </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2 col-sm-2">
+              <button class="btn btn-warning" ng-click="compile()" data-toggle="modal" data-target="#myModal">Run</button>
             </div>
           </div>
         </div>
-      </div>
+        <div class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-1">
+          <h4>Related</h4>
+
+          <ul class="related-snipp">
+            <li>
+              <span class="related-wrap">
+                <i class="glyphicon glyphicon-eye-open related-eye-icon" aria-hidden="true"></i><b style="font-size:11px;"> 100</b>
+              </span>
+                <a href=""><span class="related-span">Lorem Ipsum Lorem Ipsum</span></a>
+            </li>
+            <li>
+              <span class="related-wrap">
+                <i class="glyphicon glyphicon-eye-open related-eye-icon" aria-hidden="true"></i><b style="font-size:11px;"> 100</b>
+              </span>
+                <a href=""><span class="related-span">Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum</span></a>
+            </li>
+            <li>
+              <span class="related-wrap">
+                <i class="glyphicon glyphicon-eye-open related-eye-icon" aria-hidden="true"></i><b style="font-size:11px;"> 123</b>
+              </span>
+                <a href=""><span class="related-span">Lorem Ipsum Lorem Ipsum Lorem Ipsum</span></a>
+            </li>
+            <li>
+              <span class="related-wrap">
+                <i class="glyphicon glyphicon-eye-open related-eye-icon" aria-hidden="true"></i><b style="font-size:11px;"> 10</b>
+              </span>
+                <a href=""><span class="related-span">Lorem Ipsum Lorem Ipsum Lorem Ipsum</span></a>
+            </li>
+            <li>
+              <span class="related-wrap">
+                <i class="glyphicon glyphicon-eye-open related-eye-icon" aria-hidden="true"></i><b style="font-size:11px;"> 101</b>
+              </span>
+                <a href=""><span class="related-span">Lorem Ipsum Lorem Ipsum Lorem Ipsum</span></a>
+            </li>
+            <li>
+              <span class="related-wrap">
+                <i class="glyphicon glyphicon-eye-open related-eye-icon" aria-hidden="true"></i><b style="font-size:11px;"> 600</b>
+              </span>
+                <a href=""><span class="related-span">Lorem Ipsum Lorem Ipsum</span></a>
+            </li>
+            <li>
+              <span class="related-wrap">
+                <i class="glyphicon glyphicon-eye-open related-eye-icon" aria-hidden="true"></i><b style="font-size:11px;"> 1234</b>
+              </span>
+                <a href=""><span class="related-span">Lorem Ipsum Lorem Ipsum Lorem Ipsum</span></a>
+            </li>
+            <li>
+              <span class="related-wrap">
+                <i class="glyphicon glyphicon-eye-open related-eye-icon" aria-hidden="true"></i><b style="font-size:11px;"> 0</b>
+              </span>
+                <a href=""><span class="related-span">Lorem Ipsum Lorem Ipsum Lorem</span></a>
+            </li>
+          </ul>
+
+        </div>
+
+  </div>
       <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -87,6 +140,7 @@
           </div>
         </div>
       </div>
+
 
       <div class="row" style="padding-top:20px; padding-left:40px;">
         <div class="labels">
@@ -127,12 +181,12 @@
       </div>
 
 
-  <div class="row" style="margin-left: 5px;">
+  <div class="row" style="padding-left: 40px;">
     <div class="col-md-4 col-sm-4">
       <textarea class="form-control" ng-model="new_comment" placeholder="Add your comment here..." rows="5"></textarea>
     </div>
   </div>
-  <div class="row">
+  <div class="row" style="margin:15px 0px; padding-left:40px;">
     <button type="submit" class="btn sub-button" ng-click="addComment()">Submit</button>
   </div>
   <div class="row" ng-repeat="comment in snippet.comments">
