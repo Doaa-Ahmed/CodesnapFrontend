@@ -1,13 +1,13 @@
 
 <div class="container-fluid"  style="padding-top:90px;">
      <div class="row" ng-controller="profileController">
-       <div class="col-lg-6 col-md-6 col-md-6">
+       <div class="col-lg-4 col-md-4 col-md-4">
          <div class="well well-sm">
            <div class="row">
              <div class="col-sm-4 col-md-4">
                <div class="row">
                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                   <img src="upload-img.png" alt="user-profile-img" class="img-rounded img-responsive" />
+                   <img src="../images/upload-img.png" alt="user-profile-img" class="img-rounded img-responsive" />
                  </div>
                </div>
                <div class="row">
@@ -28,7 +28,7 @@
                 <h5><i class="glyphicon glyphicon-gift"></i><span> {{date}}</span></h5>
 
             </div>
-            <div class="col-md-2 col-sm-2 col-xs-2">
+            <div class="col-md-2 col-sm-2 col-xs-2" style="padding-left:0px;">
               <button type="button" class="btn btn-warning btn-sm" data-toggle="collapse" data-target="#edit-prof-collapse">
                 <span class="glyphicon glyphicon-edit"></span> Edit
               </button>
@@ -36,9 +36,138 @@
           </div>
         </div>
       </div>
+
+
+
+
+
+
+
+
+
+      <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+        <div class="panel with-nav-tabs panel-primary">
+          <div class="panel-heading">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#tab1" data-toggle="tab">Contributes</a></li>
+              <li><a href="#tab2" data-toggle="tab">Requests</a></li>
+            </ul>
+          </div>
+          <div class="panel-body">
+            <div class="tab-content">
+              <div class="tab-pane fade in active" id="tab1">
+              <div ng-repeat="snippet in snippets">
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <div class="row lang-snip-row">
+                    <div class="col-md-2 col-sm-2 col-xs-2" style="margin-top:10px;">
+                      <span class="side-info">{{snippet.date}}</span>
+                      <br>
+                      <b class="side-info">{{snippet.views}}</b>
+                      <span class="side-info"> views</span>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-8" style="padding-left:0;">
+                      <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                          <a class="explore-anckor" ng-href="snippet/{{snippet.id}}">
+                            <h4 class="snip-title" >
+                              {{snippet.title}}
+                            </h4>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="row">
+
+                        <div class="col-md-8 col-sm-8 col-xs-8">
+                          <li class="li-tag"  ng-repeat="tag in snippet.tags"><a class="li-tag-a"><span class="tag-span" >{{tag}}</span></a></li>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-2">
+                      <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                          <span class="stars-container stars-{{snippet.rank}}">★★★★★</span>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                          <b class="side-info">{{snippet.votes}}</b>
+                          <span class="side-info"> Votes</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+              </div>
+                <div class="tab-pane fade" id="tab2">
+                <div ng-repeat="question in questions">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <div class="row lang-snip-row">
+                    <div class="col-md-2 col-sm-2 col-xs-2" style="padding-right:0; margin-top:10px;">
+                      <span>{{question.date}}</span>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-xs-8" style="padding-left:0;">
+                      <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                          <a class="explore-anckor" ng-href="question/{{question.id}}">
+                            <h4 class="user-snipp-header">
+                              {{question.title}}
+                            </h4>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-8 col-sm-8 col-xs-8">
+                          <ul class="ul-tags">
+                            <li class="li-tag"  ng-repeat="tag in question.tags"><a class="li-tag-a"><span class="tag-span" >{{tag}}</span></a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-2">
+                      <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                          <b class="side-info">100</b>
+                          <span class="side-info"> Views</span>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                          <a class="explore-anckor">
+                            <h5 class="snipp-header">
+                              <b class="side-info">19</b>
+                              <span class="side-info"> Answers</span>
+                            </h5>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
-  </div>
-   
+
     <div class="row collapse" id="edit-prof-collapse">
       <div class="col-lg-6 col-md-6 col-md-6">
         <div class="well well-sm">
@@ -140,110 +269,5 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-        <div class="panel with-nav-tabs panel-primary">
-          <div class="panel-heading">
-            <ul class="nav nav-tabs">
-              <li class="active"><a href="#tab1" data-toggle="tab">Contributes</a></li>
-              <li><a href="#tab2" data-toggle="tab">Requests</a></li>
-            </ul>
-          </div>
-          <div class="panel-body">
-            <div class="tab-content">
-              <div class="tab-pane fade in active" id="tab1">
-              <div ng-repeat="snippet in snippets">
 
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                  <div class="row lang-snip-row">
-                    <div class="col-md-2 col-sm-2 col-xs-2" style="margin-top:10px;">
-                      <span>{{snippet.date}}</span>
-                      <br>
-                      <b>{{snippet.views}}</b>
-                      <span> views</span>
-                    </div>
-                    <div class="col-md-8 col-sm-8 col-xs-8" style="padding-left:0;">
-                      <div class="row">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                          <a class="explore-anckor" ng-href="snippet/{{snippet.id}}">
-                            <h4 class="user-snipp-header" >
-                              {{snippet.title}}
-                            </h4>
-                          </a>
-                        </div>
-                      </div>
-                      <div class="row">
-
-                        <div class="col-md-8 col-sm-8 col-xs-8">
-                          <li class="li-tag"  ng-repeat="tag in snippet.tags"><a class="li-tag-a"><span class="tag-span" >{{tag}}</span></a></li>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-2 col-sm-2 col-xs-2">
-                      <div class="row">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                          <span class="stars-container stars-{{snippet.rank}}">★★★★★</span>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                          <b>{{snippet.votes}}</b>
-                          <span> votes</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                </div>
-              </div>
-                <div class="tab-pane fade" id="tab2">
-                <div ng-repeat="question in questions">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                  <div class="row lang-snip-row">
-                    <div class="col-md-2 col-sm-2 col-xs-2" style="padding-right:0; margin-top:10px;">
-                      <span>{{question.date}}</span>
-                    </div>
-                    <div class="col-md-8 col-sm-8 col-xs-8" style="padding-left:0;">
-                      <div class="row">
-                        <div class="col-md-12 col-sm-12">
-                          <a class="explore-anckor" ng-href="question/{{question.id}}">
-                            <h4 class="user-snipp-header">
-                              {{question.title}}
-                            </h4>
-                          </a>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-8 col-sm-8 col-xs-8">
-                          <li class="li-tag"  ng-repeat="tag in question.tags"><a class="li-tag-a"><span class="tag-span" >{{tag}}</span></a></li>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-2 col-sm-2 col-xs-2">
-                      <div class="row">
-                        <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                          <b>100</b>
-                          <span> views</span>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                          <a class="explore-anckor">
-                            <h5 class="snipp-header">
-                              <b>19</b>
-                              <span> Answers</span>
-                            </h5>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
+</div>

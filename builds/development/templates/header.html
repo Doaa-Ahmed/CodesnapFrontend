@@ -2,29 +2,39 @@
 <nav id="mainNavbar" class="navbar navbar-fixed-top">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-1">
+      <div class="col-md-1 col-sm-1">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".mfa" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
         <img class="img-responsive logoImg" src="images/logo.png" alt="logo" />
       </div>
-      <div class="col-md-4" style="padding-left:0px;">
-        <ul class="nav navbar-nav">
-          <li><a class="navAnchor" href="/">Home</a></li>
-          <li><a class="navAnchor" href="/explore">explore</a></li>
-          <li><a class="navAnchor" href="/add">add</a></li>
-          <li><a class="navAnchor" href="/request">request</a></li>
-        </ul>
-      </div>
-      <div ng-controller="searchController"  ng-hide="isActive('/')" class="col-md-4 headSearchCol">
-        <input type="search" class="form-control headSearchInput" placeholder="Search For Snippet!">
-        <span class="headSearchSpan">
-          <button class="btn headSearchSpanBtn" type="button">
-            <span style="color:#fff;" class="glyphicon glyphicon-search"></span>
-          </button>
-        </span>
-      </div>
+      <div class="mfa collapse navbar-collapse col-md-8 col-sm-8">
+        <div class="row">
+          <div class="col-md-6 col-sm-6">
+            <ul class="nav navbar-nav">
+              <li><a class="navAnchor" href="/">Home</a></li>
+              <li><a class="navAnchor" href="/explore">explore</a></li>
+              <li><a class="navAnchor" href="/add">add</a></li>
+              <li><a class="navAnchor" href="/request">request</a></li>
+            </ul>
+          </div>
 
-      
-      <div class="col-md-3" ng-hide="currentUserSignedIn">
+          <div ng-controller="searchController"  ng-hide="isActive('/')" class="col-md-6 col-sm-6 headSearchCol">
+            <input type="search" class="form-control headSearchInput input-focus" placeholder="Search For Snippet!">
+            <span class="headSearchSpan">
+              <button class="btn headSearchSpanBtn" type="button">
+                <span style="color:#fff;" class="glyphicon glyphicon-search"></span>
+              </button>
+            </span>
+          </div>
+        </div>
+      </div> <!--/.nav-collapse -->
+      <div class="col-md-3 col-sm-3 collapse navbar-collapse" ng-hide="currentUserSignedIn">
         <ul class="nav navbar-nav" style="float:right;">
+          <li role="separator" class="divider"></li>
           <li>
             <a class="navAnchor" data-toggle="modal" data-target="#signUpModal"  style="cursor:pointer;">
               <span class="glyphicon glyphicon-user"></span> register
@@ -37,16 +47,16 @@
           </li>
         </ul>
       </div>
-  
- <div class="col-md-3" class="nav navbar-nav" style="float:right; " ng-show="currentUserSignedIn"  >
+
+ <div class="col-md-3" class="nav navbar-nav" style="float:right; " ng-show="currentUserSignedIn">
     <div ng-hide="currentUserLogedout">
-    <span style="color: white; font-weight: bolder; font-family: Arial; border-radius: 5px;"><a href="/profile" class="navAnchor" data-toggle="modal" data-target="#loginModal"> {{username}}</a></span>
+    <span><a href="/profile" class="navAnchor"> {{username}}</a></span>
     </div>
-      </div>
+  </div>
 <!--       <div ng-show="currentUserSignedIn" >
         <div ng-hide="currentUserLogedout">
           <a href="/profile" class="navAnchor" data-toggle="modal" data-target="#loginModal" style="cursor:pointer;">
-            <span class="glyphicon glyphicon-log-in">profile</span> 
+            <span class="glyphicon glyphicon-log-in">profile</span>
           </a>
         </div>
        </div>
@@ -54,16 +64,13 @@
   <div ng-controller="LogoutController" class="col-md-3" class="nav navbar-nav" style="float:right;"
         ng-show="currentUserSignedIn" >
     <div ng-hide="currentUserLogedout">
-      <a href="#/"> 
+      <a href="#/">
         <span ng-click="logout()" style="color: white; font-weight: bolder; font-family: Arial; border-radius: 5px;">Logout
         </span>
       </a>
       </div>
   </div>
-
       </div>
-
-
     </div> <!-- end of row -->
   </div>
 </nav>
