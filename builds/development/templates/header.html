@@ -32,7 +32,9 @@
           </div>
         </div>
       </div> <!--/.nav-collapse -->
-      <div class="col-md-3 col-sm-3 collapse navbar-collapse" ng-hide="currentUserSignedIn">
+      <div class="col-md-3 col-sm-3 collapse navbar-collapse">
+              <div ng-hide="currentUserSignedIn">
+
         <ul class="nav navbar-nav" style="float:right;">
           <li role="separator" class="divider"></li>
           <li>
@@ -46,6 +48,7 @@
             </a>
           </li>
         </ul>
+</div>
       </div>
 
  <div class="col-md-3" class="nav navbar-nav" style="float:right; " ng-show="currentUserSignedIn">
