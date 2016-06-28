@@ -4,10 +4,10 @@ angular
 	.factory('langService', langService);
 
 /* dependency injection */
-langService.$inject = ['$http'];
+langService.$inject = ['$http','authService'];
 
 /* service implementation */
-function langService($http) {
+function langService($http,authService) {
 	var service = {
 		getLangs : getLangs,
 		getLang : getLang

@@ -2,10 +2,14 @@ angular
 	.module('myApp')
 	.controller('requestController', requestController);
 
-function requestController($scope, $http) {
-
-	$http.get("http://www.koodet.com:6543/api/elements")
-    	.success(function(data) {
+function requestController($scope,$cookies, $http,$location,authService) {
+  $http({
+            method: 'GET',
+            url: 'http://www.koodet.com:6543/api/elements',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'} ,
+            xhrFields: {withCredentials: true }
+        })
+    	   .success(function(data) {
           	$scope.result=data;
 	      	$scope.lan = [];
 
@@ -29,24 +33,30 @@ function requestController($scope, $http) {
     $scope.Postquestion=function(){
 
     	var snap = {
-    		'title': $scope.inputData.Title,
+            'user_id':1,
+    		    'title': $scope.inputData.Title,
             'description': $scope.inputData.Description,
            	'context': $scope.inputData.Context.id,
             'tags': $scope.inputData.Tags,
             'language': $scope.inputData.Language.id,
             'code_type': $scope.inputData.Codetype.id,
+            'user_id':$cookies.get("user_id")
         };
+      //var object = authService.getCookieData;
+        //var object = $cookies.get('auth');
+
 
         $http({
         	method: 'POST',
         	url: 'http://www.koodet.com:6543/api/questions',
         	data:JSON.stringify(snap),
-        	headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        	headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          xhrFields: {withCredentials: true}
         })
         .success(function(data, status, headers, config) {
         	console.log(data);
         	console.log(status);
-          $location.path('/question/:qid');
+          $location.path('/question/'+ data.question_id);
 
         })
    	}

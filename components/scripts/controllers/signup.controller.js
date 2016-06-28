@@ -1,4 +1,4 @@
-angular
+	angular
   .module('myApp')
   .controller('signupController', signupController);
 
@@ -22,6 +22,8 @@ function signupController($scope, $http) {
 			method: 'POST',
 			url: 'http://www.koodet.com:6543/api/users',
 			data:JSON.stringify(upobject),
+			crossDomain: true, 
+             xhrFields: { withCredentials: true},
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 		})
 			

@@ -1,117 +1,141 @@
 <div class="container-fluid" style="padding-top:90px;" ng-init="fetchQuestion()">
   <div class="row">
-    <div class="col-md-12" style="padding-left:40px;">
+    <div class="col-md-12 col-sm-12" style="padding-left:40px;">
       <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-2 col-sm-2">
           <div class="row">
-            <div class="col-md-12 sideInfo">
-              <b>300</b>
+            <div class="col-md-12 col-sm-12">
+              <b>{{question.views}}</b>
               <span> views</span>
               <br>
-              <b>5</b>
-              <span> answers</span>
               <br>
               <span title="Author" class="glyphicon glyphicon-user" aria-hidden="true"></span>
-              <span title="Author" style="font-size:14px;font-family:sans-serif"> {{snippet.username}}</span>
+              <span title="Author" style="font-size:14px;font-family:sans-serif"> {{question.username}}</span>
               <br>
               <b>posted</b>
-              <span>April 19,2016</span>
+              <span>{{question.date}}</span>
             </div>
           </div>
         </div>
-        <div class="col-md-6" style="padding-left:0px;">
-          <textarea class="form-control" rows="1" readonly style="resize:none;"></textarea>
-        </div>
-      </div>
-      <div class="row" style="margin-top:10px;">
-        <div class="col-md-8 form-group">
-          <textarea class="form-control" rows="7" readonly style="resize:none;"></textarea>
+        <div class="col-md-8 col-sm-8" style="margin-top:20px;">
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <h3 class="snipp-header snipp-title">
+                {{question.title}}
+              </h3>
+            </div>
+          </div>
+          <div class="row" style="margin-top:10px;">
+            <div class="col-md-9 col-sm-9">
+              <p class="snipp-desc">
+                {{question.description}}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12" style="padding-left:40px;">
+    <div class="col-md-12 col-sm-12" style="padding-left:40px;">
+
       <div class="row" style="padding-top:20px;">
         <div class="labels">
           <h5 class="addLabels labelsFont">Language</h5>
         </div>
-        <div class="col-md-2 form-group">
-          <textarea class="form-control" rows="1" readonly style="resize:none;"></textarea>
+        <div class="col-md-1 col-sm-1">
+          <h5 class="wrap">
+            {{question.language}}
+          </h5>
         </div>
         <div class="labels">
           <h5 class="addLabels labelsFont">Type</h5>
         </div>
-        <div class="col-md-2 form-group">
-            <textarea class="form-control" rows="1" readonly style="resize:none;"></textarea>
+        <div class="col-md-1 col-sm-1">
+          <h5 class="wrap">
+            {{question.code_type}}
+          </h5>
         </div>
       </div>
-
-      <div class="row">
+      <div class="row" style="border-bottom:1px solid #888;">
         <div class="labels">
           <h5 class="addLabels labelsFont">Context</h5>
         </div>
-        <div class="col-md-2 form-group">
-          <textarea class="form-control" rows="1" readonly style="resize:none;"></textarea>
+        <div class="col-md-1 col-sm-1">
+          <h5 class="wrap">
+            {{question.context}}
+          </h5>
         </div>
         <div class="labels">
           <h5 class="addLabels labelsFont">Tags</h5>
         </div>
-        <div class="col-md-4 form-group">
-          <textarea class="form-control" rows="1" readonly style="resize:none;"></textarea>
+        <div class="col-md-6 col-sm-6">
+          <ul class="snippet-tags">
+            <li class="li-tags"  ng-repeat="tag in question.tags"><a class="li-tags-a"><span class="tags-span" >{{tag}}</span></a></li>                         
+          </ul>
         </div>
       </div>
     </div>
   </div>
 
   <div class="row">
-    <div class="col-md-12" style="padding-left:40px;">
+    <div class="col-md-12 col-sm-12" style="padding-left:40px;">
       <div class="row">
-        <div class="col-md-2 sideInfo">
-          <div class="row">
-            <div class="col-md-12">
-              <span title="Author" class="glyphicon glyphicon-user" aria-hidden="true"></span>
-              <span title="Author" style="font-size:14px;font-family:sans-serif"> username</span>
-              <br>
-              <b>posted</b>
-              <span>April 19,2016</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-8" style="padding-left:0px;">
-          <textarea class="form-control" rows="25" style="resize:none;"></textarea>
-          <button type="submit" class="btn btn-warning pull-right" style="margin-top:5px;">
-            Submit
-          </button>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+          <h4 class="snipp-header">Add your snippet here:</h4>
         </div>
       </div>
+
+    <div class="row" style="margin-left: 5px;">
+
+      <div class="form-group">
+        <label style="margin-top:10px; " class="col-sm-1 control-label">Description</label>
+        <div class="col-sm-11">
+          <textarea style="margin: 10px 5px 20px 5px; width:750px; height: 70px" type="text" class="form-control" placeholder="Description.." ng-model="new_answer.description"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label style="margin-top:10px " class="col-sm-1 control-label">Code</label>
+        <div class="col-sm-11">
+          <textarea style="margin: 10px 5px 20px 5px; width:750px; height:120px" type="text" class="form-control" placeholder="Code.." ng-model="new_answer.code"></textarea>
+        </div>
+      </div>
+
+      <button float="right" style="margin:5px 20px 20px 15px; width: 100px; height: 50px" type="submit" class="btn sub-button" ng-click="addAnswer()">Submit</button>
+    </div>
+
     </div>
   </div>
   <div class="row">
-    <div class="col-md-2" style="padding-left:40px;">
-      <h4 class="SnippHeader">Previous Answers</h4>
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding-left:40px;">
+      <h4 class="snipp-header">Previous Answers</h4>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-12" style="padding-left:40px;">
-      <div class="row">
-        <div class="col-md-2 sideInfo">
+  <div class="row" ng-repeat="answer in question.answers">
+
+    <div class="col-md-12 col-sm-12" style="padding-left:40px;">
+      <div class="row prev-answer">
+        <div class="col-md-2 col-sm-2">
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 col-sm-12">
               <span title="Author" class="glyphicon glyphicon-user" aria-hidden="true"></span>
-              <span title="Author" style="font-size:14px;font-family:sans-serif"> username</span>
+              <span title="Author" style="font-size:14px;font-family:sans-serif"> {{answer.username}}</span>
               <br>
               <b>posted</b>
-              <span>April 19,2016</span>
+              <span>{{answer.date}}</span>
             </div>
           </div>
         </div>
-        <div class="col-md-8" style="padding-left:0px;">
-          <textarea class="form-control" rows="25" style="resize:none;" readonly>
-            hena hykon fy el previous answers 3la el snippet da
+        <div class="col-md-8 col-sm-8" style="padding-left:0px;">
+          <textarea  class="form-control addTextarea" rows="11" style="resize:none; height: 120px" readonly>
+            {{answer.code}}
           </textarea>
         </div>
       </div>
     </div>
+
+
+
   </div>
 </div>
