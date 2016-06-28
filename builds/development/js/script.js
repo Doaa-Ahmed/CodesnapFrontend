@@ -687,6 +687,7 @@ angular
 function viewSnippetController($scope, $http, $routeParams, $location, $route, $cookies, snippetService,authService) {
 
 	$scope.fetchSnippet = fetchSnippet;
+    $scope.getRelated = getRelated;
 	$scope.addComment = addComment;
 	$scope.snippet = {};
 	$scope.new_comment = "";
@@ -699,6 +700,15 @@ function viewSnippetController($scope, $http, $routeParams, $location, $route, $
 				$scope.snippet = data;
 			});
 	}
+
+    function getRelated() {
+        snippetService
+            .getSnippets()
+            .success(function(data) {
+                $scope.related = data;
+                console.log(data);
+            });
+    }
 
 	$scope.aceLoaded = function(_editor) {
     // Options
@@ -1135,12 +1145,12 @@ function snippetService($http,authService,$cookies) {
 	var service = {
 		getLangSnippets : getLangSnippets,
 		getSnippet : getSnippet,
+		getSnippets : getSnippets,
 		createSnippet : createSnippet
 	};
 
 	return service;
 	
-
 	function getLangSnippets(feature,fname) {
 
 		var obj =$cookies.get("access_token");
@@ -1162,8 +1172,19 @@ function snippetService($http,authService,$cookies) {
             crossDomain: true, 
             xhrFields: { withCredentials: true},
             headers: {"Cookie":"obj"}
-	})
-}
+        })
+	}
+
+	function getSnippets() {
+		//var obj =$cookies.get("access_token");
+        return $http({
+            method: 'GET',
+            url: 'http://www.koodet.com:6543/api/snippets',
+            crossDomain: true, 
+            xhrFields: { withCredentials: true},
+            headers: {"Cookie":"obj"}
+        })
+	}
 
 	function createSnippet(snippet) {
 		//var obj =$cookies.get("access_token");

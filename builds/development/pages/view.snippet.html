@@ -124,53 +124,11 @@
           <h4>Related</h4>
 
           <ul class="related-snipp">
-            <li>
+            <li ng-repeat = "n in snippet.related" ng-init="getRelated()">
               <span class="related-wrap">
-                <i class="glyphicon glyphicon-eye-open related-eye-icon" aria-hidden="true"></i><b style="font-size:11px;"> 100</b>
+                <i class="glyphicon glyphicon-eye-open related-eye-icon" aria-hidden="true"></i><b style="font-size:11px;"> {{related[n].views}}</b>
               </span>
-                <a href=""><span class="related-span">Lorem Ipsum Lorem Ipsum</span></a>
-            </li>
-            <li>
-              <span class="related-wrap">
-                <i class="glyphicon glyphicon-eye-open related-eye-icon" aria-hidden="true"></i><b style="font-size:11px;"> 100</b>
-              </span>
-                <a href=""><span class="related-span">Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum</span></a>
-            </li>
-            <li>
-              <span class="related-wrap">
-                <i class="glyphicon glyphicon-eye-open related-eye-icon" aria-hidden="true"></i><b style="font-size:11px;"> 123</b>
-              </span>
-                <a href=""><span class="related-span">Lorem Ipsum Lorem Ipsum Lorem Ipsum</span></a>
-            </li>
-            <li>
-              <span class="related-wrap">
-                <i class="glyphicon glyphicon-eye-open related-eye-icon" aria-hidden="true"></i><b style="font-size:11px;"> 10</b>
-              </span>
-                <a href=""><span class="related-span">Lorem Ipsum Lorem Ipsum Lorem Ipsum</span></a>
-            </li>
-            <li>
-              <span class="related-wrap">
-                <i class="glyphicon glyphicon-eye-open related-eye-icon" aria-hidden="true"></i><b style="font-size:11px;"> 101</b>
-              </span>
-                <a href=""><span class="related-span">Lorem Ipsum Lorem Ipsum Lorem Ipsum</span></a>
-            </li>
-            <li>
-              <span class="related-wrap">
-                <i class="glyphicon glyphicon-eye-open related-eye-icon" aria-hidden="true"></i><b style="font-size:11px;"> 600</b>
-              </span>
-                <a href=""><span class="related-span">Lorem Ipsum Lorem Ipsum</span></a>
-            </li>
-            <li>
-              <span class="related-wrap">
-                <i class="glyphicon glyphicon-eye-open related-eye-icon" aria-hidden="true"></i><b style="font-size:11px;"> 1234</b>
-              </span>
-                <a href=""><span class="related-span">Lorem Ipsum Lorem Ipsum Lorem Ipsum</span></a>
-            </li>
-            <li>
-              <span class="related-wrap">
-                <i class="glyphicon glyphicon-eye-open related-eye-icon" aria-hidden="true"></i><b style="font-size:11px;"> 0</b>
-              </span>
-                <a href=""><span class="related-span">Lorem Ipsum Lorem Ipsum Lorem</span></a>
+                <a href="/snippet/{{n}}"><span class="related-span">{{related[n].title}}</span></a>
             </li>
           </ul>
 
