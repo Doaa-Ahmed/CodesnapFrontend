@@ -197,13 +197,15 @@
       </div>
 
 
-  <div class="row" style="padding-left: 40px;">
-    <div class="col-md-4 col-sm-4">
+  <div class="row">
+    <div class="col-md-5 col-sm-5" style="padding-left: 40px;">
       <textarea class="form-control" ng-model="new_comment" placeholder="Add your comment here..." rows="5"></textarea>
     </div>
   </div>
-  <div class="row" style="margin:15px 0px; padding-left:40px;">
-    <button type="submit" class="btn sub-button" ng-click="addComment()">Submit</button>
+  <div class="row">
+    <div class="col-md-2 col-sm-2" style="padding-left:40px; margin:15px 0px;">
+      <button type="submit" class="btn sub-button" ng-click="addComment()">Submit</button>
+    </div>
   </div>
   <div class="row" ng-repeat="comment in snippet.comments">
     <div class="col-md-12 col-sm-12" style="padding-left:40px;">

@@ -1013,3 +1013,28 @@ ul.related-snipp span.related-span {
 ul.related-snipp li a:hover {
   color: #3af;
 }
+
+.month-style {
+  padding-right: 0px;
+  font-size: 14px;
+}
+
+.day-style {
+  text-align: center;
+  font-size: 14px;
+}
+
+.year-style {
+  font-size: 14px;
+  padding-left: 0px;
+  margin-left: -6px;
+}
+
+.input-year {
+  height: 20px;
+  width: 100%;
+}
+
+.panel-heading {
+  font-size: 12px;
+}

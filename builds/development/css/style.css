@@ -515,7 +515,8 @@ h5.addLabels {
 
 textarea.addTextarea {
   resize: none;
-  font-size: 16px; }
+  font-size: 16px;
+  font-family: monospace; }
 
 .labels {
   float: left; }
@@ -648,8 +649,9 @@ h4.EXPMiniH {
   font-size: 20px;
   font-family: 'Josefin Slab', serif;
   font-weight: bolder;
-  width: 60%;
-  margin: 15px auto; }
+  width: 70%;
+  margin: 15px auto;
+  text-align: center; }
 
 img.EXPImgs {
   width: 35%; }
@@ -657,10 +659,11 @@ img.EXPImgs {
 p.multiParagraph {
   color: #666;
   /*#7FC1C2;*/
-  width: 60%;
+  width: 65%;
   margin: 0 auto 20px;
   font-family: monospace;
-  font-weight: lighter; }
+  font-weight: lighter;
+  font-size: 14px; }
 
 /* end of expolore style */
 .panel.with-nav-tabs .panel-heading {
@@ -972,3 +975,23 @@ ul.related-snipp span.related-span {
 
 ul.related-snipp li a:hover {
   color: #3af; }
+
+.month-style {
+  padding-right: 0px;
+  font-size: 14px; }
+
+.day-style {
+  text-align: center;
+  font-size: 14px; }
+
+.year-style {
+  font-size: 14px;
+  padding-left: 0px;
+  margin-left: -6px; }
+
+.input-year {
+  height: 20px;
+  width: 100%; }
+
+.panel-heading {
+  font-size: 12px; }
