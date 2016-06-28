@@ -126,9 +126,9 @@
           <ul class="related-snipp">
             <li ng-repeat = "n in snippet.related" ng-init="getRelated()">
               <span class="related-wrap">
-                <i class="glyphicon glyphicon-eye-open related-eye-icon" aria-hidden="true"></i><b style="font-size:11px;"> {{related[n].views}}</b>
+                <i class="glyphicon glyphicon-eye-open related-eye-icon" aria-hidden="true"></i><b style="font-size:11px;"> {{related[n-1].views}}</b>
               </span>
-                <a href="/snippet/{{n}}"><span class="related-span">{{related[n].title}}</span></a>
+                <a href="/snippet/{{n}}"><span class="related-span">{{related[n-1].title}}</span></a>
             </li>
           </ul>
 
