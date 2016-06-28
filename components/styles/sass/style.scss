@@ -481,6 +481,7 @@ h5.addLabels {
 textarea.addTextarea {
 	resize: none;
   font-size: 16px;
+  font-family: monospace;
 }
 
 .labels {
@@ -642,8 +643,9 @@ h4.EXPMiniH {
   font-size: 20px;
   font-family: 'Josefin Slab', serif;
   font-weight: bolder;
-  width: 60%;
+  width: 70%;
   margin: 15px auto;
+  text-align: center;
 }
 
 img.EXPImgs {
@@ -652,10 +654,11 @@ img.EXPImgs {
 
 p.multiParagraph {
   color: #666;/*#7FC1C2;*/
-  width: 60%;
+  width: 65%;
   margin: 0 auto 20px;
   font-family: monospace;
   font-weight: lighter;
+  font-size: 14px;
 }
 /* end of expolore style */
 
