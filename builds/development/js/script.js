@@ -711,31 +711,7 @@ function viewSnippetController($scope, $http, $routeParams, $location, $route, $
             });
     }
 
-
-    //snippet editor functions
-    $scope.compileSnippet=function(){
-
-        var snap = {
-            'code': $scope.snippet.code
-
-        };
-        $http({
-            method: 'POST',
-            url: 'http://www.koodet.com:6543/api/compile',
-            data:JSON.stringify(snap),
-            crossDomain: true, 
-            xhrFields: { withCredentials: true},
-            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
-        
-        })
-        .success(function(data, status, headers, config) {
-            $scope.snippet.output = data.output;
-            console.log(status);
-
-        })
-    }
-
-
+    
 
 	$scope.aceLoaded = function(_editor) {
     // Options
