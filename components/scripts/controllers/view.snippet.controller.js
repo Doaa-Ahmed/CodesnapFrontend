@@ -28,6 +28,8 @@ function viewSnippetController($scope, $http, $routeParams, $location, $route, $
             });
     }
 
+    
+
 	$scope.aceLoaded = function(_editor) {
     // Options
 		_editor.setReadOnly(true);
