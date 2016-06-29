@@ -675,6 +675,7 @@ function viewQuestionController($scope, $http, $routeParams, $cookies, $route, q
 			.getQuestion($routeParams.qid)
 			.success(function(data) {
 				$scope.question = data;
+                console.log(data.answers)
 			})
 	}
 
