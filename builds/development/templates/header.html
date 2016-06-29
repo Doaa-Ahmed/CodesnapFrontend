@@ -114,7 +114,7 @@
   </div>
 </div>
 
-<div id="signUpModal" class="modal fade" role="dialog">
+<div id="signUpModal" class="modal fade" role="dialog" ng-controller="signupController as signupCtrl">
   <div class="modal-dialog" style="width:100%;">
       <div class="container">
         <div class="row">
@@ -125,7 +125,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Sign Up</h4>
               </div>
-              <div class="modal-body" ng-controller="signupController as signupCtrl">
+              <div class="modal-body">
                 <form ng-submit="signupCtrl.signupForm()">
                   <div class="form-group">
                     <label for="first_name">first name</label>

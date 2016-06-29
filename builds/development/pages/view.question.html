@@ -73,30 +73,17 @@
     </div>
   </div>
 
-  <div class="row" style="padding-bottom:10px;">
-    <div class="col-md-12 col-sm-12" style="padding-left:40px;">
-    <div class="row">
-      <div class="col-md-8 col-sm-8 labels form-group">
-        <h5>Description:</h5>
-        <textarea class="form-control addTextarea input-focus" placeholder="Add your describtion here..." rows="4" required ng-model="new_answer.description">
-        </textarea>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-8 col-sm-8 labels form-group">
-        <h5>Snippet:</h5>
-        <textarea class="form-control input-focus addTextarea" ng-model="snippet.code" rows="10" required ng-model="new_answer.code">
-        </textarea>
-      </div>
-    </div>
-      <button float="right" type="submit" class="btn sub-button" ng-click="addAnswer()">Submit</button>
-    </div>
-    </div>
-  <div class="row">
+  <div class="row" ng-show="question.answers!==''">
     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding-left:40px;">
-      <h4 class="view-snipp-title" style="margin-bottom:20px;">Previous Answers</h4>
+      <h4 class="view-snipp-title" style="margin-bottom:20px;"><b>Answers</b></h4>
     </div>
   </div>
+  <div class="row" ng-show="question.answers==''">
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding-left:40px;">
+      <h4 class="view-snipp-title" style="margin-bottom:20px;"><b>There's no answers now</b></h4>
+    </div>
+  </div>
+
   <div class="row" ng-repeat="answer in question.answers" style="margin-bottom:10px; padding-bottom:15px;">
     <div class="col-md-12 col-sm-12" style="padding-left:40px;">
       <div class="row">
@@ -117,11 +104,106 @@
           </p>
         </div>
         <div class="col-md-6 col-sm-6">
-          <textarea  class="form-control addTextarea" rows="8" style="resize:none" readonly>
+        <div ui-ace = "{
+            require: ['ace/ext/language_tools'],
+            advanced: {
+                enableSnippets: true,
+                enableBasicAutocompletion: true,
+                enableLiveAutocompletion: true
+            }
+          }" ng-model="answer.code">
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-2">
+              <button class="btn btn-warning" ng-click="compileSnippet(answer.code)" data-toggle="modal" data-target="#myModal">Run</button>
+            </div>
+        </div>
+        <div id="myModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+              <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Python output</h4>
+              </div>
+              <div class="modal-body">
+                <p>Output</p>
+                <p>{{new_answer.output}}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+<!--           <textarea  class="form-control addTextarea" rows="8" style="resize:none" readonly>
             {{answer.code}}
-          </textarea>
+          </textarea> -->
         </div>
       </div>
     </div>
   </div>
+
+  <br>
+  <hr>
+  
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="padding-left:40px;">
+      <h4 class="view-snipp-title" style="margin-bottom:20px;"><b>Add Answer</b></h4>
+      </div>
+    </div>
+   <div class="row" style="padding-bottom:10px;">
+    <div class="col-md-12 col-sm-12" style="padding-left:40px;">
+    <div class="row">
+      <div class="col-md-8 col-sm-8 labels form-group">
+        <h5>Description:</h5>
+        <textarea class="form-control addTextarea input-focus" placeholder="Add your describtion here..." rows="4" required ng-model="new_answer.description">
+        </textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8 col-sm-8 labels form-group">
+        <h5>Snippet:</h5>
+        <div ui-ace = "{
+            require: ['ace/ext/language_tools'],
+            advanced: {
+                enableSnippets: true,
+                enableBasicAutocompletion: true,
+                enableLiveAutocompletion: true
+            }
+          }" ng-model="new_answer.code">
+        </div>
+      </div>
+
+    </div>
+
+      <button class="btn btn-warning" ng-click="compileSnippet(new_answer.code)" data-toggle="modal" data-target="#myModal">Run</button>
+      <button float="right" type="submit" class="btn sub-button" ng-click="addAnswer()">Submit</button>
+    </div>
+
+    <div id="myModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+              <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Python output</h4>
+              </div>
+              <div class="modal-body">
+                <p>Output</p>
+                <p>{{snippet.output}}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+
+          </div>
+      </div>
+  </div>
+  <div style="margin-bottom:50px"></div>
 </div>
