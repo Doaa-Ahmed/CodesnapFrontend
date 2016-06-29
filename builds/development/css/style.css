@@ -70,30 +70,7 @@ a.navAnchor:active {
   border-color: #3498db;
   background-color: #3498db; }
 
-/* style of dropdown setting and logout menue
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  width: 50%;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 10px 8px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-content a:hover {
-  background-color: #1376d7;
-  color: #FFFFFF;
-}
-
-.css-dropdown:hover .dropdown-content {
-  display: block;
-}
+/* style of dropdown setting and logout menue*
 
 .dropbtn {
     background-color: #222;
@@ -124,7 +101,7 @@ span.dropdown-options {
   border-right-width: 6px;
   border-left-width: 6px;
 }
-end of dropdown and setting menue style */
+/*end of dropdown and setting menue style */
 /* end of header style */
 body {
   font-size: 18px; }
@@ -722,7 +699,7 @@ a.explore-anchor {
   cursor: pointer;
   text-decoration: none; }
 
-a.explore-anchor:hover > h4 {
+a.explore-anchor:hover > h4, a.explore-anchor:hover > h5 {
   transition-duration: .5s;
   color: #16a085; }
 
@@ -995,3 +972,65 @@ ul.related-snipp li a:hover {
 
 .panel-heading {
   font-size: 12px; }
+
+.user-dev {
+  text-align: end; }
+
+.div-user-menue {
+  text-align: center; }
+
+.user-menue-ul {
+  min-width: 40%;
+  margin-left: 55%;
+  margin-top: -4px; }
+
+.user-menue {
+  text-decoration: none !important;
+  display: block;
+  padding: 3px 0px;
+  color: #000;
+  font-family: monospace;
+  font-size: 16px; }
+
+a.user-menue:hover {
+  background-color: #1abc9c;
+  color: #fff;
+  transition-duration: .5s; }
+
+.user-menue span {
+  font-size: 14px; }
+
+.inline-dev {
+  display: inline-block;
+  margin-right: 4px; }
+
+.inline-dev img {
+  width: 30px;
+  height: 30px; }
+
+.inline-dev1 {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 4px; }
+
+.return-name {
+  font-size: 16px;
+  font-family: monospace;
+  color: #fff; }
+
+.return-btn {
+  background-color: transparent;
+  border: 0;
+  border-radius: 0; }
+
+.return-btn:active, .return-btn:focus {
+  border: 0;
+  border-radius: 0;
+  outline: 0 !important; }
+
+.caret {
+  color: #fff;
+  border-top-width: 5px;
+  border-right-width: 4px;
+  border-left-width: 4px;
+  margin-left: 4px !important; }
