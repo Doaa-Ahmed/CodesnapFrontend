@@ -2,7 +2,7 @@
   .module('myApp')
   .controller('signupController', signupController);
 
-function signupController($scope, $http) {
+function signupController($scope, $http, $rootScope) {
 
 	this.signupForm = function() {
 		var	upobject = {
@@ -31,6 +31,11 @@ function signupController($scope, $http) {
 					//window.location.href = 'index.html';
 					console.log(data);
 					console.log(status);
+				    $scope.errorMsg =data.massage;
+				    if(data.massage=="success"){
+				    $rootScope.correctsubmit =true;
+                    }
+
         })
 		.error(function(data, status, headers, config) {
 				//$scope.errorMsg = 'Unable to signup the form';

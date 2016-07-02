@@ -292,11 +292,17 @@ function PostController($scope, $http, $rootScope,authService,$cookies) {
 
         console.log(data);
         console.log(status);
-        $rootScope.currentUserSignedIn =true;
 
         authService.setCookieData(data);
         $rootScope.username = data.username;
-        
+        $scope.messageerror ="ERROR,PLEASE ENTER A VALID DATA";
+        if(data.successful){
+            $rootScope.currentUserSignedIn =true;
+                    }else{
+                      $scope.messageerror;
+                      $rootScope.currentUsernotSignedIn =true;
+                    }
+
       })
       .error(function(data, status, headers, config) {
         console.log(data);
@@ -522,7 +528,7 @@ $scope.isActive = function (viewLocation) {
   .module('myApp')
   .controller('signupController', signupController);
 
-function signupController($scope, $http) {
+function signupController($scope, $http, $rootScope) {
 
 	this.signupForm = function() {
 		var	upobject = {
@@ -551,6 +557,11 @@ function signupController($scope, $http) {
 					//window.location.href = 'index.html';
 					console.log(data);
 					console.log(status);
+				    $scope.errorMsg =data.massage;
+				    if(data.massage=="success"){
+				    $rootScope.correctsubmit =true;
+                    }
+
         })
 		.error(function(data, status, headers, config) {
 				//$scope.errorMsg = 'Unable to signup the form';
@@ -629,6 +640,40 @@ function starCtrl($scope, $http) {
 
  //-------------------------------
 angular
+    .module('myApp')
+    .controller('userprofileController', userprofileController);
+
+profileController.$inject = ['$scope','$cookies','$routeParams','$http','$location'];
+
+function userprofileController($scope,$cookies,$routeParams, $http, $location){
+
+     var username = $routeParams.username;
+      
+      $http({
+            method: 'GET',
+            url: 'http://www.koodet.com:6543/api/users/'+username,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'} ,
+            xhrFields: {withCredentials: true }
+        })
+    	   .success(function(data) {
+    	   	console.log(data);
+	      	$scope.username = data.username;
+	      	$scope.firstname = data.firstname;
+	      	$scope.lastname = data.lastname;
+	      	$scope.email = data.email;
+            $scope.country = data.country;
+            $scope.snippets = data.snippets;
+            $scope.questions = data.questions;
+	      })
+
+}
+
+
+
+
+
+ //-------------------------------
+angular
 	.module('myApp')
 	.controller('viewQuestionController', viewQuestionController);
 
@@ -675,7 +720,6 @@ function viewQuestionController($scope, $http, $routeParams, $cookies, $route, q
 			.getQuestion($routeParams.qid)
 			.success(function(data) {
 				$scope.question = data;
-                console.log(data.answers)
 			})
 	}
 
@@ -878,6 +922,14 @@ function configurator($routeProvider, $httpProvider, $locationProvider) {
              controller  : 'profileController',
                 
         })
+
+  
+       .when('/profile/:username', {
+             templateUrl : 'pages/profile.html',
+             controller  : 'userprofileController',
+                
+        })
+
 
     // route for the about page
        .when('/search', {

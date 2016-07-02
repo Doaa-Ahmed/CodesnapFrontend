@@ -36,7 +36,7 @@
       					<div class="row lang-snip-row">
                 	<div class="col-md-2 col-sm-2">
                   <span title="Author" class="glyphicon glyphicon-user" aria-hidden="true" style="font-size:11px;"></span>
-                  <span title="Author" class="side-info"> {{snippet.username}}</span>
+                  <span title="Author" class="side-info"><a href="profile/{{snippet.username}}"> {{snippet.username}} </a></span>
                   <br>
                   <span class="side-info">{{snippet.date}}</span>
                 	</div>
@@ -57,7 +57,7 @@
       								</div>
       								<div class="col-md-8 col-sm-8">
       									<ul class="ul-tags">
-      										  <li class="li-tag"  ng-repeat="tag in snippet.tags"><a class="li-tag-a"><span class="tag-span" >{{tag}}</span></a></li>
+      										  <li class="li-tag"  ng-repeat="tag in snippet.tags"><a class="li-tag-a" href="tag/{{tag}}"><span class="tag-span" >{{tag}}</span></a></li>
       									</ul>
       								</div>
       							</div>
@@ -103,14 +103,14 @@
     								<div class="row">
     									<div class="col-md-8 col-sm-8">
     										<ul class="ul-tags">
-    											<li class="li-tag" ng-repeat="tag in question.tags"><a class="li-tag-a"><span class="tag-span">{{tag}}</span></a></li>
+    											<li class="li-tag" ng-repeat="tag in question.tags"><a class="li-tag-a" href="tag/{{tag}}"><span class="tag-span">{{tag}}</span></a></li>
     										</ul>
     									</div>
     								</div>
     							</div>
     							<div class="col-md-2 col-sm-2">
     								<span title="Author" class="glyphicon glyphicon-user" aria-hidden="true" style="font-size:11px;"></span>
-    								<span title="Author" class="side-info"> {{question.username}}</span>
+    								<span title="Author" class="side-info"><a href="profile/{{question.username}}">{{question.username}}</a></span>
     								<br>
     								<span class="side-info">{{question.date}}</span>
     							</div>

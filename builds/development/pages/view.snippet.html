@@ -93,17 +93,21 @@
               <h5 class="addLabels labelsFont">Language</h5>
             </div>
             <div class="col-md-1 col-sm-1">
-              <h5 class="wrap">
+              <a href="language/{{snippet.language}}">
+                <h5 class="wrap">
                 {{snippet.language}}
-              </h5>
+                </h5>
+              </a>
             </div>
             <div class="labels">
               <h5 class="addLabels labelsFont">Type</h5>
             </div>
             <div class="col-md-1 col-sm-1">
-              <h5 class="wrap">
-                {{snippet.code_type}}
-              </h5>
+              <a href="codetype/{{snippet.code_type}}">
+                <h5 class="wrap">
+                  {{snippet.code_type}}
+                </h5>
+              </a>
             </div>
           </div>
 
@@ -112,16 +116,18 @@
               <h5 class="addLabels labelsFont">Context</h5>
             </div>
             <div class="col-md-1 col-sm-1">
-              <h5 class="wrap">
-                {{snippet.context}}
-              </h5>
+              <a href="context/{{snippet.context}}">
+                <h5 class="wrap">
+                  {{snippet.context}}
+                </h5>
+              </a>
             </div>
             <div class="labels">
               <h5 class="addLabels labelsFont">Tags</h5>
             </div>
             <div class="col-md-6 col-sm-6">
               <ul class="snippet-tags">
-                <li class="li-tags"  ng-repeat="tag in snippet.tags"><a class="li-tags-a"><span class="tags-span" >{{tag}}</span></a></li>
+                <li class="li-tags"  ng-repeat="tag in snippet.tags"><a class="li-tags-a" href="tag/{{tag}}"><span class="tags-span" >{{tag}}</span></a></li>
               </ul>
             </div>
           </div>
