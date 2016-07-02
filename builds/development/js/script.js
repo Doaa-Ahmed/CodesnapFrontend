@@ -268,10 +268,15 @@ function PostController($scope, $http, $rootScope,authService,$cookies) {
 
         console.log(data);
         console.log(status);
-        $rootScope.currentUserSignedIn =true;
-
         authService.setCookieData(data);
         $rootScope.username = data.username;
+        $scope.messageerror ="ERROR,PLEASE ENTER A VALID DATA";
+        if(data.successful){
+            $rootScope.currentUserSignedIn =true;
+                    }else{
+                      $scope.messageerror;
+                      $rootScope.currentUsernotSignedIn =true;
+                    }
         
       })
       .error(function(data, status, headers, config) {
@@ -279,6 +284,8 @@ function PostController($scope, $http, $rootScope,authService,$cookies) {
         console.log(status);
       });
   } 
+
+
 }
 
  //-------------------------------
@@ -493,7 +500,7 @@ angular
   .module('myApp')
   .controller('signupController', signupController);
 
-function signupController($scope, $http) {
+function signupController($scope, $http,$rootScope) {
 
 	this.signupForm = function() {
 		var	upobject = {
@@ -519,12 +526,14 @@ function signupController($scope, $http) {
 		})
 			
 		.success(function(data, status, headers, config) {
-					//window.location.href = 'index.html';
 					console.log(data);
 					console.log(status);
+				    $scope.errorMsg =data.massage;
+				    if(data.massage=="success"){
+				    $rootScope.correctsubmit =true;
+                    }
         })
 		.error(function(data, status, headers, config) {
-				//$scope.errorMsg = 'Unable to signup the form';
 				console.log(data);
 				console.log(status);
 		})
@@ -745,8 +754,7 @@ function configurator($routeProvider,$httpProvider) {
 
 }	
 
-
-  /*myApp.run(["$rootScope", "$location", 'authService', 
+/*myApp.run(["$rootScope", "$location", 'authService', 
      function ($rootScope, $location, authService) {
     $rootScope.$on("$routeChangeStart"
     , function (event ,next , current) {
@@ -814,6 +822,7 @@ function authService($cookies,$http,$location,$rootScope) {
 				$cookies.remove("user_name");
 				$cookies.remove("access_token");
 				$cookies.remove("currentUserSignedIn");
+				//$cookies.remove("massage");
 
 		}
 

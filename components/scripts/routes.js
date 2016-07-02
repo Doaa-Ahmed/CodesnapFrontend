@@ -60,8 +60,7 @@ function configurator($routeProvider,$httpProvider) {
 
 }	
 
-
-  /*myApp.run(["$rootScope", "$location", 'authService', 
+/*myApp.run(["$rootScope", "$location", 'authService', 
      function ($rootScope, $location, authService) {
     $rootScope.$on("$routeChangeStart"
     , function (event ,next , current) {
