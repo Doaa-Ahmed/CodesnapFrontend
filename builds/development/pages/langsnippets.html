@@ -1,16 +1,15 @@
-
 <div class="container-fluid" style="padding-top:90px;">
   <div class="row">
     <div class="col-md-2 col-sm-2">
-      <div class="panel panel-default">
-        <div class="panel-heading"><h4>Context</h4></div>
+      <div class="panel panel-default side-check-panel">
+        <div class="panel-heading"><h5 style="margin:0px;">Context</h5></div>
         <div class="panel-body">
           <ul class="list-unstyled">
-            <li><label><input type="checkbox"> Web</label></li>
-            <li><label><input type="checkbox"> Desktop</label></li>
-            <li><label><input type="checkbox"> IOS</label></li>
-            <li><label><input type="checkbox"> Android</label></li>
-            <li><label><input type="checkbox"> ...</label></li>
+            <li><label><input type="checkbox" class="check-box"><span class="side-info"> Web</span></label></li>
+            <li><label><input type="checkbox" class="check-box"><span class="side-info"> Desktop</span></label></li>
+            <li><label><input type="checkbox" class="check-box"><span class="side-info"> IOS</span></label></li>
+            <li><label><input type="checkbox" class="check-box"><span class="side-info"> Android</span></label></li>
+            <li><label><input type="checkbox" class="check-box"><span class="side-info"> ...</span></label></li>
           </ul>
         </div>
         <div class="panel-footer text-center">
@@ -19,13 +18,13 @@
       </div>
     </div>
 
-    <div class="col-md-10 col-sm-10">
+    <div class="col-md-8 col-sm-8">
       <div class="panel with-nav-tabs panel-primary">
 
         <div class="panel-heading">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab1primary" data-toggle="tab">Snippets</a></li>
-            <li><a href="#tab2primary" data-toggle="tab">Questions</li>
+            <li><a href="#tab2primary" data-toggle="tab">Questions</a></li>
           </ul>
         </div>
 
@@ -33,137 +32,93 @@
           <div class="tab-content">
             <div class="tab-pane fade in active" id="tab1primary" ng-init=fetchSnippets()>
             <div ng-repeat="snippet in snippets">
-				<div class="col-md-12 col-sm-12 title-to-snippet">
-					<div class="row lang-snip-row">
-                  	<div class="col-md-2 col-sm-2">
-                    <span title="Author" class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                    <span title="Author" style="font-size:14px;font-family:sans-serif"> {{snippet.username}}</span>
-                    <br>
-                    <span>{{snippet.date}}</span>
-                  	</div>
-						<div class="col-md-8 col-sm-8" style="padding-left:0;">
-										<div class="row">
-											<div class="col-md-12 col-sm-12">
-												<a class="explore-anckor" ng-href="/snippet/{{snippet.id}}">
-													<h4 class="snip-title">
-														{{snippet.title}}
-													</h4>
-												</a>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-2 col-sm-2">
-												<b>{{snippet.views}}</b>
-												<span> views</span>
-											</div>
-											<div class="col-md-8 col-sm-8">
-												<ul class="ul-tags">
-													    <li class="li-tag"  ng-repeat="tag in snippet.tags"><a class="li-tag-a"><span class="tag-span" >{{tag}}</span></a></li>
-													
-												</ul>
-											</div>
-										</div>
-									</div>
-<!--                   <div class="col-md-2 col-sm-2">
-										<div class="row">
-											<div class="col-md-12 col-sm-12">
-
-												<fieldset class="rating">
-														<input type="radio" id="star5" name="rating" value="5" />
-														<label class = "full" for="star5" title="Awesome - 5 stars"></label>
-														<input type="radio" id="star4half" name="rating" value="4 and a half" />
-														<label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-														<input type="radio" id="star4" name="rating" value="4" />
-														<label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-														<input type="radio" id="star3half" name="rating" value="3 and a half" />
-														<label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-														<input type="radio" id="star3" name="rating" value="3" />
-														<label class = "full" for="star3" title="Meh - 3 stars"></label>
-														<input type="radio" id="star2half" name="rating" value="2 and a half" />
-														<label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-														<input type="radio" id="star2" name="rating" value="2" />
-														<label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-														<input type="radio" id="star1half" name="rating" value="1 and a half" />
-														<label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-														<input type="radio" id="star1" name="rating" value="1" />
-														<label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-														<input type="radio" id="starhalf" name="rating" value="half" />
-														<label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-												</fieldset>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-12 col-sm-12">
-												<b>{{snippet.votes}}</b>
-												<span> votes</span>
-											</div>
-										</div>
-									</div> -->
-							<div class="col-md-2 col-sm-2 col-xs-2">
-		                      <div class="row">
-		                        <div class="col-md-12 col-sm-12 col-xs-12">
-		                          <span class="stars-container stars-{{snippet.rank}}">★★★★★</span>
-		                        </div>
-		                      </div>
-		                      <div class="row">
-		                        <div class="col-md-12 col-sm-12 col-xs-12">
-		                          <b>{{snippet.votes}}</b>
-		                          <span> votes</span>
-                                </div>
-                                </div>
-                                </div>
-								</div>
-							</div>
-
+      				<div class="col-md-12 col-sm-12 title-to-snippet">
+      					<div class="row lang-snip-row">
+                	<div class="col-md-2 col-sm-2">
+                  <span title="Author" class="glyphicon glyphicon-user" aria-hidden="true" style="font-size:11px;"></span>
+                  <span title="Author" class="side-info"><a href="profile/{{snippet.username}}"> {{snippet.username}} </a></span>
+                  <br>
+                  <span class="side-info">{{snippet.date}}</span>
+                	</div>
+      						<div class="col-md-8 col-sm-8" style="padding-left:0;">
+      							<div class="row">
+      								<div class="col-md-12 col-sm-12">
+      									<a class="explore-anchor" ng-href="/snippet/{{snippet.id}}">
+      										<h4 class="snip-title">
+      											{{snippet.title}}
+      										</h4>
+      									</a>
+      								</div>
+      							</div>
+      							<div class="row">
+      								<div class="col-md-2 col-sm-2">
+      									<b class="side-info">{{snippet.views}}</b>
+      									<span class="side-info"> views</span>
+      								</div>
+      								<div class="col-md-8 col-sm-8">
+      									<ul class="ul-tags">
+      										  <li class="li-tag"  ng-repeat="tag in snippet.tags"><a class="li-tag-a" href="tag/{{tag}}"><span class="tag-span" >{{tag}}</span></a></li>
+      									</ul>
+      								</div>
+      							</div>
+      						</div>
+        					<div class="col-md-2 col-sm-2 col-xs-2">
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+                        <span class="stars-container stars-{{snippet.rank}}">★★★★★</span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+                        <b class="side-info">{{snippet.votes}}</b>
+                        <span class="side-info"> votes</span>
+                      </div>
+                    </div>
+                  </div>
+      					</div>
+      				</div>
 						</div>
-            </div>
-            	<div class="tab-pane fade" id="tab2primary" ng-init="fetchQuestions()">
-              <div ng-repeat="question in questions">
-							<div class="col-md-12 col-sm-12 title-to-snippet">
-								<div class="row lang-snip-row">
-									<div class="col-md-2 col-sm-2" style="padding-right:0;">
-										<div class="row">
-											<div class="col-md-12 col-sm-12">
-												<b>{{question.views}}</b>
-												<span> views</span>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-12 col-sm-12">
-												<b>19</b>
-												<span> answers</span>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-8 col-sm-8" style="padding-left:0;">
-										<div class="row">
-											<div class="col-md-12 col-sm-12">
-												<a class="explore-anckor" ng-href="question/{{question.id}}">
-													<h4 class="snip-title">
-														{{question.title}}
-													</h4>
-												</a>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-8 col-sm-8">
-												<ul class="ul-tags">
-													<li class="li-tag" ng-repeat="tag in ['ss','loll']"><a class="li-tag-a"><span class="tag-span">{{tag}}</span></a></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-2 col-sm-2">
-										<span title="Author" class="glyphicon glyphicon-user" aria-hidden="true"></span>
-										<span title="Author" style="font-size:14px;font-family:sans-serif"> {{question.username}}</span>
-										<br>
-										<span>{{question.date}}</span>
-									</div>
-								</div>
-							</div>
-            </div>
           </div>
-        </div>
+        	<div class="tab-pane fade" id="tab2primary" ng-init="fetchQuestions()">
+            <div ng-repeat="question in questions">
+    					<div class="col-md-12 col-sm-12 title-to-snippet">
+    						<div class="row lang-snip-row">
+    							<div class="col-md-2 col-sm-2" style="line-height:normal;">
+										<b class="side-info">{{question.views}}</b>
+										<span class="side-info"> Views</span>
+								    <br>
+										<b class="side-info">{{question.answers}}</b>
+										<span class="side-info"> Answers</span>
+    							</div>
+    							<div class="col-md-8 col-sm-8" style="padding-left:0;">
+    								<div class="row">
+    									<div class="col-md-12 col-sm-12">
+    										<a class="explore-anchor" ng-href="question/{{question.id}}">
+    											<h4 class="snip-title">
+    												{{question.title}}
+    											</h4>
+    										</a>
+    									</div>
+    								</div>
+    								<div class="row">
+    									<div class="col-md-8 col-sm-8">
+    										<ul class="ul-tags">
+    											<li class="li-tag" ng-repeat="tag in question.tags"><a class="li-tag-a" href="tag/{{tag}}"><span class="tag-span">{{tag}}</span></a></li>
+    										</ul>
+    									</div>
+    								</div>
+    							</div>
+    							<div class="col-md-2 col-sm-2">
+    								<span title="Author" class="glyphicon glyphicon-user" aria-hidden="true" style="font-size:11px;"></span>
+    								<span title="Author" class="side-info"><a href="profile/{{question.username}}">{{question.username}}</a></span>
+    								<br>
+    								<span class="side-info">{{question.date}}</span>
+    							</div>
+    						</div>
+    					</div>
+          </div>
+      </div>
+      </div>
       </div>
     </div>
   </div>

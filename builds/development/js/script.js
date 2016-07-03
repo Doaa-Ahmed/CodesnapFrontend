@@ -292,11 +292,17 @@ function PostController($scope, $http, $rootScope,authService,$cookies) {
 
         console.log(data);
         console.log(status);
-        $rootScope.currentUserSignedIn =true;
 
         authService.setCookieData(data);
         $rootScope.username = data.username;
-        
+        $scope.messageerror ="ERROR,PLEASE ENTER A VALID DATA";
+        if(data.successful){
+            $rootScope.currentUserSignedIn =true;
+                    }else{
+                      $scope.messageerror;
+                      $rootScope.currentUsernotSignedIn =true;
+                    }
+
       })
       .error(function(data, status, headers, config) {
         console.log(data);
@@ -321,8 +327,7 @@ function profileController($scope,$cookies, $http, $location){
             url: 'http://www.koodet.com:6543/api/users/'+user_id,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'} ,
             xhrFields: {withCredentials: true }
-        })
-    	   .success(function(data) {
+        }).success(function(data) {
     	   	console.log(data);
 	      	$scope.username = data.username;
 	      	$scope.firstname = data.firstname;
@@ -392,8 +397,9 @@ function requestController($scope,$cookies, $http,$location,authService) {
         	method: 'POST',
         	url: 'http://www.koodet.com:6543/api/questions',
         	data:JSON.stringify(snap),
-        	headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-          xhrFields: {withCredentials: true}
+          crossDomain: true, 
+          xhrFields: { withCredentials: true},
+          headers: {'Content-Type': 'application/x-www-form-urlencoded' }
         })
         .success(function(data, status, headers, config) {
         	console.log(data);
@@ -521,7 +527,7 @@ $scope.isActive = function (viewLocation) {
   .module('myApp')
   .controller('signupController', signupController);
 
-function signupController($scope, $http) {
+function signupController($scope, $http, $rootScope) {
 
 	this.signupForm = function() {
 		var	upobject = {
@@ -550,6 +556,11 @@ function signupController($scope, $http) {
 					//window.location.href = 'index.html';
 					console.log(data);
 					console.log(status);
+				    $scope.errorMsg =data.massage;
+				    if(data.massage=="success"){
+				    $rootScope.correctsubmit =true;
+                    }
+
         })
 		.error(function(data, status, headers, config) {
 				//$scope.errorMsg = 'Unable to signup the form';
@@ -628,6 +639,40 @@ function starCtrl($scope, $http) {
 
  //-------------------------------
 angular
+    .module('myApp')
+    .controller('userprofileController', userprofileController);
+
+userprofileController.$inject = ['$scope','$cookies','$routeParams','$http','$location'];
+
+function userprofileController($scope,$cookies,$routeParams, $http, $location){
+
+     var username = $routeParams.username;
+      
+      $http({
+            method: 'GET',
+            url: 'http://www.koodet.com:6543/api/users/'+username,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'} ,
+            xhrFields: {withCredentials: true }
+        })
+    	   .success(function(data) {
+    	   	console.log(data);
+	      	$scope.username = data.username;
+	      	$scope.firstname = data.firstname;
+	      	$scope.lastname = data.lastname;
+	      	$scope.email = data.email;
+            $scope.country = data.country;
+            $scope.snippets = data.snippets;
+            $scope.questions = data.questions;
+	      })
+
+}
+
+
+
+
+
+ //-------------------------------
+angular
 	.module('myApp')
 	.controller('viewQuestionController', viewQuestionController);
 
@@ -637,6 +682,36 @@ function viewQuestionController($scope, $http, $routeParams, $cookies, $route, q
 	$scope.new_answer = {};
 	$scope.question = {};
 	$scope.question.answers = [];
+
+	$scope.aceLoaded = function(_editor) {
+    // Options
+		_editor.setReadOnly(true);
+
+        _editor.setVale(snippet.code);
+        console.log(_editor);
+    };
+
+    $scope.compileSnippet=function(code){
+
+        var snap = {
+            'code': code
+
+        };
+        $http({
+            method: 'POST',
+            url: 'http://www.koodet.com:6543/api/compile',
+            data:JSON.stringify(snap),
+            crossDomain: true, 
+            xhrFields: { withCredentials: true},
+            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
+        
+        })
+        .success(function(data, status, headers, config) {
+            $scope.new_answer.output = data.output;
+            console.log(status);
+
+        })
+    }
 	
 
 	function fetchQuestion() {
@@ -687,6 +762,7 @@ angular
 function viewSnippetController($scope, $http, $routeParams, $location, $route, $cookies, snippetService,authService) {
 
 	$scope.fetchSnippet = fetchSnippet;
+    $scope.getRelated = getRelated;
 	$scope.addComment = addComment;
 	$scope.snippet = {};
 	$scope.new_comment = "";
@@ -699,6 +775,17 @@ function viewSnippetController($scope, $http, $routeParams, $location, $route, $
 				$scope.snippet = data;
 			});
 	}
+
+    function getRelated() {
+        snippetService
+            .getSnippets()
+            .success(function(data) {
+                $scope.related = data;
+                console.log(data);
+            });
+    }
+
+    
 
 	$scope.aceLoaded = function(_editor) {
     // Options
@@ -834,6 +921,14 @@ function configurator($routeProvider, $httpProvider, $locationProvider) {
              controller  : 'profileController',
                 
         })
+
+  
+       .when('/profile/:username', {
+             templateUrl : 'pages/profile.html',
+             controller  : 'userprofileController',
+                
+        })
+
 
     // route for the about page
        .when('/search', {
@@ -1135,12 +1230,12 @@ function snippetService($http,authService,$cookies) {
 	var service = {
 		getLangSnippets : getLangSnippets,
 		getSnippet : getSnippet,
+		getSnippets : getSnippets,
 		createSnippet : createSnippet
 	};
 
 	return service;
 	
-
 	function getLangSnippets(feature,fname) {
 
 		var obj =$cookies.get("access_token");
@@ -1162,8 +1257,19 @@ function snippetService($http,authService,$cookies) {
             crossDomain: true, 
             xhrFields: { withCredentials: true},
             headers: {"Cookie":"obj"}
-	})
-}
+        })
+	}
+
+	function getSnippets() {
+		//var obj =$cookies.get("access_token");
+        return $http({
+            method: 'GET',
+            url: 'http://www.koodet.com:6543/api/snippets',
+            crossDomain: true, 
+            xhrFields: { withCredentials: true},
+            headers: {"Cookie":"obj"}
+        })
+	}
 
 	function createSnippet(snippet) {
 		//var obj =$cookies.get("access_token");

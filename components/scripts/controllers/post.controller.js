@@ -25,11 +25,17 @@ function PostController($scope, $http, $rootScope,authService,$cookies) {
 
         console.log(data);
         console.log(status);
-        $rootScope.currentUserSignedIn =true;
 
         authService.setCookieData(data);
         $rootScope.username = data.username;
-        
+        $scope.messageerror ="ERROR,PLEASE ENTER A VALID DATA";
+        if(data.successful){
+            $rootScope.currentUserSignedIn =true;
+                    }else{
+                      $scope.messageerror;
+                      $rootScope.currentUsernotSignedIn =true;
+                    }
+
       })
       .error(function(data, status, headers, config) {
         console.log(data);

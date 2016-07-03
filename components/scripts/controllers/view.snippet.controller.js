@@ -5,6 +5,7 @@ angular
 function viewSnippetController($scope, $http, $routeParams, $location, $route, $cookies, snippetService,authService) {
 
 	$scope.fetchSnippet = fetchSnippet;
+    $scope.getRelated = getRelated;
 	$scope.addComment = addComment;
 	$scope.snippet = {};
 	$scope.new_comment = "";
@@ -17,6 +18,17 @@ function viewSnippetController($scope, $http, $routeParams, $location, $route, $
 				$scope.snippet = data;
 			});
 	}
+
+    function getRelated() {
+        snippetService
+            .getSnippets()
+            .success(function(data) {
+                $scope.related = data;
+                console.log(data);
+            });
+    }
+
+    
 
 	$scope.aceLoaded = function(_editor) {
     // Options

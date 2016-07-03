@@ -50,8 +50,9 @@ function requestController($scope,$cookies, $http,$location,authService) {
         	method: 'POST',
         	url: 'http://www.koodet.com:6543/api/questions',
         	data:JSON.stringify(snap),
-        	headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-          xhrFields: {withCredentials: true}
+          crossDomain: true, 
+          xhrFields: { withCredentials: true},
+          headers: {'Content-Type': 'application/x-www-form-urlencoded' }
         })
         .success(function(data, status, headers, config) {
         	console.log(data);

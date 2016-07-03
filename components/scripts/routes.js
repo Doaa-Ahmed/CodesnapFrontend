@@ -29,6 +29,14 @@ function configurator($routeProvider, $httpProvider, $locationProvider) {
                 
         })
 
+  
+       .when('/profile/:username', {
+             templateUrl : 'pages/profile.html',
+             controller  : 'userprofileController',
+                
+        })
+
+
     // route for the about page
        .when('/search', {
             templateUrl: 'pages/search.html',

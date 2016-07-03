@@ -1,81 +1,143 @@
-
 <nav id="mainNavbar" class="navbar navbar-fixed-top">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-1">
+      <div class="col-md-1 col-sm-1">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".mfa" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
         <img class="img-responsive logoImg" src="images/logo.png" alt="logo" />
       </div>
-      <div class="col-md-4" style="padding-left:0px;">
-        <ul class="nav navbar-nav">
-          <li><a class="navAnchor" href="/">Home</a></li>
-          <li><a class="navAnchor" href="/explore">explore</a></li>
-          <li><a class="navAnchor" href="/add">add</a></li>
-          <li><a class="navAnchor" href="/request">request</a></li>
-        </ul>
-      </div>
-      <div ng-controller="searchController"  ng-hide="isActive('/')" class="col-md-4 headSearchCol">
-        <input type="search" class="form-control headSearchInput" placeholder="Search For Snippet!">
-        <span class="headSearchSpan">
-          <button class="btn headSearchSpanBtn" type="button">
-            <span style="color:#fff;" class="glyphicon glyphicon-search"></span>
-          </button>
-        </span>
+      <div class="mfa collapse navbar-collapse col-md-8 col-sm-8">
+        <div class="row">
+          <div class="col-md-6 col-sm-6">
+            <ul class="nav navbar-nav">
+              <li><a class="navAnchor" href="/">Home</a></li>
+              <li><a class="navAnchor" href="/explore">explore</a></li>
+              <li><a class="navAnchor" href="/add">add</a></li>
+              <li><a class="navAnchor" href="/request">request</a></li>
+            </ul>
+          </div>
+
+          <div ng-controller="searchController"  ng-hide="isActive('/')" class="col-md-6 col-sm-6 headSearchCol">
+            <input type="search" class="form-control headSearchInput input-focus" placeholder="Search For Snippet!">
+            <span class="headSearchSpan">
+              <button class="btn headSearchSpanBtn" type="button">
+                <span style="color:#fff;" class="glyphicon glyphicon-search"></span>
+              </button>
+            </span>
+          </div>
+        </div>
+      </div> <!--/.nav-collapse -->
+      <div class="col-md-3 col-sm-3 collapse navbar-collapse">
+        <div ng-hide="currentUserSignedIn">
+          <ul class="nav navbar-nav" style="float:right;">
+            <li role="separator" class="divider"></li>
+            <li>
+              <a class="navAnchor" data-toggle="modal" data-target="#signUpModal"  style="cursor:pointer;">
+                <span class="glyphicon glyphicon-user"></span> register
+              </a>
+            </li>
+            <li>
+              <a class="navAnchor" data-toggle="modal" data-target="#loginModal" style="cursor:pointer;">
+                <span class="glyphicon glyphicon-log-in"></span> Signin
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
 
-      
-      <div class="col-md-3" ng-hide="currentUserSignedIn">
-        <ul class="nav navbar-nav" style="float:right;">
-          <li>
-            <a class="navAnchor" data-toggle="modal" data-target="#signUpModal"  style="cursor:pointer;">
-              <span class="glyphicon glyphicon-user"></span> register
-            </a>
-          </li>
-          <li>
-            <a class="navAnchor" data-toggle="modal" data-target="#loginModal" style="cursor:pointer;">
-              <span class="glyphicon glyphicon-log-in"></span> Signin
-            </a>
-          </li>
-        </ul>
+
+
+
+
+      <div class="col-md-3 dropdown user-dev" ng-show="currentUserSignedIn">
+          <button class="btn dropdown-toggle return-btn" type="button" data-toggle="dropdown">
+            <div ng-hide="currentUserLogedout">
+              <div class="inline-dev">
+                <img class="img-responsive" src="../images/upload-img.png" alt="img" />
+              </div>
+              <div class="inline-dev1">
+                <span class="return-name">{{username}}</span><span class="caret"></span>
+              </div>
+            </div></a>
+          </button>
+          <ul class="dropdown-menu user-menue-ul">
+            <li>
+              <div ng-show="currentUserSignedIn" >
+                <div class="div-user-menue" ng-hide="currentUserLogedout">
+                  <a class="user-menue" href="/profile">
+                    <sapn>Setting</span>
+                  </a>
+                </div>
+               </div>
+            </li>
+            <li>
+              <div ng-controller="LogoutController" ng-show="currentUserSignedIn" >
+                  <div class="div-user-menue" ng-hide="currentUserLogedout">
+                    <a class="user-menue" href="/">
+                      <span ng-click="logout()">Logout</span>
+                    </a>
+                    </div>
+                </div>
+            </li>
+          </ul>
+        </div>
+
+
+
+
+
+
+<!--
+
+    <div class="col-md-3" class="nav navbar-nav" style="float:right; " ng-show="currentUserSignedIn">
+      <div ng-hide="currentUserLogedout">
+        <span><a href="/profile" class="navAnchor"> {{username}}</a></span>
       </div>
-  
- <div class="col-md-3" class="nav navbar-nav" style="float:right; " ng-show="currentUserSignedIn"  >
-    <div ng-hide="currentUserLogedout">
-    <span style="color: white; font-weight: bolder; font-family: Arial; border-radius: 5px;"><a href="/profile" class="navAnchor" data-toggle="modal" data-target="#loginModal"> {{username}}</a></span>
-    </div>
-      </div>
-<!--       <div ng-show="currentUserSignedIn" >
+
+      <div ng-show="currentUserSignedIn" >
         <div ng-hide="currentUserLogedout">
           <a href="/profile" class="navAnchor" data-toggle="modal" data-target="#loginModal" style="cursor:pointer;">
-            <span class="glyphicon glyphicon-log-in">profile</span> 
+            <span class="glyphicon glyphicon-log-in">profile</span>
           </a>
         </div>
        </div>
- -->
-  <div ng-controller="LogoutController" class="col-md-3" class="nav navbar-nav" style="float:right;"
-        ng-show="currentUserSignedIn" >
-    <div ng-hide="currentUserLogedout">
-      <a href="#/"> 
-        <span ng-click="logout()" style="color: white; font-weight: bolder; font-family: Arial; border-radius: 5px;">Logout
-        </span>
-      </a>
-      </div>
+      <div ng-controller="LogoutController" class="col-md-3" class="nav navbar-nav" style="float:right;"
+              ng-show="currentUserSignedIn" >
+          <div ng-hide="currentUserLogedout">
+            <a href="#/">
+              <span ng-click="logout()" style="color: white; font-weight: bolder; font-family: Arial; border-radius: 5px;">Logout
+              </span>
+            </a>
+            </div>
+        </div>
+    </div>
+
+-->
+
+
+
+
+
+
+
+  </div>
   </div>
 
-      </div>
-
-
-    </div> <!-- end of row -->
-  </div>
 </nav>
 
 <div id="loginModal" class="modal fade" role="dialog" ng-controller="PostController as postCtrl" >
   <div class="modal-dialog" style="width:100%;">
+    <div ng-hide="currentUserSignedIn">
       <div class="container">
         <div class="row">
           <div class="col-md-4 col-md-offset-4">
             <!-- Modal content-->
 
-            <div class="modal-content" ng-hide="currentUserSignedIn">
+            <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Login</h4>
@@ -91,12 +153,12 @@
                   <input type="password" class="form-control" id="inputPassword" placeholder="Password" required ng-model="inputData.password">
                 </div>
                 <button class="btn btn-primary" type="submit">Signin</button>
+                <div ng-show="currentUsernotSignedIn">
+                  <p>{{messageerror}}</p>
+                </div>
               </form>
             </div>
-
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
+           </div>
           </div>
         </div>
       </div>
@@ -104,9 +166,10 @@
   </div>
 </div>
 
-<div id="signUpModal" class="modal fade" role="dialog">
+<div id="signUpModal" class="modal fade" role="dialog" ng-controller="signupController as signupCtrl">
   <div class="modal-dialog" style="width:100%;">
-      <div class="container">
+    <div ng-hide="correctsubmit">
+      <div  class="container">
         <div class="row">
           <div class="col-md-4 col-md-offset-4">
             <!-- Modal content-->
@@ -115,7 +178,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Sign Up</h4>
               </div>
-              <div class="modal-body" ng-controller="signupController as signupCtrl">
+              <div class="modal-body">
                 <form ng-submit="signupCtrl.signupForm()">
                   <div class="form-group">
                     <label for="first_name">first name</label>
@@ -138,11 +201,16 @@
                     <input type="password" class="form-control" id="Password" placeholder="Password" required ng-model="signupData.password">
                   </div>
                   <button type="submit" class="btn btn-primary">Signup</button>
+                  <div>
+                    <p>{{errorMsg}}</p>
+                  </div>
+
                 </form>
               </div>
-
+<!-- 
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div> -->
             </div>
           </div>
         </div>

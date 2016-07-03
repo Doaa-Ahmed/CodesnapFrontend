@@ -8,6 +8,36 @@ function viewQuestionController($scope, $http, $routeParams, $cookies, $route, q
 	$scope.new_answer = {};
 	$scope.question = {};
 	$scope.question.answers = [];
+
+	$scope.aceLoaded = function(_editor) {
+    // Options
+		_editor.setReadOnly(true);
+
+        _editor.setVale(snippet.code);
+        console.log(_editor);
+    };
+
+    $scope.compileSnippet=function(code){
+
+        var snap = {
+            'code': code
+
+        };
+        $http({
+            method: 'POST',
+            url: 'http://www.koodet.com:6543/api/compile',
+            data:JSON.stringify(snap),
+            crossDomain: true, 
+            xhrFields: { withCredentials: true},
+            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
+        
+        })
+        .success(function(data, status, headers, config) {
+            $scope.new_answer.output = data.output;
+            console.log(status);
+
+        })
+    }
 	
 
 	function fetchQuestion() {
