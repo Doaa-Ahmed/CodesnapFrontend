@@ -2,7 +2,7 @@ angular
     .module('myApp')
     .controller('userprofileController', userprofileController);
 
-profileController.$inject = ['$scope','$cookies','$routeParams','$http','$location'];
+userprofileController.$inject = ['$scope','$cookies','$routeParams','$http','$location'];
 
 function userprofileController($scope,$cookies,$routeParams, $http, $location){
 

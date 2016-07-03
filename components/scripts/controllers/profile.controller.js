@@ -13,8 +13,7 @@ function profileController($scope,$cookies, $http, $location){
             url: 'http://www.koodet.com:6543/api/users/'+user_id,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'} ,
             xhrFields: {withCredentials: true }
-        })
-    	   .success(function(data) {
+        }).success(function(data) {
     	   	console.log(data);
 	      	$scope.username = data.username;
 	      	$scope.firstname = data.firstname;
