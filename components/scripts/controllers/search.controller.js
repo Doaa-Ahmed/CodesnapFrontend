@@ -1,13 +1,9 @@
 angular
-	.module('myApp')
-	.controller('searchController',searchController);
+    .module('myApp')
+    .controller('searchController', searchController);
 
-function searchController($scope,$rootScope, $location) {
-$scope.isActive = function (viewLocation) {
-	             return viewLocation === $location.path();
-            }
-        }
-
-
-
-
+function searchController($scope, $rootScope, $location) {
+    $scope.isActive = function(viewLocation) {
+        return viewLocation === $location.path();
+    }
+}

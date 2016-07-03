@@ -1,25 +1,22 @@
-/* service registration */
 angular
-	.module('myApp')
-	.factory('langService', langService);
+    .module('myApp')
+    .factory('langService', langService);
 
-/* dependency injection */
-langService.$inject = ['$http','authService'];
+langService.$inject = ['$http', 'authService'];
 
-/* service implementation */
-function langService($http,authService) {
-	var service = {
-		getLangs : getLangs,
-		getLang : getLang
-	};
+function langService($http, authService) {
+    var service = {
+        getLangs: getLangs,
+        getLang: getLang
+    };
 
-	return service;
+    return service;
 
-	function getLangs() {
-		//get all languages
-	}
+    function getLangs() {
+        //get all languages
+    }
 
-	function getLang(langId) {
-		//get a specific language
-	}
+    function getLang(langId) {
+        //get a specific language
+    }
 }

@@ -129,7 +129,7 @@
 
 </nav>
 
-<div id="loginModal" class="modal fade" role="dialog" ng-controller="PostController as postCtrl" >
+<div id="loginModal" class="modal fade" role="dialog" ng-controller="loginController as login" >
   <div class="modal-dialog" style="width:100%;">
     <div ng-hide="currentUserSignedIn">
       <div class="container">
@@ -143,7 +143,7 @@
                 <h4 class="modal-title">Login</h4>
               </div>
             <div class="modal-body">
-              <form ng-submit="postCtrl.postForm()">
+              <form ng-submit="login.postForm()">
                 <div class="form-group">
                   <label for="inputUsername">Username</label>
                   <input type="text" class="form-control" id="inputUsername" placeholder="Username" required ng-model="inputData.username">

@@ -1,75 +1,12 @@
 
 
  //-------------------------------
-
 (function() {
 	'use strict';
 
 	var app = angular.module('myApp',['ngRoute' ,'ngCookies','ui.ace']);
 
 })();
-
-
- //-------------------------------
-/* controller registeration */
-angular
-	.module('myApp')
-	.controller('addQuestionController', addQuestionController);
-
-/* dependency injection */
-addQuestionController.$inject = ['$scope', '$http', '$location', 'optionsService', 'questionService','authService'];
-
-/* controller implementation */
-function addQuestionController($scope, $http, $location, optionsService, questionService,authService) {
-    
-    $scope.question = {};
-    $scope.options = {};
-    $scope.postQuestion = postQuestion;
-    $scope.populateOptions = populateOptions;
-    $scope.prepareQuestion = prepareQuestion;
-
-    function populateOptions() {
-        optionsService
-            .getOptions()
-            .success(function(data) {
-                $scope.options = data;    
-            });
-    }
-
-    function prepareQuestion() {
-        $scope.question.language = $scope.question.language.id;
-        $scope.question.context = $scope.question.context.id;
-        $scope.question.code_type = $scope.question.code_type.id;   
-
-    }
-
-    function postQuestion() {
-        prepareQuestion();
-        var snap = JSON.stringify($scope.question);
-        console.log(snap);
-        var object = {
-              'Cookie': authService.getCookieData
-      };
-
-        $http({
-            method: 'POST',
-            url: 'http://www.koodet.com:6543/api/questions',
-            data: JSON.stringify($scope.question),
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                "Cookie":JSON.stringify(object.access_token)
-                
-            },
-            xhrFields: {
-            withCredentials: true
-        }
-        })
-        .success(function(data) {
-            $location.path('/question/:qid');
-            console.log(data);
-        })
-    }
-}
 
  //-------------------------------
 /* controller registeration */
@@ -182,14 +119,6 @@ function addSnippetController($scope,$cookies, $http, $location, optionsService,
 }
 
  //-------------------------------
-
-
-
-
-
-
-
- //-------------------------------
 angular
 	.module('myApp')
 	.controller('listLangsController', listLangsController);
@@ -244,16 +173,64 @@ function listSnippetsController($scope, $http, $routeParams, snippetService, que
 
  //-------------------------------
 angular
-  .module('myApp')
-  .controller('LogoutController', LogoutController);
-LogoutController.$inject = ['$http','$scope','$rootScope','$location','authService','$cookies'];
+    .module('myApp')
+    .controller('loginController', loginController);
 
-function LogoutController($http,$scope,$rootScope, $location,authService,$cookies) {
-  $scope.logout = logout;
-    
+loginController.$inject = ['$scope', '$http', '$rootScope', 'authService', '$cookies'];
+
+function loginController($scope, $http, $rootScope, authService, $cookies) {
+    this.postForm = function() {
+        var obj = {
+            'username': $scope.inputData.username,
+            'password': $scope.inputData.password
+        };
+
+        console.log(JSON.stringify(obj));
+
+        $http({
+                method: 'POST',
+                url: 'http://www.koodet.com:6543/api/login',
+                data: JSON.stringify(obj),
+                xhrFields: { withCredentials: true },
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+
+            })
+            .success(function(data, status, headers, config) {
+
+                console.log(data);
+                console.log(status);
+
+                authService.setCookieData(data);
+                $rootScope.username = data.username;
+                $scope.messageerror = "ERROR,PLEASE ENTER A VALID DATA";
+                if (data.successful) {
+                    $rootScope.currentUserSignedIn = true;
+                } else {
+                    $scope.messageerror;
+                    $rootScope.currentUsernotSignedIn = true;
+                }
+
+            })
+            .error(function(data, status, headers, config) {
+                console.log(data);
+                console.log(status);
+            });
+    }
+}
+
+ //-------------------------------
+angular
+    .module('myApp')
+    .controller('LogoutController', LogoutController);
+
+LogoutController.$inject = ['$http', '$scope', '$rootScope', '$location', 'authService', '$cookies'];
+
+function LogoutController($http, $scope, $rootScope, $location, authService, $cookies) {
+    $scope.logout = logout;
+
     function logout() {
-      
-       $rootScope.currentUserSignedIn=false;
+
+        $rootScope.currentUserSignedIn = false;
         //$rootScope.userInfo = authService.getCookieData;
         //console.log(status);
         //console.log("hi");
@@ -261,54 +238,7 @@ function LogoutController($http,$scope,$rootScope, $location,authService,$cookie
         authService.clearCookieData();
         //console.log("hey");
         $location.path('/');
-      }
-  }
-
- //-------------------------------
-angular
-  .module('myApp')
-  .controller('PostController', PostController);
-
-PostController.$inject = ['$scope', '$http','$rootScope','authService','$cookies'];
-
-function PostController($scope, $http, $rootScope,authService,$cookies) {
-  this.postForm = function() {
-      var obj = {
-              'username': $scope.inputData.username,
-              'password': $scope.inputData.password
-      };
-
-      console.log(JSON.stringify(obj));
-
-      $http({
-        method: 'POST',
-        url: 'http://www.koodet.com:6543/api/login',
-        data:JSON.stringify(obj),
-        xhrFields: {withCredentials: true},
-        headers:{'Content-Type': 'application/x-www-form-urlencoded'}
-
-      })
-        .success(function(data, status, headers, config) {
-
-        console.log(data);
-        console.log(status);
-
-        authService.setCookieData(data);
-        $rootScope.username = data.username;
-        $scope.messageerror ="ERROR,PLEASE ENTER A VALID DATA";
-        if(data.successful){
-            $rootScope.currentUserSignedIn =true;
-                    }else{
-                      $scope.messageerror;
-                      $rootScope.currentUsernotSignedIn =true;
-                    }
-
-      })
-      .error(function(data, status, headers, config) {
-        console.log(data);
-        console.log(status);
-      });
-  } 
+    }
 }
 
  //-------------------------------
@@ -316,324 +246,220 @@ angular
     .module('myApp')
     .controller('profileController', profileController);
 
-profileController.$inject = ['$scope','$cookies','$http','$location'];
+profileController.$inject = ['$scope', '$cookies', '$http', '$location'];
 
-function profileController($scope,$cookies, $http, $location){
+function profileController($scope, $cookies, $http, $location) {
 
-     var user_id = $cookies.get("user_id");
-      
-      $http({
-            method: 'GET',
-            url: 'http://www.koodet.com:6543/api/users/'+user_id,
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'} ,
-            xhrFields: {withCredentials: true }
-        }).success(function(data) {
-    	   	console.log(data);
-	      	$scope.username = data.username;
-	      	$scope.firstname = data.firstname;
-	      	$scope.lastname = data.lastname;
-	      	$scope.email = data.email;
-            $scope.country = data.country;
-            $scope.snippets = data.snippets;
-            $scope.questions = data.questions;
-	      })
+    var user_id = $cookies.get("user_id");
+
+    $http({
+        method: 'GET',
+        url: 'http://www.koodet.com:6543/api/users/' + user_id,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        xhrFields: { withCredentials: true }
+    }).success(function(data) {
+        console.log(data);
+        $scope.username = data.username;
+        $scope.firstname = data.firstname;
+        $scope.lastname = data.lastname;
+        $scope.email = data.email;
+        $scope.country = data.country;
+        $scope.snippets = data.snippets;
+        $scope.questions = data.questions;
+    })
 
 }
 
-
-
-
-
  //-------------------------------
 angular
-	.module('myApp')
-	.controller('requestController', requestController);
+    .module('myApp')
+    .controller('requestController', requestController);
 
-function requestController($scope,$cookies, $http,$location,authService) {
-  $http({
+function requestController($scope, $cookies, $http, $location, authService) {
+    
+    $http({
             method: 'GET',
             url: 'http://www.koodet.com:6543/api/elements',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'} ,
-            xhrFields: {withCredentials: true }
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            xhrFields: { withCredentials: true }
         })
-    	   .success(function(data) {
-          	$scope.result=data;
-	      	$scope.lan = [];
+        .success(function(data) {
+            $scope.result = data;
+            $scope.lan = [];
 
-      		angular.forEach($scope.result.language, function(item) {
-            	$scope.lan.push(item);
+            angular.forEach($scope.result.language, function(item) {
+                $scope.lan.push(item);
             })
 
-      		$scope.con = [];
+            $scope.con = [];
 
-      		angular.forEach($scope.result.context, function(item) {
-            	$scope.con.push(item);
+            angular.forEach($scope.result.context, function(item) {
+                $scope.con.push(item);
             })
 
-      		$scope.typ = [];
-      		angular.forEach($scope.result.code_type, function(item) {
-            	$scope.typ.push(item);
+            $scope.typ = [];
+            angular.forEach($scope.result.code_type, function(item) {
+                $scope.typ.push(item);
             })
-         
+
         })
 
-    $scope.Postquestion=function(){
+    $scope.Postquestion = function() {
 
-    	var snap = {
-            'user_id':1,
-    		    'title': $scope.inputData.Title,
+        var snap = {
+            'user_id': 1,
+            'title': $scope.inputData.Title,
             'description': $scope.inputData.Description,
-           	'context': $scope.inputData.Context.id,
+            'context': $scope.inputData.Context.id,
             'tags': $scope.inputData.Tags,
             'language': $scope.inputData.Language.id,
             'code_type': $scope.inputData.Codetype.id,
-            'user_id':$cookies.get("user_id")
+            'user_id': $cookies.get("user_id")
         };
-      //var object = authService.getCookieData;
+        //var object = authService.getCookieData;
         //var object = $cookies.get('auth');
 
-
         $http({
-        	method: 'POST',
-        	url: 'http://www.koodet.com:6543/api/questions',
-        	data:JSON.stringify(snap),
-          crossDomain: true, 
-          xhrFields: { withCredentials: true},
-          headers: {'Content-Type': 'application/x-www-form-urlencoded' }
-        })
-        .success(function(data, status, headers, config) {
-        	console.log(data);
-        	console.log(status);
-          $location.path('/question/'+ data.question_id);
+                method: 'POST',
+                url: 'http://www.koodet.com:6543/api/questions',
+                data: JSON.stringify(snap),
+                crossDomain: true,
+                xhrFields: { withCredentials: true },
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            })
+            .success(function(data, status, headers, config) {
+                console.log(data);
+                console.log(status);
+                $location.path('/question/' + data.question_id);
 
-        })
-   	}
+            })
+    }
 }
 
  //-------------------------------
 angular
-	.module('myApp')
-	.config(configurator)
-function configurator($routeProvider,$httpProvider) {
-	$routeProvider
-    // route for the home page
-        .when('/', {
-                templateUrl : 'pages/home.html',
-                controller  : 'PostController',
-                
-        })
-        .when('/register', {
-                templateUrl : 'pages/Signup.html',
-                controller  : 'signupController',
-                
-        })
-        //.when('/Logout', {
-          //      templateUrl : '',
-            //controller  : 'LogoutController'
+    .module('myApp')
+    .controller('searchController', searchController);
 
-        //})
-        // route for the about page
-        .when('/search', {
-                templateUrl : 'pages/search.html',
-                controller  : 'searchController',
-                
-        })
-        // route for the about page
-        .when('/explore', {
-        		templateUrl : 'pages/list.langs.html',
-                controller : 'listLangsController',
-                
-        })
-        .when('/language/:lanid', {
-                templateUrl: 'pages/langsnippets.html',
-                controller: 'listSnippetsController',
-        })
-        .when('/snippet/:sid', {
-                templateUrl: 'pages/view.snippet.html',
-                controller: 'viewSnippetController',
-        })
-        .when('/question/:qid', {
-                templateUrl: 'pages/view.question.html',
-                controller: 'viewQuestionController',
-        })
-        // route for the about page
-        .when('/add', {
-                templateUrl : 'pages/add.snippet.html',
-                controller  : 'addSnippetController',
-        })
-        // route for the contact page
-        .when('/request', {
-
-                templateUrl : 'pages/request.html',
-                controller  : 'requestController'
-        })
-        .otherwise({
-        		redirectTo: 'pages/home.html',
-                //withCredentials: true
-        });
-
-}	
-/*app.run(['$rootScope', '$location', 'Auth', function ($rootScope, $location, Auth) {
-    $rootScope.$on('$routeChangeStart', function (event) {
-
-        if (Auth.isLoggedIn()) {
-            console.log('DENY');
-            event.preventDefault();
-            //$location.path('/home');
-        }
-        else {
-            console.log('ALLOW');
-            //$location.path('/home');
-        }
-    });
-}]);
-
-/*app.run(['$rootScope', '$location', 'Auth',function($rootScope, $location, $route,Auth) {
-
-    var routesOpenToPublic = [];
-    angular.forEach($route.routes, function(route, path) {
-        // push route onto routesOpenToPublic if it has a truthy publicAccess value
-        route.publicAccess && (routesOpenToPublic.push(path));
-    });
-
-    $rootScope.$on('$routeChangeStart', function(event, nextLoc, currentLoc) {
-        var closedToPublic = (-1 == routesOpenToPublic.indexOf($location.path()));
-        if(closedToPublic && !user.isLoggedIn()) {
-            $location.path('/home');
-        }
-    });
-}]);*/
-
-
+function searchController($scope, $rootScope, $location) {
+    $scope.isActive = function(viewLocation) {
+        return viewLocation === $location.path();
+    }
+}
 
  //-------------------------------
 angular
-	.module('myApp')
-	.controller('searchController',searchController);
-
-function searchController($scope,$rootScope, $location) {
-$scope.isActive = function (viewLocation) {
-	             return viewLocation === $location.path();
-            }
-        }
-
-
-
-
-
-
- //-------------------------------
-	angular
-  .module('myApp')
-  .controller('signupController', signupController);
+    .module('myApp')
+    .controller('signupController', signupController);
 
 function signupController($scope, $http, $rootScope) {
 
-	this.signupForm = function() {
-		var	upobject = {
-			 		'first_name':$scope.signupData.firstname,
-					'last_name': $scope.signupData.lastname,
-					'username': $scope.signupData.username,
-					'email': $scope.signupData.email,
-					'password': $scope.signupData.password,
-					'avatar': $scope.signupData.avatar,
-					'country': $scope.signupData.country
-        		};
-          
-      console.log(JSON.stringify(upobject));
+    this.signupForm = function() {
+        var upobject = {
+            'first_name': $scope.signupData.firstname,
+            'last_name': $scope.signupData.lastname,
+            'username': $scope.signupData.username,
+            'email': $scope.signupData.email,
+            'password': $scope.signupData.password,
+            'avatar': $scope.signupData.avatar,
+            'country': $scope.signupData.country
+        };
+
+        console.log(JSON.stringify(upobject));
 
 
-		$http({
-			method: 'POST',
-			url: 'http://www.koodet.com:6543/api/users',
-			data:JSON.stringify(upobject),
-			crossDomain: true, 
-             xhrFields: { withCredentials: true},
-			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-		})
-			
-		.success(function(data, status, headers, config) {
-					//window.location.href = 'index.html';
-					console.log(data);
-					console.log(status);
-				    $scope.errorMsg =data.massage;
-				    if(data.massage=="success"){
-				    $rootScope.correctsubmit =true;
-                    }
-
+        $http({
+            method: 'POST',
+            url: 'http://www.koodet.com:6543/api/users',
+            data: JSON.stringify(upobject),
+            crossDomain: true,
+            xhrFields: { withCredentials: true },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         })
-		.error(function(data, status, headers, config) {
-				//$scope.errorMsg = 'Unable to signup the form';
-				console.log(data);
-				console.log(status);
-		})
-	}
+
+        .success(function(data, status, headers, config) {
+                //window.location.href = 'index.html';
+                console.log(data);
+                console.log(status);
+                $scope.errorMsg = data.massage;
+                if (data.massage == "success") {
+                    $rootScope.correctsubmit = true;
+                }
+
+            })
+            .error(function(data, status, headers, config) {
+                //$scope.errorMsg = 'Unable to signup the form';
+                console.log(data);
+                console.log(status);
+            })
+    }
 }
 
  //-------------------------------
 angular
-	.module('myApp')
-	.controller('snippetController', snippetController);
+    .module('myApp')
+    .controller('snippetController', snippetController);
 
 function snippetController($scope, $http) {
 
-	$scope.Postsnippet = function() {
-    	var snap = {
-    			'title': $scope.inputData.Title,
-            	'description': $scope.inputData.Description,
-    			'code': $scope.inputData.Code,
-    			'context': $scope.inputData.Context.id,
-    			'tags': $scope.inputData.Tags,
-    			'language': $scope.inputData.Language.id,
-    			'code_type': $scope.inputData.Codetype.id,
-    		};
-    		var object= {
-              'Cookie': authService.getCookieData()
-      };
+    $scope.Postsnippet = function() {
+        var snap = {
+            'title': $scope.inputData.Title,
+            'description': $scope.inputData.Description,
+            'code': $scope.inputData.Code,
+            'context': $scope.inputData.Context.id,
+            'tags': $scope.inputData.Tags,
+            'language': $scope.inputData.Language.id,
+            'code_type': $scope.inputData.Codetype.id,
+        };
+        var object = {
+            'Cookie': authService.getCookieData()
+        };
 
-    	    $http({
-				method: 'POST',
-				url: 'http://www.koodet.com:6543/api/snippets',
-				data:JSON.stringify(snap),
-				headers: {'Content-Type': 'application/x-www-form-urlencoded',
-                          "Cookie":JSON.stringify(object.access_token)
-			             },
-                         xhrFields: {
-            withCredentials: true
-        }
-			})
-			.success(function(data, status, headers, config) {
-			console.log(data);
-			console.log(status);
+        $http({
+                method: 'POST',
+                url: 'http://www.koodet.com:6543/api/snippets',
+                data: JSON.stringify(snap),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    "Cookie": JSON.stringify(object.access_token)
+                },
+                xhrFields: {
+                    withCredentials: true
+                }
+            })
+            .success(function(data, status, headers, config) {
+                console.log(data);
+                console.log(status);
 
             })
-	}
+    }
 }
 
  //-------------------------------
 angular
-	.module('myApp')
-	.controller('starCtrl', starCtrl);
+    .module('myApp')
+    .controller('starCtrl', starCtrl);
 
 function starCtrl($scope, $http) {
-	$scope.rating = 0;
+    $scope.rating = 0;
     $scope.rateFunction = function(rating) {
-    	var obj = {rating: rating};
- 
+        var obj = { rating: rating };
+
         $http({
-        	method: 'POST',
-        	url: 'http://www.koodet.com:6543/api',
-        	data:JSON.stringify(obj),
-        	headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-      	})
-      	.success(function(data, status, headers, config) {
-          console.log(data);
-          console.log(status);
-        })
-      	.error(function(data, status, headers, config) {
-        	console.log(data);
-        	console.log(status);
-      	})
+                method: 'POST',
+                url: 'http://www.koodet.com:6543/api',
+                data: JSON.stringify(obj),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            })
+            .success(function(data, status, headers, config) {
+                console.log(data);
+                console.log(status);
+            })
+            .error(function(data, status, headers, config) {
+                console.log(data);
+                console.log(status);
+            })
     };
 }
 
@@ -673,108 +499,108 @@ function userprofileController($scope,$cookies,$routeParams, $http, $location){
 
  //-------------------------------
 angular
-	.module('myApp')
-	.controller('viewQuestionController', viewQuestionController);
+    .module('myApp')
+    .controller('viewQuestionController', viewQuestionController);
 
-function viewQuestionController($scope, $http, $routeParams, $cookies, $route, questionService,authService) {
-	$scope.fetchQuestion = fetchQuestion;
-	$scope.addAnswer = addAnswer;
-	$scope.new_answer = {};
-	$scope.question = {};
-	$scope.question.answers = [];
+function viewQuestionController($scope, $http, $routeParams, $cookies, $route, questionService, authService) {
+    $scope.fetchQuestion = fetchQuestion;
+    $scope.addAnswer = addAnswer;
+    $scope.new_answer = {};
+    $scope.question = {};
+    $scope.question.answers = [];
 
-	$scope.aceLoaded = function(_editor) {
-    // Options
-		_editor.setReadOnly(true);
+    $scope.aceLoaded = function(_editor) {
+        // Options
+        _editor.setReadOnly(true);
 
         _editor.setVale(snippet.code);
         console.log(_editor);
     };
 
-    $scope.compileSnippet=function(code){
+    $scope.compileSnippet = function(code) {
 
         var snap = {
             'code': code
 
         };
         $http({
-            method: 'POST',
-            url: 'http://www.koodet.com:6543/api/compile',
-            data:JSON.stringify(snap),
-            crossDomain: true, 
-            xhrFields: { withCredentials: true},
-            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
-        
-        })
-        .success(function(data, status, headers, config) {
-            $scope.new_answer.output = data.output;
-            console.log(status);
+                method: 'POST',
+                url: 'http://www.koodet.com:6543/api/compile',
+                data: JSON.stringify(snap),
+                crossDomain: true,
+                xhrFields: { withCredentials: true },
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 
-        })
+            })
+            .success(function(data, status, headers, config) {
+                $scope.new_answer.output = data.output;
+                console.log(status);
+
+            })
     }
-	
-
-	function fetchQuestion() {
-		questionService
-			.getQuestion($routeParams.qid)
-			.success(function(data) {
-				$scope.question = data;
-			})
-	}
-
-	function addAnswer() {
-
-		var answer = {
-			"user_id": $cookies.get("user_id"),
-			"description": $scope.new_answer.description,
-			"code": $scope.new_answer.code,
-			"question": $scope.question.question_id
-
-		};
-
-		$http({
-            method: 'POST',
-            url: 'http://www.koodet.com:6543/api/answers',
-            data: JSON.stringify(answer),
-            crossDomain: true, 
-            xhrFields: { withCredentials: true},
-            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
-        
-        })
-        .success(function(data, status, headers, config) {
-            $scope.new_answer = {};
-            $route.reload();	
-            console.log(status);
-
-        })
 
 
+    function fetchQuestion() {
+        questionService
+            .getQuestion($routeParams.qid)
+            .success(function(data) {
+                $scope.question = data;
+            })
+    }
 
-	}
+    function addAnswer() {
+
+        var answer = {
+            "user_id": $cookies.get("user_id"),
+            "description": $scope.new_answer.description,
+            "code": $scope.new_answer.code,
+            "question": $scope.question.question_id
+
+        };
+
+        $http({
+                method: 'POST',
+                url: 'http://www.koodet.com:6543/api/answers',
+                data: JSON.stringify(answer),
+                crossDomain: true,
+                xhrFields: { withCredentials: true },
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+
+            })
+            .success(function(data, status, headers, config) {
+                $scope.new_answer = {};
+                $route.reload();
+                console.log(status);
+
+            })
+
+
+
+    }
 
 }
 
  //-------------------------------
 angular
-	.module('myApp')
-	.controller('viewSnippetController', viewSnippetController);
+    .module('myApp')
+    .controller('viewSnippetController', viewSnippetController);
 
-function viewSnippetController($scope, $http, $routeParams, $location, $route, $cookies, snippetService,authService) {
+function viewSnippetController($scope, $http, $routeParams, $location, $route, $cookies, snippetService, authService) {
 
-	$scope.fetchSnippet = fetchSnippet;
+    $scope.fetchSnippet = fetchSnippet;
     $scope.getRelated = getRelated;
-	$scope.addComment = addComment;
-	$scope.snippet = {};
-	$scope.new_comment = "";
-	$scope.snippet.comments = [];
+    $scope.addComment = addComment;
+    $scope.snippet = {};
+    $scope.new_comment = "";
+    $scope.snippet.comments = [];
 
-	function fetchSnippet() {
-		snippetService
-			.getSnippet($routeParams.sid)
-			.success(function(data) {
-				$scope.snippet = data;
-			});
-	}
+    function fetchSnippet() {
+        snippetService
+            .getSnippet($routeParams.sid)
+            .success(function(data) {
+                $scope.snippet = data;
+            });
+    }
 
     function getRelated() {
         snippetService
@@ -785,36 +611,36 @@ function viewSnippetController($scope, $http, $routeParams, $location, $route, $
             });
     }
 
-    
 
-	$scope.aceLoaded = function(_editor) {
-    // Options
-		_editor.setReadOnly(true);
+
+    $scope.aceLoaded = function(_editor) {
+        // Options
+        _editor.setReadOnly(true);
 
         _editor.setVale(snippet.code);
         console.log(_editor);
     };
 
-    $scope.compileSnippet=function(){
+    $scope.compileSnippet = function() {
 
         var snap = {
             'code': $scope.snippet.code
 
         };
         $http({
-            method: 'POST',
-            url: 'http://www.koodet.com:6543/api/compile',
-            data:JSON.stringify(snap),
-            crossDomain: true, 
-            xhrFields: { withCredentials: true},
-            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
-        
-        })
-        .success(function(data, status, headers, config) {
-            $scope.snippet.output = data.output;
-            console.log(status);
+                method: 'POST',
+                url: 'http://www.koodet.com:6543/api/compile',
+                data: JSON.stringify(snap),
+                crossDomain: true,
+                xhrFields: { withCredentials: true },
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 
-        })
+            })
+            .success(function(data, status, headers, config) {
+                $scope.snippet.output = data.output;
+                console.log(status);
+
+            })
     };
 
     function addComment() {
@@ -827,20 +653,20 @@ function viewSnippetController($scope, $http, $routeParams, $location, $route, $
         };
 
         $http({
-            method: 'POST',
-            url: 'http://www.koodet.com:6543/api/comments',
-            data: JSON.stringify(comment),
-            crossDomain: true, 
-            xhrFields: { withCredentials: true},
-            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
-        
-        })
-        .success(function(data, status, headers, config) {
-            $scope.new_comment = "";
-            $route.reload();    
-            console.log(status);
+                method: 'POST',
+                url: 'http://www.koodet.com:6543/api/comments',
+                data: JSON.stringify(comment),
+                crossDomain: true,
+                xhrFields: { withCredentials: true },
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 
-        })
+            })
+            .success(function(data, status, headers, config) {
+                $scope.new_comment = "";
+                $route.reload();
+                console.log(status);
+
+            })
     }
 }
 
@@ -898,11 +724,11 @@ angular
 function configurator($routeProvider, $httpProvider, $locationProvider) {
 
     //$httpProvider.defaults.withCredentials = true;
+
     $routeProvider
-    // route for the home page
         .when('/', {
             templateUrl: 'pages/home.html',
-            controller: 'PostController',
+            controller: 'loginController',
 
         })
         .when('/register', {
@@ -910,33 +736,21 @@ function configurator($routeProvider, $httpProvider, $locationProvider) {
             controller: 'signupController',
 
         })
-        //.when('/Logout', {
-        //      templateUrl : '',
-        //controller  : 'LogoutController'
+        .when('/profile', {
+            templateUrl: 'pages/userprofile.html',
+            controller: 'profileController',
 
-    //})
-
-       .when('/profile', {
-             templateUrl : 'pages/userprofile.html',
-             controller  : 'profileController',
-                
         })
+        .when('/profile/:username', {
+            templateUrl: 'pages/profile.html',
+            controller: 'userprofileController',
 
-  
-       .when('/profile/:username', {
-             templateUrl : 'pages/profile.html',
-             controller  : 'userprofileController',
-                
         })
-
-
-    // route for the about page
-       .when('/search', {
+        .when('/search', {
             templateUrl: 'pages/search.html',
             controller: 'searchController',
 
         })
-        // route for the about page
         .when('/explore', {
             templateUrl: 'pages/list.langs.html',
             controller: 'listLangsController',
@@ -950,12 +764,10 @@ function configurator($routeProvider, $httpProvider, $locationProvider) {
             templateUrl: 'pages/view.question.html',
             controller: 'viewQuestionController',
         })
-
         .when('/:feature/:fname', {
             templateUrl: 'pages/langsnippets.html',
             controller: 'listSnippetsController',
         })
-
         // route for the about page
         .when('/add', {
             templateUrl: 'pages/add.snippet.html',
@@ -963,7 +775,6 @@ function configurator($routeProvider, $httpProvider, $locationProvider) {
         })
         // route for the contact page
         .when('/request', {
-
             templateUrl: 'pages/request.html',
             controller: 'requestController'
         })
@@ -972,47 +783,8 @@ function configurator($routeProvider, $httpProvider, $locationProvider) {
             //withCredentials: true
         });
 
-        $locationProvider.html5Mode(true);
-
-    // if (window.history && window.history.pushState) {
-    //     //$locationProvider.html5Mode(true); will cause an error $location in HTML5 mode requires a  tag to be present! Unless you set baseUrl tag after head tag like so: <head> <base href="/">
-
-    //     // to know more about setting base URL visit: https://docs.angularjs.org/error/$location/nobase
-
-    //     // if you don't wish to set base URL then use this
-    //     $locationProvider.html5Mode({
-    //         enabled: true,
-    //         requireBase: false
-    //     });
-    // }
+    $locationProvider.html5Mode(true);
 }
-/*app.run(['$rootScope', '$location', 'Auth', function ($rootScope, $location, Auth) {
-    $rootScope.$on('$routeChangeStart', function (event) {
-        if (Auth.isLoggedIn()) {
-            console.log('DENY');
-            event.preventDefault();
-            //$location.path('/home');
-        }
-        else {
-            console.log('ALLOW');
-            //$location.path('/home');
-        }
-    });
-}]);
-/*app.run(['$rootScope', '$location', 'Auth',function($rootScope, $location, $route,Auth) {
-    var routesOpenToPublic = [];
-    angular.forEach($route.routes, function(route, path) {
-        // push route onto routesOpenToPublic if it has a truthy publicAccess value
-        route.publicAccess && (routesOpenToPublic.push(path));
-    });
-    $rootScope.$on('$routeChangeStart', function(event, nextLoc, currentLoc) {
-        var closedToPublic = (-1 == routesOpenToPublic.indexOf($location.path()));
-        if(closedToPublic && !user.isLoggedIn()) {
-            $location.path('/home');
-        }
-    });
-}]);*/
-
 
  //-------------------------------
 angular
@@ -1086,92 +858,91 @@ function authService($cookies,$http,$location,$rootScope) {
 angular
     .module('myApp')
     .factory('globalService', globalService);
-   globalService.$inject = ['$http','$cookies', '$location', '$filter','authService'];
 
-    function globalService($http, $cookies, $location, $filter,authService) {
+globalService.$inject = ['$http', '$cookies', '$location', '$filter', 'authService'];
+
+function globalService($http, $cookies, $location, $filter, authService) {
     var service = {
-        isAuth : isAuth,    
-        setUser : setUser,
-        getUser : getUser 
+        isAuth: isAuth,
+        setUser: setUser,
+        getUser: getUser
     };
 
     return service;
-   globalService.user = null;
+    globalService.user = null;
 
-    function isAuth () {
+    function isAuth() {
         if (globalService.user == null) {
             globalService.user = $cookies.get('user');
         }
         return (globalService.user != null);
     }
-    
+
     function setUser(newUser) {
         globalService.user = newUser;
         if (globalService.user == null) $cookies.remove('user');
         else $cookies.put('user', globalService.user);
     }
+
     function getUser() {
-                return globalService.user;
+        return globalService.user;
 
     }
 
 }
 
  //-------------------------------
-/* service registration */
 angular
-	.module('myApp')
-	.factory('langService', langService);
+    .module('myApp')
+    .factory('langService', langService);
 
-/* dependency injection */
-langService.$inject = ['$http','authService'];
+langService.$inject = ['$http', 'authService'];
 
-/* service implementation */
-function langService($http,authService) {
-	var service = {
-		getLangs : getLangs,
-		getLang : getLang
-	};
+function langService($http, authService) {
+    var service = {
+        getLangs: getLangs,
+        getLang: getLang
+    };
 
-	return service;
+    return service;
 
-	function getLangs() {
-		//get all languages
-	}
+    function getLangs() {
+        //get all languages
+    }
 
-	function getLang(langId) {
-		//get a specific language
-	}
+    function getLang(langId) {
+        //get a specific language
+    }
 }
 
  //-------------------------------
 /* service registration */
 angular
-	.module('myApp')
-	.factory('optionsService', optionsService);
+    .module('myApp')
+    .factory('optionsService', optionsService);
 
 /* dependency injection */
-optionsService.$inject = ['$http','authService','$cookies'];
+optionsService.$inject = ['$http', 'authService', '$cookies'];
 
 /* service implementation */
-function optionsService($http,authService,$cookies) {
-		//var object =authService.getaccess_token();
-	var service = {
-		getOptions : getOptions
-	};
+function optionsService($http, authService, $cookies) {
+    //var object =authService.getaccess_token();
+    var service = {
+        getOptions: getOptions
+    };
 
-	return service;
-   // var obj =$cookies.get("access_token");
-	function getOptions() {
-		return $http({
+    return service;
+    // var obj =$cookies.get("access_token");
+    function getOptions() {
+        return $http({
             method: 'GET',
             url: 'http://www.koodet.com:6543/api/elements',
-            crossDomain: true, 
-            xhrFields: { withCredentials: true},
-            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
-                
-         })
-	}
+            crossDomain: true,
+            xhrFields: { withCredentials: true },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+
+        })
+    }
 
 }
 
@@ -1223,102 +994,99 @@ function questionService($http,authService) {
 
  //-------------------------------
 angular
-	.module('myApp')
-	.factory('snippetService', snippetService);
+    .module('myApp')
+    .factory('snippetService', snippetService);
 
-function snippetService($http,authService,$cookies) {
-	var service = {
-		getLangSnippets : getLangSnippets,
-		getSnippet : getSnippet,
-		getSnippets : getSnippets,
-		createSnippet : createSnippet
-	};
+function snippetService($http, authService, $cookies) {
+    var service = {
+        getLangSnippets: getLangSnippets,
+        getSnippet: getSnippet,
+        getSnippets: getSnippets,
+        createSnippet: createSnippet
+    };
 
-	return service;
-	
-	function getLangSnippets(feature,fname) {
+    return service;
 
-		var obj =$cookies.get("access_token");
-	    return $http({
-	            method: 'GET',
-	            url: 'http://www.koodet.com:6543/api/explore/' +feature+'/'+ fname + '/snippets',
-	            crossDomain: true, 
-	            xhrFields: { withCredentials: true},
-	            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
-	                
-	         })
-	}
+    function getLangSnippets(feature, fname) {
 
-	function getSnippet(sid) {
-		//var obj =$cookies.get("access_token");
+        var obj = $cookies.get("access_token");
+        return $http({
+            method: 'GET',
+            url: 'http://www.koodet.com:6543/api/explore/' + feature + '/' + fname + '/snippets',
+            crossDomain: true,
+            xhrFields: { withCredentials: true },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+
+        })
+    }
+
+    function getSnippet(sid) {
+        //var obj =$cookies.get("access_token");
         return $http({
             method: 'GET',
             url: 'http://www.koodet.com:6543/api/snippets/' + sid,
-            crossDomain: true, 
-            xhrFields: { withCredentials: true},
-            headers: {"Cookie":"obj"}
+            crossDomain: true,
+            xhrFields: { withCredentials: true },
+            headers: { "Cookie": "obj" }
         })
-	}
+    }
 
-	function getSnippets() {
-		//var obj =$cookies.get("access_token");
+    function getSnippets() {
+        //var obj =$cookies.get("access_token");
         return $http({
             method: 'GET',
             url: 'http://www.koodet.com:6543/api/snippets',
-            crossDomain: true, 
-            xhrFields: { withCredentials: true},
-            headers: {"Cookie":"obj"}
+            crossDomain: true,
+            xhrFields: { withCredentials: true },
+            headers: { "Cookie": "obj" }
         })
-	}
+    }
 
-	function createSnippet(snippet) {
-		//var obj =$cookies.get("access_token");
-		return $http({
+    function createSnippet(snippet) {
+        //var obj =$cookies.get("access_token");
+        return $http({
             method: 'POST',
             url: 'http://www.koodet.com:6543/api/snippets/',
             data: snippet,
-            crossDomain: true, 
-            xhrFields: { withCredentials: true},
-            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
-           
-	})
-	
-    }	
-	
-	function compileSnippet(code) {
-		var obj =$cookies.get("access_token");
-		return $http({
+            crossDomain: true,
+            xhrFields: { withCredentials: true },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+
+        })
+
+    }
+
+    function compileSnippet(code) {
+        var obj = $cookies.get("access_token");
+        return $http({
             method: 'POST',
-            url: 'http://www.koodet.com/6543/api/compile', code,
-            crossDomain: true, 
-            xhrFields: { withCredentials: true},
-            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
-	})
-	
+            url: 'http://www.koodet.com/6543/api/compile',
+            code,
+            crossDomain: true,
+            xhrFields: { withCredentials: true },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        })
+
     }
 }
 
  //-------------------------------
-/* service registration */
 angular
-	.module('myApp')
-	.factory('userService', userService);
+    .module('myApp')
+    .factory('userService', userService);
 
-/* dependency injection */
-userService.$inject = ['$http','authService'];
+userService.$inject = ['$http', 'authService'];
 
-/* service implementation */
-function userService($http,authService) {
-	var service = {
-		getUser : geUser,
-		createUser : createUser
-	};
+function userService($http, authService) {
+    var service = {
+        getUser: geUser,
+        createUser: createUser
+    };
 
-	return service;
+    return service;
 
-	function getUser(uid) {
-		return $http
-		.get('http://www.koodet.com:6543/api/elements');
-	}
-
+    function getUser(uid) {
+        return $http
+            .get('http://www.koodet.com:6543/api/elements');
+    }
 }
