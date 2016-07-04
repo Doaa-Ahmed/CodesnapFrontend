@@ -31,51 +31,6 @@ function addSnippetController($scope,$cookies, $http, $location, optionsService,
         $scope.snippet.code_type = $scope.snippet.code_type.id; 
     }
 
-
-    //snippet editor functions
-    $scope.compileSnippet=function(){
-
-        var snap = {
-            'code': $scope.snippet.code
-
-        };
-        $http({
-            method: 'POST',
-            url: 'http://www.koodet.com:6543/api/compile',
-            data:JSON.stringify(snap),
-            crossDomain: true, 
-            xhrFields: { withCredentials: true},
-            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
-        
-        })
-        .success(function(data, status, headers, config) {
-            $scope.snippet.output = data.output;
-            console.log(status);
-
-        })
-    }
-
-    $scope.aceLoaded = function(_editor) {
-    // Options
-    console.log(_editor);
-        var _session = _editor.getSession();
-        var _renderer = _editor.renderer;
-
-        _editor.setValue("Add Your Code HERE!",1);
-        _session.setMode("ace/mode/javascript");
-
-        var code = _editor.getValue();
-        console.log(code);
-
-        // _editor.setReadOnly(true);
-    };
-
-    $scope.aceChanged = function(e) {
-        snippet.code= _editor.getValue();
-        console.log(e)
-    //
-    };
-
     $scope.postSnippet=function(){
     var snap = {
             'user_id':1, 

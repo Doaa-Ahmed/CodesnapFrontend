@@ -1,0 +1,49 @@
+<label for="addSnippet"><h5>Code Snippet:</h5></label>
+<div class="row">
+    <div class="col-md-8">
+        <div id="editor" ui-ace="{
+			  require: ['ace/ext/language_tools'],
+			  advanced: {
+			      enableSnippets: true,
+			      enableBasicAutocompletion: true,
+			      enableLiveAutocompletion: true
+			  },
+			  onLoad: aceLoaded,
+			  onChange: aceChanged
+			}" ng-model="snippet.code">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <textarea class="form-control addTextarea" name="descriptionofcode" ng-model="snippet.stdin" placeholder="stdin.." rows="8" id="stdin" required tabindex="101" data-min-length="">
+        </textarea>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-2 col-sm-2 form-group">
+        <select class="form-control" id="lang" ng-options="lang as lang[1] for lang in snippet.languages" ng-model="snippet.language" ng-change="aceUpdate()"required>
+        	<option value="">Language</option>
+        </select>
+    </div>
+    <div class="col-md-2 col-sm-2">
+        <button class="btn btn-warning" ng-click="snippet.compileSnippet()" data-toggle="modal" data-target="#myModal">Run</button>
+    </div>
+</div>
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">{{snippet.language[1]}} Output</h4>
+            </div>
+            <div class="modal-body">
+                <p id="output"></p>
+                <p id="time"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

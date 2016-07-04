@@ -5,6 +5,13 @@
 	'use strict';
 
 	var app = angular.module('myApp',['ngRoute' ,'ngCookies','ui.ace']);
+	
+	app.config(function ($httpProvider) {
+		$httpProvider.defaults.headers.common = {};
+		$httpProvider.defaults.headers.post = {};
+		$httpProvider.defaults.headers.put = {};
+		$httpProvider.defaults.headers.patch = {};
+	});
 
 })();
 
@@ -41,51 +48,6 @@ function addSnippetController($scope,$cookies, $http, $location, optionsService,
         $scope.snippet.context = $scope.snippet.context.id;
         $scope.snippet.code_type = $scope.snippet.code_type.id; 
     }
-
-
-    //snippet editor functions
-    $scope.compileSnippet=function(){
-
-        var snap = {
-            'code': $scope.snippet.code
-
-        };
-        $http({
-            method: 'POST',
-            url: 'http://www.koodet.com:6543/api/compile',
-            data:JSON.stringify(snap),
-            crossDomain: true, 
-            xhrFields: { withCredentials: true},
-            headers: {'Content-Type': 'application/x-www-form-urlencoded' }
-        
-        })
-        .success(function(data, status, headers, config) {
-            $scope.snippet.output = data.output;
-            console.log(status);
-
-        })
-    }
-
-    $scope.aceLoaded = function(_editor) {
-    // Options
-    console.log(_editor);
-        var _session = _editor.getSession();
-        var _renderer = _editor.renderer;
-
-        _editor.setValue("Add Your Code HERE!",1);
-        _session.setMode("ace/mode/javascript");
-
-        var code = _editor.getValue();
-        console.log(code);
-
-        // _editor.setReadOnly(true);
-    };
-
-    $scope.aceChanged = function(e) {
-        snippet.code= _editor.getValue();
-        console.log(e)
-    //
-    };
 
     $scope.postSnippet=function(){
     var snap = {
@@ -672,6 +634,98 @@ function viewSnippetController($scope, $http, $routeParams, $location, $route, $
 
  //-------------------------------
 angular
+    .module('myApp')
+    .directive('compileEditor', compileEditor);
+
+// in html use <compileEditor></compileEditor>
+
+function compileEditor() {
+    var directive = {
+        restrict: 'E',
+        templateUrl: 'pages/compiler.html',
+        controller: compileController,
+        controllerAs: 'vm',
+        bindToController: true
+    };
+
+    return directive;
+
+    compileController.$inject = ['$scope', '$http', 'compileService'];
+
+    function compileController($scope, $http, compileService) {
+
+        $scope.snippet = {};
+
+        $scope.snippet.compileSnippet = compileSnippet
+
+        compileService.getLanguages().then(
+            function(response) {
+                $scope.snippet.languages = response.data.languages;
+            });
+
+        function compileSnippet() {
+            $('#output').empty();
+            $('#time').empty();
+
+            compileService.compileSnippet($scope.snippet.language[1], $scope.snippet.code, $scope.snippet.stdin).then(
+                function(response) {
+                    $scope.snippet.output = response.data.output;
+                    //console.log(response.data.output);
+
+                    $scope.checkCodeandPrint($scope.snippet.output);
+                });
+        }
+
+        $scope.checkCodeandPrint = function(output) {
+            console.log(output);
+            if (output.search('runtime') !== -1) {
+                var outSplit = output.split('runtime');
+                var output = outSplit[0];
+                var time = outSplit[1];
+                $('#output').html(output);
+                $('#time').html('<br>' + "<b>runtime<i>" + time + "</i></b>");
+                return 1;
+            } else {
+                $('#output').html(output);
+                return 0;
+            }
+        }
+
+        $scope.aceLoaded = function(_editor) {
+            //var _renderer = _editor.renderer;
+            $scope._editor = _editor;
+            $scope._session = _editor.getSession();
+        };
+
+        $scope.aceChanged = function(e) {
+            //angular.element(document.querySelector('#lang'))
+            $scope.snippet.code = $scope._session.getDocument().getValue();
+        };
+
+        $scope.aceUpdate = function() {
+            $scope.snippet.mode = $scope.snippet.language[1];
+            if ($scope.snippet.mode == 'C/C++') {
+                $scope.snippet.mode = 'c_cpp';
+            } else if ($scope.snippet.mode == 'C#') {
+                $scope.snippet.mode = 'csharp';
+            } else if ($scope.snippet.mode == 'Go') {
+                $scope.snippet.mode = 'golang';
+            }
+
+            compileService.getLangSample($scope.snippet.language[0]).then(
+                function(response) {
+                    $scope.snippet.codeSample = response.data.code;
+                    $scope._editor.setValue($scope.snippet.codeSample, -1);
+                    $scope._session.setMode("ace/mode/" + angular.lowercase($scope.snippet.mode));
+                    console.log("ace/mode/" + angular.lowercase($scope.snippet.mode));
+                });
+        }
+
+    }
+}
+
+ //-------------------------------
+angular
 	.module('myApp')
 	.directive('starRating', starRating);
 
@@ -853,6 +907,45 @@ function authService($cookies,$http,$location,$rootScope) {
 
   }
 
+
+ //-------------------------------
+angular
+    .module('myApp')
+    .factory('compileService', compileService);
+
+function compileService($http) {
+    var service = {};
+
+    service.getLanguages = getLanguages;
+    service.getLangSample = getLangSample;
+    service.compileSnippet = compileSnippet;
+
+    return service;
+
+    function getLanguages() {
+        return $http.get('http://localhost:6543/api/languages')
+                    .then(handleSuccess, handleError('Error getting Languages'));
+    }
+
+    function getLangSample(languageID) {
+        return $http.get('http://localhost:6543/api/compile/' + languageID)
+                    .then(handleSuccess, handleError('Error getting Languages'));
+    }
+
+    function compileSnippet(language, snippet, stdin) {
+        return $http.post('http://localhost:6543/api/compile', {"language":language, "snippet":snippet, "stdin":stdin})
+                    .then(handleSuccess, handleError('Error creating presentation'));
+    }
+
+    function handleSuccess(res) {
+        return { success: true, data: res.data };
+    }
+
+    function handleError(error) {
+        return { success: false, message: error };
+    }
+
+}
 
  //-------------------------------
 angular
