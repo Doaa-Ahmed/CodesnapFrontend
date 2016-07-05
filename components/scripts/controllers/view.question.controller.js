@@ -9,14 +9,6 @@ function viewQuestionController($scope, $http, $routeParams, $cookies, $route, q
     $scope.question = {};
     $scope.question.answers = [];
 
-    $scope.aceLoaded = function(_editor) {
-        // Options
-        _editor.setReadOnly(true);
-
-        _editor.setVale(snippet.code);
-        console.log(_editor);
-    };
-
     $scope.compileSnippet = function(code) {
 
         var snap = {
@@ -53,7 +45,7 @@ function viewQuestionController($scope, $http, $routeParams, $cookies, $route, q
         var answer = {
             "user_id": $cookies.get("user_id"),
             "description": $scope.new_answer.description,
-            "code": $scope.new_answer.code,
+            "code": $scope.snippet.code,
             "question": $scope.question.question_id
 
         };

@@ -24,40 +24,16 @@ function viewSnippetController($scope, $http, $routeParams, $location, $route, $
             .getSnippets()
             .success(function(data) {
                 $scope.related = data;
-                console.log(data);
             });
     }
 
-
-
     $scope.aceLoaded = function(_editor) {
         // Options
-        _editor.setReadOnly(true);
+        
 
         _editor.setVale(snippet.code);
-        console.log(_editor);
-    };
+        _editor.setReadOnly(true);
 
-    $scope.compileSnippet = function() {
-
-        var snap = {
-            'code': $scope.snippet.code
-
-        };
-        $http({
-                method: 'POST',
-                url: 'http://www.koodet.com:6543/api/compile',
-                data: JSON.stringify(snap),
-                crossDomain: true,
-                xhrFields: { withCredentials: true },
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-
-            })
-            .success(function(data, status, headers, config) {
-                $scope.snippet.output = data.output;
-                console.log(status);
-
-            })
     };
 
     function addComment() {
@@ -81,7 +57,6 @@ function viewSnippetController($scope, $http, $routeParams, $location, $route, $
             .success(function(data, status, headers, config) {
                 $scope.new_comment = "";
                 $route.reload();
-                console.log(status);
 
             })
     }

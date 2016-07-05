@@ -7,10 +7,9 @@ angular
 function compileEditor() {
     var directive = {
         restrict: 'E',
-        templateUrl: 'pages/compiler.html',
+        templateUrl: 'pages/compilerEdit.html',
         controller: compileController,
-        controllerAs: 'vm',
-        bindToController: true
+        bindToController: true,
     };
 
     return directive;
@@ -69,7 +68,7 @@ function compileEditor() {
 
         $scope.aceUpdate = function() {
             $scope.snippet.mode = $scope.snippet.language[1];
-            if ($scope.snippet.mode == 'C/C++') {
+            if ($scope.snippet.mode == 'C-C++') {
                 $scope.snippet.mode = 'c_cpp';
             } else if ($scope.snippet.mode == 'C#') {
                 $scope.snippet.mode = 'csharp';

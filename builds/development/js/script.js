@@ -31,7 +31,6 @@ function addSnippetController($scope,$cookies, $http, $location, optionsService,
     $scope.options = {};
     // $scope.postSnippet = postSnippet;
     $scope.populateOptions = populateOptions;
-    $scope.prepareSnippet = prepareSnippet;
     // $scope.compileSnippet = compileSnippet
     // $scope.snippet.code = $scope.snippet.code;
 
@@ -43,12 +42,6 @@ function addSnippetController($scope,$cookies, $http, $location, optionsService,
             });
     }
 
-    function prepareSnippet() {
-        $scope.snippet.language = $scope.snippet.language.id;
-        $scope.snippet.context = $scope.snippet.context.id;
-        $scope.snippet.code_type = $scope.snippet.code_type.id; 
-    }
-
     $scope.postSnippet=function(){
     var snap = {
             'user_id':1, 
@@ -57,10 +50,11 @@ function addSnippetController($scope,$cookies, $http, $location, optionsService,
             'code': $scope.snippet.code,
             'context': $scope.snippet.context.id,
             'tags': $scope.snippet.tags,
-            'language': $scope.snippet.language.id,
+            'language': $scope.snippet.language[0],
             'code_type': $scope.snippet.code_type.id,
             'user_id':$cookies.get("user_id")
     };
+    console.log(snap);
 
     $http({
         method: 'POST',
@@ -71,7 +65,7 @@ function addSnippetController($scope,$cookies, $http, $location, optionsService,
         headers: {'Content-Type': 'application/x-www-form-urlencoded' }
        })
     .success(function(data, status, headers, config) {
-        console.log($scope.snippet.output);
+        //console.log($scope.snippet.output);
         console.log(status);
         $location.path('/snippet/'+ data.snippet_id);
 
@@ -126,7 +120,6 @@ function listSnippetsController($scope, $http, $routeParams, snippetService, que
 			.success(function(data) {
 				console.log(data);
 				$scope.questions = data;
-				console.log($scope.questions)
 			})
 	}
 
@@ -238,6 +231,8 @@ angular
     .controller('requestController', requestController);
 
 function requestController($scope, $cookies, $http, $location, authService) {
+    
+    $scope.snippet = {};
     
     $http({
             method: 'GET',
@@ -471,14 +466,6 @@ function viewQuestionController($scope, $http, $routeParams, $cookies, $route, q
     $scope.question = {};
     $scope.question.answers = [];
 
-    $scope.aceLoaded = function(_editor) {
-        // Options
-        _editor.setReadOnly(true);
-
-        _editor.setVale(snippet.code);
-        console.log(_editor);
-    };
-
     $scope.compileSnippet = function(code) {
 
         var snap = {
@@ -515,7 +502,7 @@ function viewQuestionController($scope, $http, $routeParams, $cookies, $route, q
         var answer = {
             "user_id": $cookies.get("user_id"),
             "description": $scope.new_answer.description,
-            "code": $scope.new_answer.code,
+            "code": $scope.snippet.code,
             "question": $scope.question.question_id
 
         };
@@ -569,40 +556,16 @@ function viewSnippetController($scope, $http, $routeParams, $location, $route, $
             .getSnippets()
             .success(function(data) {
                 $scope.related = data;
-                console.log(data);
             });
     }
 
-
-
     $scope.aceLoaded = function(_editor) {
         // Options
-        _editor.setReadOnly(true);
+        
 
         _editor.setVale(snippet.code);
-        console.log(_editor);
-    };
+        _editor.setReadOnly(true);
 
-    $scope.compileSnippet = function() {
-
-        var snap = {
-            'code': $scope.snippet.code
-
-        };
-        $http({
-                method: 'POST',
-                url: 'http://www.koodet.com:6543/api/compile',
-                data: JSON.stringify(snap),
-                crossDomain: true,
-                xhrFields: { withCredentials: true },
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-
-            })
-            .success(function(data, status, headers, config) {
-                $scope.snippet.output = data.output;
-                console.log(status);
-
-            })
     };
 
     function addComment() {
@@ -626,7 +589,6 @@ function viewSnippetController($scope, $http, $routeParams, $location, $route, $
             .success(function(data, status, headers, config) {
                 $scope.new_comment = "";
                 $route.reload();
-                console.log(status);
 
             })
     }
@@ -642,10 +604,9 @@ angular
 function compileEditor() {
     var directive = {
         restrict: 'E',
-        templateUrl: 'pages/compiler.html',
+        templateUrl: 'pages/compilerEdit.html',
         controller: compileController,
-        controllerAs: 'vm',
-        bindToController: true
+        bindToController: true,
     };
 
     return directive;
@@ -704,7 +665,7 @@ function compileEditor() {
 
         $scope.aceUpdate = function() {
             $scope.snippet.mode = $scope.snippet.language[1];
-            if ($scope.snippet.mode == 'C/C++') {
+            if ($scope.snippet.mode == 'C-C++') {
                 $scope.snippet.mode = 'c_cpp';
             } else if ($scope.snippet.mode == 'C#') {
                 $scope.snippet.mode = 'csharp';
@@ -720,6 +681,103 @@ function compileEditor() {
                     console.log("ace/mode/" + angular.lowercase($scope.snippet.mode));
                 });
         }
+
+    }
+}
+
+ //-------------------------------
+angular
+    .module('myApp')
+    .directive('compileViewer', compileViewer);
+
+// in html use <compileViewer></compileViewer>
+
+function compileViewer() {
+    var directive = {
+        restrict: 'E',
+        templateUrl: 'pages/compilerView.html',
+        controller: compileController,
+        bindToController: true,
+        link: function (scope,element,attrs){}
+    };
+
+    return directive;
+
+    compileController.$inject = ['$scope', '$http', '$routeParams', 'compileService', 'snippetService'];
+
+    function compileController($scope, $http, $routeParams, compileService, snippetService) {
+
+        $scope.snippetView = {};
+
+        snippetService.getSnippet($routeParams.sid)
+                .success(function(data) {
+                    $scope.snippetView = data;
+                    // $scope.snippetView.language = data.language;
+                    // $scope.snippetView.code = data.code;
+
+                    $scope.mode = $scope.snippetView.language;
+                    if ($scope.mode == 'C-C++') {
+                        $scope.mode = 'c_cpp';
+                    } else if ($scope.mode == 'C#') {
+                        $scope.mode = 'csharp';
+                    } else if ($scope.mode == 'Go') {
+                        $scope.mode = 'golang';
+                    }
+                    $scope._session.setMode("ace/mode/" + angular.lowercase($scope.mode));
+                })
+                .error(function(data){
+                    $scope.mode = $scope.question.language;
+                    if ($scope.mode == 'C-C++') {
+                        $scope.mode = 'c_cpp';
+                    } else if ($scope.mode == 'C#') {
+                        $scope.mode = 'csharp';
+                    } else if ($scope.mode == 'Go') {
+                        $scope.mode = 'golang';
+                    }
+                    $scope._session.setMode("ace/mode/" + angular.lowercase($scope.mode));
+        });
+
+        $scope.compileSnippetView = compileSnippetView
+
+        function compileSnippetView() {
+            $('#output').empty();
+            $('#time').empty();
+
+            var code = ($scope.snippetView.code !== undefined ? $scope.snippetView.code: $scope.answer.code );
+            var language = ($scope.snippetView.language !== undefined ? $scope.snippetView.language: $scope.question.language );
+
+            compileService.compileSnippet(language, code, $scope.snippetView.stdin).then(
+                function(response) {
+                    $scope.snippetView.output = response.data.output;
+                    //console.log(response.data.output);
+
+                    $scope.checkCodeandPrint($scope.snippetView.output);
+                });
+        }
+
+        $scope.checkCodeandPrint = function(output) {
+            if (output.search('runtime') !== -1) {
+                var outSplit = output.split('runtime');
+                var output = outSplit[0];
+                var time = outSplit[1];
+                $('#output').html(output);
+                $('#time').html('<br>' + "<b>runtime<i>" + time + "</i></b>");
+                return 1;
+            } else {
+                $('#output').html(output);
+                return 0;
+            }
+        }
+
+        $scope.aceLoaded = function(_editor) {
+            _editor.setReadOnly(true);
+            $scope._session = _editor.getSession();
+        };
+
+        $scope.aceChanged = function(e) {
+            //angular.element(document.querySelector('#lang'))
+            //$scope.snippetView.code = $scope._session.getDocument().getValue();
+        };
 
     }
 }

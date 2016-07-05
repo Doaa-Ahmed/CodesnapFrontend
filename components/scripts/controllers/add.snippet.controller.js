@@ -13,7 +13,6 @@ function addSnippetController($scope,$cookies, $http, $location, optionsService,
     $scope.options = {};
     // $scope.postSnippet = postSnippet;
     $scope.populateOptions = populateOptions;
-    $scope.prepareSnippet = prepareSnippet;
     // $scope.compileSnippet = compileSnippet
     // $scope.snippet.code = $scope.snippet.code;
 
@@ -25,12 +24,6 @@ function addSnippetController($scope,$cookies, $http, $location, optionsService,
             });
     }
 
-    function prepareSnippet() {
-        $scope.snippet.language = $scope.snippet.language.id;
-        $scope.snippet.context = $scope.snippet.context.id;
-        $scope.snippet.code_type = $scope.snippet.code_type.id; 
-    }
-
     $scope.postSnippet=function(){
     var snap = {
             'user_id':1, 
@@ -39,10 +32,11 @@ function addSnippetController($scope,$cookies, $http, $location, optionsService,
             'code': $scope.snippet.code,
             'context': $scope.snippet.context.id,
             'tags': $scope.snippet.tags,
-            'language': $scope.snippet.language.id,
+            'language': $scope.snippet.language[0],
             'code_type': $scope.snippet.code_type.id,
             'user_id':$cookies.get("user_id")
     };
+    console.log(snap);
 
     $http({
         method: 'POST',
@@ -53,7 +47,7 @@ function addSnippetController($scope,$cookies, $http, $location, optionsService,
         headers: {'Content-Type': 'application/x-www-form-urlencoded' }
        })
     .success(function(data, status, headers, config) {
-        console.log($scope.snippet.output);
+        //console.log($scope.snippet.output);
         console.log(status);
         $location.path('/snippet/'+ data.snippet_id);
 

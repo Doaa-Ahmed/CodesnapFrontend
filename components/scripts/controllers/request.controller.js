@@ -4,6 +4,8 @@ angular
 
 function requestController($scope, $cookies, $http, $location, authService) {
     
+    $scope.snippet = {};
+    
     $http({
             method: 'GET',
             url: 'http://www.koodet.com:6543/api/elements',
