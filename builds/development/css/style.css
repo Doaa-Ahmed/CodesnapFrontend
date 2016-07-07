@@ -443,8 +443,7 @@ button.sub-button:hover {
 
 .add-header {
   font-family: 'Ubuntu', sans-serif;
-  font-weight: bolder;
-  color: #000; }
+  color: #333; }
 
 .view-snipp-title {
   font-size: 24px;
@@ -1036,3 +1035,14 @@ a.user-menue:hover {
   outline: none;
   border-radius: 2px;
   transition-duration: .5s; }
+
+.filter-header {
+  margin-top: 0px;
+  margin-bottom: 4px;
+  color: #666; }
+
+.divider-role {
+  height: 1px;
+  margin: 9px 0px;
+  background-color: #e5e5e5;
+  overflow: hidden; }
