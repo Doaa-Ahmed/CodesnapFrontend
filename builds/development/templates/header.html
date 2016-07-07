@@ -145,11 +145,11 @@
             <div class="modal-body">
               <form ng-submit="login.postForm()">
                 <div class="form-group">
-                  <label for="inputUsername">Username</label>
+                  <label for="inputUsername"><span class="inputs-data">Username</span></label>
                   <input type="text" class="form-control" id="inputUsername" placeholder="Username" required ng-model="inputData.username">
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword">Password</label>
+                  <label for="inputPassword"><span class="inputs-data">Password</span></label>
                   <input type="password" class="form-control" id="inputPassword" placeholder="Password" required ng-model="inputData.password">
                 </div>
                 <button class="btn btn-primary" type="submit">Signin</button>
@@ -181,24 +181,24 @@
               <div class="modal-body">
                 <form ng-submit="signupCtrl.signupForm()">
                   <div class="form-group">
-                    <label for="first_name">first name</label>
-                    <input type="text" class="form-control" id ="first-name" placeholder="firstname" required ng-model="signupData.firstname">
+                    <label for="first_name"><span class="inputs-data">First Name</span></label>
+                    <input type="text" class="form-control" id ="first-name" placeholder="First Name" required ng-model="signupData.firstname">
                   </div>
                   <div class="form-group">
-                    <label for="inputlastname">last name</label>
-                    <input type="text" class="form-control" id ="inputlastname" placeholder="lastname" required ng-model="signupData.lastname">
+                    <label for="inputlastname"><span class="inputs-data">Last Name</span></label>
+                    <input type="text" class="form-control" id ="inputlastname" placeholder="Last Name" required ng-model="signupData.lastname">
                   </div>
                   <div class="form-group">
-                    <label for="username">user name</label>
-                    <input type="text" class="form-control" id ="username" placeholder="username" required ng-model="signupData.username">
+                    <label for="username"><span class="inputs-data">Username</span></label>
+                    <input type="text" class="form-control" id ="username" placeholder="Username" required ng-model="signupData.username">
                   </div>
                   <div class="form-group">
-                    <label for="inputEmail">Email</label>
+                    <label for="inputEmail"><span class="inputs-data">Email<span></label>
                     <input type="email" class="form-control" id="inputEmail" placeholder="Email" required ng-model="signupData.email">
                   </div>
                   <div class="form-group">
-                    <label for="inputPassword">Password</label>
-                    <input type="password" class="form-control" id="Password" placeholder="Password" required ng-model="signupData.password">
+                    <label for="inputPassword"><span class="inputs-data">Password</span></label>
+                    <input type="Password" class="form-control" id="Password" placeholder="Password" required ng-model="signupData.password">
                   </div>
                   <button type="submit" class="btn btn-primary">Signup</button>
                   <div>
