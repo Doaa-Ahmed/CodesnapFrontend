@@ -1,5 +1,8 @@
 @import "variables";
 @import "mixins";
+body * {
+  font-family: 'Ubuntu', sans-serif cursive !important;
+}
 
 .fill2 {
   height: 100%;
@@ -20,7 +23,7 @@
 
 #mainNavbar .navAnchor {
   text-transform: uppercase;
-  font-family: sans-serif;
+  font-family: 'Ubuntu', sans-serif;
   font-weight: bolder;
   font-size: 13px;
   color: #ffffff;
@@ -251,7 +254,7 @@ body { font-size: 18px; }
 }
 
 #searchRow p.mainHeader {
-  font-family: 'Josefin Slab', serif;
+  font-family: 'Ubuntu', sans-serif;
   text-align: center;
   font-size: 52px;
   color: #3ac162;
@@ -262,7 +265,7 @@ body { font-size: 18px; }
 
 #searchRow p.subHeader, #searchRow h4 {
   color: yellow;
-  font-family: cursive;
+  font-family: 'Ubuntu', sans-serif;
   font-weight: lighter;
 }
 
@@ -300,7 +303,7 @@ body { font-size: 18px; }
   margin: 0 15px 20px 0;
   padding-right: 15px;
   text-transform: uppercase;
-  font-family: sans-serif;
+  font-family: 'Ubuntu', sans-serif;
   font-weight: bolder;
   color: white;
 }
@@ -318,7 +321,7 @@ body { font-size: 18px; }
 
 .copy {
   color: yellow;
-  font-family: monospace;
+  font-family: 'Ubuntu', sans-serif;
   font-weight: bolder;
   font-size: 16px;
 }
@@ -339,7 +342,7 @@ body { font-size: 18px; }
 .fixed-footer a.famailclass {
   text-decoration: none;
   color: #FFFFFF;
-  font-family: monospace;;
+  font-family: 'Ubuntu', sans-serif;
   font-weight: bolder;
 }
 
@@ -395,30 +398,20 @@ button.sub-button:hover {
 }
 
 .add-header {
-  font-family: 'Josefin Slab', serif;
+  font-family: 'Ubuntu', sans-serif;
   font-weight: bolder;
   color: #000;
 }
 
  .view-snipp-title {
    font-size: 24px;
-   font-family: sans-serif;
+   font-family: 'Ubuntu', sans-serif;
    color: #333;
    font-weight: lighter;
  }
 
-.input-focus:focus {
-  background-color: #333;
-  color: #fff;
-  font-family: monospace;
-  outline: none;
-  border-color: transparent;
-  font-size: 16px;
-  transition-duration: 1s;
-}
-
 .labels h5, h5.labelsFont{
-  font-family: cursive;
+  font-family: 'Ubuntu', sans-serif;
   color: #6599FF;
 }
 
@@ -458,7 +451,7 @@ h5.addLabels {
 textarea.addTextarea {
   resize: none;
   font-size: 16px;
-  font-family: monospace;
+  font-family: 'Ubuntu', sans-serif;
 }
 
 .labels {
@@ -531,13 +524,13 @@ textarea.reqTextarea {
 
 .EXPMainH {
   color: #2ecc71;
-  font-family: 'Josefin Slab', serif;
+  font-family: 'Ubuntu', sans-serif;
   font-weight: lighter;
 }
 
 .EXPSubH {
   color: #FFEB00;
-  font-family: monospace;
+  font-family: 'Ubuntu', sans-serif;
   font-style: italic;
   font-weight: lighter;
   margin-bottom: 0;
@@ -609,17 +602,16 @@ textarea.reqTextarea {
 }
 
 h3.EXPImgsHeader {
-  font-family: monospace;
+  font-family: 'Ubuntu', sans-serif;
   font-weight: bolder;
   color: #000;
   text-shadow: 1px 1px 1px #34495e;
 }
 
 h4.EXPMiniH {
-  color: #000;
+  color: #666;
   font-size: 20px;
-  font-family: 'Josefin Slab', serif;
-  font-weight: bolder;
+  font-family: 'Ubuntu', sans-serif;
   width: 70%;
   margin: 15px auto;
   text-align: center;
@@ -633,7 +625,7 @@ p.multiParagraph {
   color: #666;/*#7FC1C2;*/
   width: 65%;
   margin: 0 auto 20px;
-  font-family: monospace;
+  font-family: 'Ubuntu', sans-serif;
   font-weight: lighter;
   font-size: 14px;
 }
@@ -692,7 +684,7 @@ div.lang-snip-row {
 h4.snip-title {
   margin: 0px;
   margin-bottom: 4px;
-  font-family: monospace;
+  font-family: 'Ubuntu', sans-serif;
   color: #000;
   font-weight: bolder;
 }
@@ -715,7 +707,7 @@ a.explore-anchor:hover>h4, a.explore-anchor:hover>h5 {
 
 .side-info {
   font-size: 13px;
-  font-family: sans-serif;
+  font-family: 'Ubuntu', sans-serif;
 }
 
 .check-box {
@@ -742,7 +734,7 @@ fieldset.rating {
 .rating > label:before {
   margin: 5px;
   font-size: 1.25em;
-  font-family: FontAwesome;
+  font-family: 'Ubuntu', sans-serif;
   display: inline-block;
   content: "\f005";
 }
@@ -822,7 +814,7 @@ li a.li-tag-a:hover>span {
 }
 
 li a span.tag-span {
-  font-family: monospace;
+  font-family: 'Ubuntu', sans-serif;
   font-size: 14px;
   color: #fff;
 }
@@ -877,7 +869,7 @@ li a span.tag-span {
 }
 
 p.snipp-desc {
-  font-family: monospace;
+  font-family: 'Ubuntu', sans-serif;
   color: #34495e;
   font-weight: lighter;
   font-size: 14px;
@@ -890,9 +882,8 @@ h5.wrap {
   border-radius: 3px;
   display: inline-block;
   color: #fff;
-  font-family: monospace;
+  font-family: 'Ubuntu', sans-serif;
   text-transform: uppercase;
-  font-weight: bolder;
 }
 
 span.related-wrap {
@@ -932,7 +923,7 @@ li a.li-tags-a {
 }
 
 li a span.tags-span {
-  font-family: monospace;
+  font-family: 'Ubuntu', sans-serif;
   font-size: 14px;
   color: #fff;
 }
@@ -969,7 +960,7 @@ li a.li-tag-a:hover>span {
 }
 
 li a span.tag-span {
-  font-family: monospace;
+  font-family: 'Ubuntu', sans-serif;
   font-size: 14px;
   color: #fff;
 }
@@ -999,6 +990,7 @@ ul.related-snipp li a:hover {
 .day-style {
   text-align: center;
   font-size: 14px;
+  margin-left: -32px;
 }
 
 .year-style {
@@ -1035,7 +1027,7 @@ ul.related-snipp li a:hover {
   display: block;
   padding: 3px 0px;
   color: #000;
-  font-family: monospace;
+  font-family: 'Ubuntu', sans-serif;
   font-size: 16px;
 }
 
@@ -1067,7 +1059,7 @@ a.user-menue:hover {
 
 .return-name {
   font-size: 16px;
-  font-family: monospace;
+  font-family: 'Ubuntu', sans-serif;
   color: #fff;
 }
 
@@ -1089,4 +1081,13 @@ a.user-menue:hover {
   border-right-width: 4px;
   border-left-width: 4px;
   margin-left: 4px !important;
+}
+
+.save-profile-btn, .upload-profile-btn {
+  padding: 0px 12px;
+  background-color: #16a085;
+  border-color: #16a085;
+  outline: none;
+  border-radius: 2px;
+  transition-duration: .5s;
 }
