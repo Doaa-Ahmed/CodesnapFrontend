@@ -22,9 +22,9 @@
           </div>
 
           <div ng-controller="searchController"  ng-hide="isActive('/')" class="col-md-6 col-sm-6 headSearchCol">
-            <input type="search" class="form-control headSearchInput input-focus" placeholder="Search For Snippet!">
+            <input type="search" class="form-control headSearchInput input-focus" placeholder="Search For Snippet!" ng-model="search">
             <span class="headSearchSpan">
-              <button class="btn headSearchSpanBtn" type="button">
+              <button class="btn headSearchSpanBtn" type="button" ng-click="searchSnippet()">
                 <span style="color:#fff;" class="glyphicon glyphicon-search"></span>
               </button>
             </span>

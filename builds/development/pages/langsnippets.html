@@ -1,4 +1,4 @@
-<div class="container-fluid" style="padding-top:90px;">
+div class="container-fluid" style="padding-top:90px;">
   <div class="row">
     <div class="col-md-2 col-sm-2">
       <div class="panel panel-default side-check-panel">
@@ -37,38 +37,38 @@
         <div class="panel-body">
           <div class="tab-content">
             <div class="tab-pane fade in active" id="tab1primary" ng-init=fetchSnippets()>
-            <div ng-repeat="snippet in snippets">
-      				<div class="col-md-12 col-sm-12 title-to-snippet">
-      					<div class="row lang-snip-row">
-                	<div class="col-md-2 col-sm-2">
+            <div ng-repeat="snippet in snippets | orderBy: '-count'">
+              <div class="col-md-12 col-sm-12 title-to-snippet">
+                <div class="row lang-snip-row">
+                  <div class="col-md-2 col-sm-2">
                   <span title="Author" class="glyphicon glyphicon-user" aria-hidden="true" style="font-size:11px;"></span>
                   <span title="Author" class="side-info"><a href="profile/{{snippet.username}}"> {{snippet.username}} </a></span>
                   <br>
                   <span class="side-info">{{snippet.date}}</span>
-                	</div>
-      						<div class="col-md-8 col-sm-8" style="padding-left:0;">
-      							<div class="row">
-      								<div class="col-md-12 col-sm-12">
-      									<a class="explore-anchor" ng-href="/snippet/{{snippet.id}}">
-      										<h4 class="snip-title">
-      											{{snippet.title}}
-      										</h4>
-      									</a>
-      								</div>
-      							</div>
-      							<div class="row">
-      								<div class="col-md-2 col-sm-2">
-      									<b class="side-info">{{snippet.views}}</b>
-      									<span class="side-info"> views</span>
-      								</div>
-      								<div class="col-md-8 col-sm-8">
-      									<ul class="ul-tags">
-      										  <li class="li-tag"  ng-repeat="tag in snippet.tags"><a class="li-tag-a" href="tag/{{tag}}"><span class="tag-span" >{{tag}}</span></a></li>
-      									</ul>
-      								</div>
-      							</div>
-      						</div>
-        					<div class="col-md-2 col-sm-2 col-xs-2">
+                  </div>
+                  <div class="col-md-8 col-sm-8" style="padding-left:0;">
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12">
+                        <a class="explore-anchor" ng-href="/snippet/{{snippet.snippet_id}}">
+                          <h4 class="snip-title">
+                            {{snippet.title}}
+                          </h4>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-2 col-sm-2">
+                        <b class="side-info">{{snippet.views}}</b>
+                        <span class="side-info"> views</span>
+                      </div>
+                      <div class="col-md-8 col-sm-8">
+                        <ul class="ul-tags">
+                            <li class="li-tag"  ng-repeat="tag in snippet.tags"> <a class="li-tag-a" href="tag/{{tag}}"><span class="tag-span" >{{tag}}</span></a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2 col-sm-2 col-xs-2">
                     <div class="row">
                       <div class="col-md-12 col-sm-12 col-xs-12">
                         <span class="stars-container stars-{{snippet.rank}}">★★★★★</span>
@@ -81,47 +81,47 @@
                       </div>
                     </div>
                   </div>
-      					</div>
-      				</div>
-						</div>
+                </div>
+              </div>
+            </div>
           </div>
-        	<div class="tab-pane fade" id="tab2primary" ng-init="fetchQuestions()">
-            <div ng-repeat="question in questions">
-    					<div class="col-md-12 col-sm-12 title-to-snippet">
-    						<div class="row lang-snip-row">
-    							<div class="col-md-2 col-sm-2" style="line-height:normal;">
-										<b class="side-info">{{question.views}}</b>
-										<span class="side-info"> Views</span>
-								    <br>
-										<b class="side-info">{{question.answers}}</b>
-										<span class="side-info"> Answers</span>
-    							</div>
-    							<div class="col-md-8 col-sm-8" style="padding-left:0;">
-    								<div class="row">
-    									<div class="col-md-12 col-sm-12">
-    										<a class="explore-anchor" ng-href="question/{{question.id}}">
-    											<h4 class="snip-title">
-    												{{question.title}}
-    											</h4>
-    										</a>
-    									</div>
-    								</div>
-    								<div class="row">
-    									<div class="col-md-8 col-sm-8">
-    										<ul class="ul-tags">
-    											<li class="li-tag" ng-repeat="tag in question.tags"><a class="li-tag-a" href="tag/{{tag}}"><span class="tag-span">{{tag}}</span></a></li>
-    										</ul>
-    									</div>
-    								</div>
-    							</div>
-    							<div class="col-md-2 col-sm-2">
-    								<span title="Author" class="glyphicon glyphicon-user" aria-hidden="true" style="font-size:11px;"></span>
-    								<span title="Author" class="side-info"><a href="profile/{{question.username}}">{{question.username}}</a></span>
-    								<br>
-    								<span class="side-info">{{question.date}}</span>
-    							</div>
-    						</div>
-    					</div>
+          <div class="tab-pane fade" id="tab2primary" ng-init="fetchQuestions()">
+            <div ng-repeat="question in questions | orderBy: '-count'">
+              <div class="col-md-12 col-sm-12 title-to-snippet">
+                <div class="row lang-snip-row">
+                  <div class="col-md-2 col-sm-2" style="line-height:normal;">
+                    <b class="side-info">{{question.views}}</b>
+                    <span class="side-info"> Views</span>
+                    <br>
+                    <b class="side-info">{{question.count_answers}}</b>
+                    <span class="side-info"> Answers</span>
+                  </div>
+                  <div class="col-md-8 col-sm-8" style="padding-left:0;">
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12">
+                        <a class="explore-anchor" ng-href="question/{{question.question_id}}">
+                          <h4 class="snip-title">
+                            {{question.title}}
+                          </h4>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-8 col-sm-8">
+                        <ul class="ul-tags">
+                          <li class="li-tag" ng-repeat="tag in question.tags"><a class="li-tag-a" href="tag/{{tag}}"><span class="tag-span">{{tag}}</span></a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2 col-sm-2">
+                    <span title="Author" class="glyphicon glyphicon-user" aria-hidden="true" style="font-size:11px;"></span>
+                    <span title="Author" class="side-info"><a href="profile/{{question.username}}">{{question.username}}</a></span>
+                    <br>
+                    <span class="side-info">{{question.date}}</span>
+                  </div>
+                </div>
+              </div>
           </div>
       </div>
       </div>

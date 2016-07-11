@@ -17,10 +17,10 @@
       <div class="row">
         <div class="col-md-12 col-sm-12">
             <form>
-              <div class="input-group input-group-lg">
-                <input id="inputSearch" type="search" class="form-control input-focus" placeholder="Search For Snippet!">
+              <div ng-controller="searchController" class="input-group input-group-lg">
+                <input id="inputSearch" type="search" class="form-control input-focus" ng-model="search" placeholder="Search For Snippet!">
                 <span class="input-group-btn">
-                  <button id="searchButton" class="btn btn-primary" type="button">
+                  <button id="searchButton" class="btn btn-primary" type="button" ng-click="searchSnippet()">
                     <span class="glyphicon glyphicon-search"></span>
                   </button>
                 </span>
